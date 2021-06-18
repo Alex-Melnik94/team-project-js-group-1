@@ -41,7 +41,7 @@
     transform: translate(-50%, 0);
 
     width: 280px;
-    height: 958px;
+    height: auto;
     background-color: #FFFFFF;
     padding: 48px 20px 41px;
 
@@ -51,18 +51,13 @@
       display: flex;
 
       width: 618px;
-      height: 562px;
       padding: 42px 29px 40px 28px;
     }
 
     @media screen and (min-width: 1024px) {
       top: 100px;
-      left: 50%;
-  
-      transform: translate(-50%, 0);
 
-      width: 882px;
-      height: 568px;
+      width: 884px;
       padding: 50px 30px 40px;
     }
   }
