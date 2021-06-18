@@ -13,4 +13,4 @@ var e,t=arguments[3];!function(t,r){"object"==typeof exports&&"object"==typeof m
 },{"../hbs-templates/trending-films.hbs":"OeyV","./api-service.js":"cQRY"}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss");var e=require("./js-modules/api-service.js"),r=require("./js-modules/render-service.js");const s=document.querySelector(".film__grid");(0,e.getGenres)(),(0,r.renderTrendingFilms)(s);
 },{"./sass/main.scss":"clu1","./js-modules/api-service.js":"cQRY","./js-modules/render-service.js":"WUGp"}]},{},["Focm"], null)
-//# sourceMappingURL=/team-project-js-group-1/src.98df830e.js.map
+//# sourceMappingURL=/team-project-js-group-1/src.ff80e6e6.js.map
