@@ -28,11 +28,7 @@ display: none;
 
 @media screen and (min-width: 768px){
 display: inline;
-font-family: Roboto;
 font-size: 30px;
-font-style: normal;
-font-weight: 500;
-line-height: 35px;
 letter-spacing: 0em;
 color: #FFFFFF;
 }
@@ -46,11 +42,6 @@ color: #FFFFFF;
 .header__links{
     display: flex;
   list-style: none;
-  font-family: Roboto;
-font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 14px;
 align-items: center;
 text-align: center;
 text-transform: uppercase;
@@ -77,11 +68,6 @@ text-transform: uppercase;
 }
 
 .header__search {
-font-family: Roboto;
-font-style: normal;
-font-weight: normal;
-font-size: 14px;
-line-height: 16px;
 text-align: center;
 align-items: center;
 
@@ -101,11 +87,6 @@ align-items: center;
 
 .search__input::placeholder {
   color: #FFFFFF;
-  font-family: Roboto;
-font-style: normal;
-font-weight: normal;
-font-size: 14px;
-line-height: 16px;
 }
 
 .search__link {
