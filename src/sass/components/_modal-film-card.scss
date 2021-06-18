@@ -57,7 +57,9 @@
 
     @media screen and (min-width: 1024px) {
       top: 100px;
-      
+      left: 50%;
+  
+      transform: translate(-50%, 0);
 
       width: 882px;
       height: 568px;
