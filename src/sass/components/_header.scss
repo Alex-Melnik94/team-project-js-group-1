@@ -70,6 +70,7 @@ text-transform: uppercase;
 .header__search {
 text-align: center;
 align-items: center;
+font-weight: normal;
 
 }
 
@@ -87,6 +88,7 @@ align-items: center;
 
 .search__input::placeholder {
   color: #FFFFFF;
+  font-weight: normal;
 }
 
 .search__link {
