@@ -1,0 +1,39 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+
+    @media screen and (min-width: 320px) {
+        margin-bottom: 40px;
+    }
+
+    & > li:not(:last-child) {
+        margin-right: 16px;
+      }
+}
+
+.page-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+
+    background-color: $background-color;
+    color: $primary-text-color;
+
+    @include transit($timing-function);
+
+    &:hover,
+    &:focus {
+    background-color: $accent-color;
+    color: $background-color;
+  }
+}
+
+.pagination-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
