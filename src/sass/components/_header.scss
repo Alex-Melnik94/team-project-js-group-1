@@ -1,3 +1,5 @@
+// header home
+
 .section__header {
   background-image: linear-gradient(
       to right,
@@ -36,9 +38,16 @@ color: #FFFFFF;
 }
 }
 
-.header-search {
-    margin-right: auto;
+.header__search {
+  position: relative;
+font-weight: normal;
+ @media screen and (min-width: 768px) {
+  margin-right: auto;
     margin-left: auto;
+    text-align: center;
+align-items: center;
+    }
+   
 }
 
 .header__links{
@@ -68,22 +77,17 @@ text-transform: uppercase;
   bottom: -3px;
 }
 
-.header__search {
-text-align: center;
-align-items: center;
-font-weight: normal;
-}
-
 .search__input {
-  position: relative;
   background-color: transparent;
   border: none;
   outline: none;
   color: #FFFFFF;
-  font-size: 18px;
+  font-size: 14px;
   width: 280px;
+  margin-bottom: 22px;
 
   border-bottom: 1px solid #9e9e9e;
+
     @media screen and (min-width: 768px) {
    width: 336px;
     }
@@ -95,17 +99,70 @@ font-weight: normal;
   font-size: 14px;
 }
 
-.search__link {
-    margin-top: -17px;
-    margin-right: -260px;
-
-      @media screen and (min-width: 768px) {
-    margin-top: -17px;
-    margin-right: -318px;
-    }
-}
-
 .search__icon {
     fill: #FFFFFF;
+position: absolute;
+    margin-top: 4px;
+    margin-left: -12px;
 }
 
+.search__result {
+font-size: 14px;
+color: #FF001B;
+}
+
+// header my library
+
+.my__library {
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.56),
+      rgba(0, 0, 0, 0.56)
+    ),
+  url(/images/background-library.jpg);  
+    height: 230px;
+    max-width: 100%;
+    background-position: center;
+}
+
+.library__list {
+  display: flex;
+  margin-top: 10px;
+
+   @media screen and (min-width: 768px) {
+  justify-content: center;
+}
+}
+
+.library__item:not(:last-child) {
+margin-right: 20px;
+@media screen and (min-width: 768px) {
+  margin-right: 15px;
+}
+}
+
+.library__btn {
+ border-width: 1px;
+  border-radius: 4px;
+  border-color: #FFFFFF;
+  background-color: transparent;
+font-size: 12px;
+text-transform: uppercase;
+width: 130px;
+height: 44px;
+color: #FFFFFF;
+
+@media screen and (min-width: 768px) {
+  width: 136px;
+}
+
+}
+
+.checked {
+  background-color: #FF6B08;
+  border: none;
+}
+
+.link__library {
+  position: relative;
+}
