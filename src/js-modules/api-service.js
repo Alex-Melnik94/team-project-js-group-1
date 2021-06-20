@@ -22,6 +22,12 @@ export const getTrendingFilms = async function () {
     
     const updatedFilmData = data.results.reduce((arr, el) => {
         el.release_date = el.release_date.slice(0, 4);
+      // for popap
+        el.vote = el.vote_average;
+        el.votes = el.vote_count;
+        el.popularity = el.popularity;
+        el.overview = el.overview;
+      // for popap
         
         const filmGenres = el.genre_ids.map((genreId) => {
 

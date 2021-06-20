@@ -9,13 +9,14 @@
     height: 100%;
   
     opacity: 1;
+    pointer-events: initial;
     background-color: rgba(0, 0, 0, 0.25);
 
     transition-property: opacity;
     transition-duration: 250ms;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 1023px) {
       overflow-y: scroll;
     }
   
@@ -26,28 +27,35 @@
   
   .popap.is-hidden {
     opacity: 0;
-    pointer-events: none;;
+    pointer-events: none;
   }
 
-  // .backdrop.is-hidden .modal-area {
+  // .backdrop.is-hidden .popap__box {
   //   transform: translate(-50%, 0) scale(1, 1);
   // }
-  
-  .popap__content {
+
+  .popap__box {
     position: absolute;
     top: 20px;
     left: 50%;
 
     transform: translate(-50%, 0);
 
+    @media screen and (min-width: 768px) {
+      top: 231px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      top: 100px;
+    }
+  }
+  .popap__content {
     width: 280px;
     height: auto;
     background-color: #FFFFFF;
     padding: 48px 20px 41px;
 
     @media screen and (min-width: 768px) {
-      top: 231px;
-
       display: flex;
 
       width: 618px;
@@ -55,15 +63,11 @@
     }
 
     @media screen and (min-width: 1024px) {
-      top: 100px;
-
       width: 884px;
       padding: 50px 30px 40px;
     }
   }
   
-  
-
 // button-close
 
 .popap__button-close {
@@ -141,6 +145,7 @@
   }
 
   .popap__block-info {
+
       margin-right: 39px;
 
       @media screen and (min-width: 1024px) {
@@ -149,6 +154,7 @@
   }
 
   .popap__film-info {
+    width: 69px;
     margin-bottom: 10px;
     &:last-child {
         margin-bottom: 0;
