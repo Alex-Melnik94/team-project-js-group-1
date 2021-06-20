@@ -1,7 +1,7 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
 import { getTrendingFilms, getTrendingFilmsByPageNum } from "./api-service.js";
 
-
+const preloader = document.querySelector('.preloader');
 const filmGrid = document.querySelector('.film__grid');
 const headerError = document.querySelector('.search-error');
 
@@ -9,15 +9,17 @@ const headerError = document.querySelector('.search-error');
 export function appendGalleryMarkup(results) {
     
   const result = results.length;
-    if (result !== 0) {
-      filmGrid.innerHTML = trendingFilmsMarkupFc(results);
-      headerError.textContent = '';
-    }
+  if (result !== 0) {
+    preloader.classList.add('preloader-hidden');
+    filmGrid.innerHTML = trendingFilmsMarkupFc(results);
+    headerError.textContent = '';
+  }
     
-    if (result === 0) {
-      headerError.textContent =
-        'Search result not successful. Enter the correct movie name and search again!';
-    }
+  if (result === 0) {
+    preloader.classList.add('preloader-hidden');
+    headerError.textContent =
+    'Search result not successful. Enter the correct movie name and search again!';
+  }
     
     
 };
