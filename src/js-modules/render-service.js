@@ -28,7 +28,10 @@ export const renderTrendingFilms = async function (container, preloader) {
     const movies = await getTrendingFilms(preloader);
     container.insertAdjacentHTML('beforeend', trendingFilmsMarkupFc(movies.updatedFilmData));
     preloader.classList.add('preloader-hidden');
+
     return movies.totalPages;
+
+
 };
 
 export const renderTrendingFilmsByPageNum = async function (container, preloader, page) {

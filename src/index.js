@@ -22,6 +22,7 @@ const initMainMarkup = async function () {
 const updateTrendingMarkup = async function () {
     const newPage = pagination.page;
     await renderTrendingFilmsByPageNum(variables.filmGrid, variables.preloader, newPage);
+    
 }
 pagination.container.addEventListener('pagechanged', updateTrendingMarkup);
 // *********************************************************************
@@ -29,6 +30,7 @@ pagination.container.addEventListener('pagechanged', updateTrendingMarkup);
 getGenres();
 initMainMarkup();
 initUpArrow();
+
 
 
 
