@@ -5,10 +5,10 @@ import { getTrendingFilms, getTrendingFilmsByPageNum } from "./api-service.js";
 const filmGrid = document.querySelector('.film__grid');
 const headerError = document.querySelector('.search-error');
 
-export const renderTrendingFilms = async function (container) {
-    const movies = await getTrendingFilms();
-    container.insertAdjacentHTML('beforeend', trendingFilmsMarkupFc(movies));
-};
+// export const renderTrendingFilms = async function (container) {
+//     const movies = await getTrendingFilms();
+//     container.insertAdjacentHTML('beforeend', trendingFilmsMarkupFc(movies));
+// };
 export function appendGalleryMarkup(results) {
     
   const result = results.length;

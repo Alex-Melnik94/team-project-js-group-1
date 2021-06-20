@@ -10,6 +10,7 @@ import variables from './js-modules/variables.js';
 import './js-modules/popap';
 import Pages from "./js-modules/pagination.js";
 import initUpArrow from "./js-modules/up-arrow.js";
+import './js-modules/modal-footer.js';
 
 
 // Рендер панели с пагинацией и первой страницы с трендовыми фильмами
