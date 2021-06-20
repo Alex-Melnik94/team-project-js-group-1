@@ -1,60 +1,55 @@
 .section__header {
-  background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.56),
-      rgba(0, 0, 0, 0.56)
-    ),
-  url(/images/header-background.jpg);  
-    height: 230px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+    url(/images/header-background.jpg);
+  height: 230px;
 }
 .header__navigation {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 41px;
-    padding-bottom: 37px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 41px;
+  padding-bottom: 37px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    &__icon {
-        margin-right: 10px;
-    }
+  &__icon {
+    margin-right: 10px;
+  }
 }
 
 .logo__text {
-display: none;
+  display: none;
 
-@media screen and (min-width: 768px){
-display: inline;
-font-size: 30px;
-letter-spacing: 0em;
-color: #FFFFFF;
-}
+  @media screen and (min-width: 768px) {
+    display: inline;
+    font-size: 30px;
+    letter-spacing: 0em;
+    color: #ffffff;
+  }
 }
 
 .header-search {
-    margin-right: auto;
-    margin-left: auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-.header__links{
-    display: flex;
+.header__links {
+  display: flex;
   list-style: none;
-align-items: center;
-text-align: center;
-text-transform: uppercase;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .link__item {
-    color: #FFFFFF;
-;
+  color: #ffffff;
 }
 
 .link__home {
-    position: relative;
-    margin-right: 39px;
+  position: relative;
+  margin-right: 39px;
 }
 
 .current::after {
@@ -62,16 +57,15 @@ text-transform: uppercase;
   content: '';
   width: 100%;
   height: 3px;
-  background-color: #FF6B08;
+  background-color: #ff6b08;
   left: 0;
   bottom: -3px;
 }
 
 .header__search {
-text-align: center;
-align-items: center;
-font-weight: normal;
-
+  text-align: center;
+  align-items: center;
+  font-weight: normal;
 }
 
 .search__input {
@@ -79,7 +73,7 @@ font-weight: normal;
   background-color: transparent;
   border: none;
   outline: none;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 18px;
   width: 336px;
 
@@ -87,16 +81,125 @@ font-weight: normal;
 }
 
 .search__input::placeholder {
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: normal;
 }
 
 .search__link {
-    margin-top: -17px;
-    margin-right: -318px;
+  margin-top: -17px;
+  margin-right: -318px;
 }
 
 .search__icon {
-    fill: #FFFFFF;
+  fill: #ffffff;
+}
+.search-error {
+  margin-top: 22px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: red;
+  text-align: center;
+  height: 32px;
+}
+@media screen and (min-width: 768px) {
+  .search-box {
+    width: 336px;
+  }
+  .error-message {
+    font-size: 15px;
+    text-align: center;
+    height: 16px;
+  }
+}
+/* THEME SWITCH */
+body.light-theme {
+  background-color: #fff;
+  color: #333333;
 }
 
+body.dark-theme {
+  background-color: #333333;
+  color: #fff;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 46px 24px;
+}
+
+.theme-switch {
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch__icon {
+  color: currentColor;
+  height: 24px;
+  width: 24px;
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+.theme-switch__control {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  width: 64px;
+  height: 32px;
+  border-radius: 50em;
+  padding: 3px 0;
+}
+
+.theme-switch__toggle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  pointer-events: none;
+}
+
+.theme-switch__track {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  user-select: none;
+  background-color: #333;
+  border-radius: inherit;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.theme-switch__marker {
+  position: relative;
+  background-color: #ff6b08;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  transform: translateX(3px);
+  transition: transform 250ms var(--timing-function);
+}
+
+.theme-switch__toggle:checked + .theme-switch__track {
+  background-color: #fff;
+}
+
+.theme-switch__toggle:checked ~ .theme-switch__marker {
+  transform: translateX(35px);
+}
+
+.theme-switch__toggle:focus + .theme-switch__track,
+.theme-switch__toggle:active + .theme-switch__track {
+  box-shadow: 0 0 0 3px #2196f3;
+}
