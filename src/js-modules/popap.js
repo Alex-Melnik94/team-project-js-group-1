@@ -32,7 +32,7 @@ function onClickFilm(e) {
         popularity: elemetLi.children[4].textContent,
         description: elemetLi.children[5].textContent,
     };
-    
+    console.log(elemetLi.children[0].attributes[1].value)
     // делаем шаблонизацию
     modalContentBox.insertAdjacentHTML('beforeend', popapFilmMarkup(arrItemsFilm));
 
