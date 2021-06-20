@@ -23,6 +23,9 @@
 //        'const paginationContainerRef = pagination.container;'
 //   current page saved in container data-property:
 //        'const currentPage = pagination.container.dataset.page;'
+//  custom event "pagechanged" dispatched on pagination container when user selects new page.
+//  It can be then caught in outer code, smth like:
+//        'pagination.container.addEventListener('pagechanged', *callback*);'  
 
 // Visual interface:
 //   `boxes with figures` - allow to change current page within +/- 1-2 offset range
@@ -73,8 +76,10 @@ export default class Pages {
   onPaginationClick(evt) {
     const target = evt.target.closest('.pagination-nav'); // closest used for the case if some deeper structure implemented
     if (!target) return;
+    if (target.dataset.active === 'false') return;
 
-    const role = target.textContent;
+    let role = target.textContent;
+    if (role === '...') return;
 
     switch (role) {
       case '<<': this.shiftPageLeftFast();
@@ -88,13 +93,17 @@ export default class Pages {
       
       case '>': this.shiftPageRight();
       break;
+      
+      default:
+        role = Number(role);
+        if (role - role === 0 && role !== this._currentPage) {
+          this.moveToPage(role);
+        } else return;
     }
 
-    if (role - role === 0) {
-      this.moveToPage(Number(role));
-    }
+    let pageEvent = new Event('pagechanged');
+    this._container.dispatchEvent(pageEvent);
 
-    // console.log('Clicked on', target.textContent);
   }
 
   refreshMap() {
@@ -171,6 +180,7 @@ export default class Pages {
     this._refs.pages.forEach((page, idx) => {
       page.textContent = this._mapping.pages[idx];
       page.classList.remove('pagination-page-active');
+      page.dataset.active = true;
     });
 
     this._refs.rightEllipsis.dataset.active = this._mapping.rightEllipsis;
@@ -242,8 +252,3 @@ export default class Pages {
     return this._container;
   }
 }
-
-// let PAGE = 15;
-// let TOTAL_PAGES = 792;
-// const pagination = new Pages();
-// pagination.moveToPage(PAGE, TOTAL_PAGES);
