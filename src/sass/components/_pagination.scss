@@ -1,4 +1,4 @@
-.pagination {
+.pagination-list {
     display: flex;
     justify-content: center;
     margin-bottom: 60px;
@@ -36,4 +36,9 @@
     width: 16px;
     height: 16px;
     fill: currentColor;
+}
+
+.is-active {
+    background-color: $accent-color;
+    color: $background-color;
 }
