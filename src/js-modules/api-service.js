@@ -41,6 +41,7 @@ export const getTrendingFilms = async function (preloader) {
     sessionStorage.setItem('totalPages', totalPages);
 
     // return updatedFilmData;
+  sessionStorage.setItem('arrayWithMovies', JSON.stringify(updatedFilmData));
   return { updatedFilmData, totalPages };
 };
 
@@ -72,6 +73,9 @@ export const getTrendingFilmsByPageNum = async function (preloader, page) {
     arr.push(el);
         return arr;
     }, []);
+
+  
+  sessionStorage.setItem('arrayWithMovies', JSON.stringify(updatedFilmData));
 
   return { updatedFilmData, totalPages };
 };
