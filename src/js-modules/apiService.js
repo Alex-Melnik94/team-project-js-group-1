@@ -51,7 +51,14 @@ export default {
     }, []);
 
      
-},
+  },
+  
+    get query() {
+        return this.searchQuery;
+    },
+    set query(newQuery) {
+        this.searchQuery = newQuery;
+    },
     incrementPage() {
     return (this.page += 1);
   },

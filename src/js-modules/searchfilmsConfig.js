@@ -6,11 +6,11 @@ const searchInput = document.querySelector('.header__search')
 function onSearch(e){    
   e.preventDefault();                
     
-  apiService.searchQuery = e.target[0].value.trim();
+  apiService.searchQuery = e.currentTarget.elements.query.value.trim();
     if (apiService.searchQuery === '') {
     return;
   }
-  e.target[0].value = '';
+  e.currentTarget.elements.query.value = '';
   
   apiService.fetchMovies().then(appendGalleryMarkup)
     .catch(error => {
