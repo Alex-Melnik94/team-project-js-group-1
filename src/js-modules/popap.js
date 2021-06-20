@@ -4,6 +4,7 @@ import popapFilmMarkup from "../hbs-templates/popap.hbs";
 const backdropBox = document.querySelector('.popap')
 const modalContentBox = document.querySelector('[data-film="popap"]')
 const listFilms = document.querySelector('.film__grid')
+const btnCloseModal = document.querySelector('[data-action="close-popap"]');
 
 listFilms.addEventListener('click', onClickFilm)
 
@@ -37,10 +38,6 @@ function onClickFilm(e) {
 
     // открываем модалку
     openModal();
-
-    // находим кнопку "закрыть" и вешаем на неё слушателя
-    const btnCloseModal = document.querySelector('[data-action="close-popap"]');
-    btnCloseModal.addEventListener('click', closeModal);
 };
 
 // открытие модалки по клику
@@ -58,6 +55,9 @@ function openModal() {
       }
   };
   
+// зыкрытие модалки по клику на кнопку "закрыть"
+  btnCloseModal.addEventListener('click', closeModal);
+
   // зыкрытие модалки по клавише Esc
   function onEscKeyPress (event) {
       if(event.code === 'Escape') {
