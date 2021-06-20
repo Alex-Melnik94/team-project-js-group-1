@@ -1,7 +1,7 @@
 
 {{#each this}}
 <li class="film__item">
-    <img alt="{{title}}" src="https://image.tmdb.org/t/p/original{{poster_path}}" />
+    <img alt="{{title}}" src="https://image.tmdb.org/t/p/original{{poster_path}}" onerror="this.src='http://blog.aspneter.com/Images/Posts/no-thumb.jpg';"/>
 
     <div class="film__info">
         <h2 class="film__name">{{original_title}}</h2>

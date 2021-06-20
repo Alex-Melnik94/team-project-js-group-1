@@ -18,9 +18,11 @@
         </ul>
         </nav>
         <form action="" class="header__search">
+
             <input class="search__input" type="text" placeholder="Поиск фильмов">
                             <svg class="search__icon"
             width="12"
+
             height="12">
                      <use
               href="./images/sprite.svg#icon-search"
@@ -28,7 +30,7 @@
                  </svg>
                 <p class="search__result visually-hidden">Search result not successful. Enter the correct movie name and </p>
         </form>
-        <div class="library visually-hidden">
+       <div class="library visually-hidden">
             <ul class="library__list">
                 <li class="library__item">
                 <button class="library__btn checked">Watched</button>
@@ -37,6 +39,28 @@
                 <button class="library__btn">queue</button>
                 </li>
             </ul>
+        </div>
+        <p class="search-error"></p>
+    </div>
+
+    <div class="toolbar">
+        <!-- Разметка переключателя темы -->
+        <div class="theme-switch">
+            <svg class="theme-switch__icon" role="img" aria-label="Иконка солнца">
+                <use href="./images/sprite.svg#iconsun"></use>
+            </svg>
+    
+            <div class="theme-switch__control">
+                <input class="theme-switch__toggle" type="checkbox" name="theme" id="theme-switch-toggle"
+                    aria-label="Переключить между тёмной и светлой темой" />
+                <label aria-hidden="true" class="theme-switch__track" for="theme-switch-toggle">
+                </label>
+                <div aria-hidden="true" class="theme-switch__marker"></div>
+            </div>
+    
+            <svg class="theme-switch__icon" aria-label="Иконка луны">
+                <use href="./images/sprite.svg#iconmoon"></use>
+            </svg>
         </div>
     </div>
 </header>
