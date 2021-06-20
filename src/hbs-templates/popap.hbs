@@ -1,0 +1,31 @@
+<div class="popap__image-block">
+    <img class="popap__image" src="{{imgFilm}}" alt="poster">           
+</div>
+<div>
+    <h2 class="popap__title">{{titleFilm}}</h2>
+    <div class="popap__film-block">
+        <div class="popap__block-info">
+            <p class="popap__film-info">Vote / Votes</p>
+            <p class="popap__film-info">Popularity</p>
+            <p class="popap__film-info">Original Title</p>
+            <p class="popap__film-info">Genre</p>
+        </div>
+        <div>
+            <p class="popap__film-vote"><span class="popap__film-res__number accent votes">{{vote}}</span> / <span class="popap__film-res__number votes">{{votes}}</span></p>
+            <p class="popap__film-res__number">{{popularity}}</p>
+            <p class="popap__film-res">{{titleFilm}}</p>
+            <p class="popap__film-res">{{genreFilm}}</p>
+        </div> 
+    </div>
+      
+    <div class="popap__block-description">
+        <h3 class="description__title">About </h3>
+        <p class="description__text">{{description}}</p>
+    </div>
+
+    <div class="popap__buttons">
+        <button type="button" class="button accent popap__button">add to Watched</button>
+        <button type="button" class="button popap__button">add to queue</button>
+    </div>
+</div>
+
