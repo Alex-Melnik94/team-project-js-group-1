@@ -40,6 +40,15 @@
   }
 }
 
+.film__item {
+  cursor: pointer;
+  transition: all $transitionTime $cubicBezierMain;
+}
+
+.film__item:hover {
+  transform: scale(1.1);
+}
+
 .film__item img {
   margin-bottom: 10px;
 
@@ -77,14 +86,20 @@
   font-size: 12px;
 }
 
-.film__name {
+body.light-theme .film__name {
   text-transform: uppercase;
   margin-bottom: 7px;
   color: #000000;
   font-weight: 700;
   line-height: 1.25;
 }
-
+body.dark-theme .film__name {
+  text-transform: uppercase;
+  margin-bottom: 7px;
+  color: white;
+  font-weight: 700;
+  line-height: 1.25;
+}
 .film__description {
   color: #ff6b08;
   font-weight: 500;

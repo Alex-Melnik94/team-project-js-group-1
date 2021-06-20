@@ -1,0 +1,35 @@
+.pagination {
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-nav {
+ margin: 0 10px;
+ padding: 10px;
+ min-width: 50px;
+
+ border-radius: 5px;
+ background-color: rgb(255, 218, 169);
+ cursor: pointer;
+
+ font-size: 30px;
+ text-align: center;
+
+ transition: all 250ms ease-out;
+
+ &:hover {
+  background-color: #FF6B08;
+  transform: scale(1.1);
+ }
+}
+
+.pagination div[data-active="false"] {
+  background-color: rgb(196, 193, 193);
+}
+
+.pagination-page-active {
+  background-color: #FF6B08;
+  transform: scale(1.1);
+}
