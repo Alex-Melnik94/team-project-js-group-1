@@ -158,6 +158,10 @@
   position: relative;
 }
 
+.hidden {
+  display: none;
+}
+
 /* THEME SWITCH */
 body.light-theme {
   background-color: $mainBgColor;
