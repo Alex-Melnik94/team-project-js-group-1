@@ -4,7 +4,7 @@ import { getGenres } from "./js-modules/api-service.js";
 import config from './js-modules/searchfilmsConfig.js';
 import themeSwitcher from './js-modules/themeSwitcher.js';
 
-import { renderTrendingFilms, renderTrendingFilmsByPageNum } from "./js-modules/render-service.js";
+import { renderTrendingFilms} from "./js-modules/render-service.js";
 import variables from './js-modules/variables.js';
 
 import './js-modules/popap';
@@ -22,7 +22,7 @@ const initMainMarkup = async function () {
 // Полноценная пагинация по трендовым фильмам
 const updateTrendingMarkup = async function () {
     const newPage = pagination.page;
-    await renderTrendingFilmsByPageNum(variables.filmGrid, variables.preloader, newPage);
+    await renderTrendingFilms(variables.filmGrid, variables.preloader, newPage);
     
 }
 pagination.container.addEventListener('pagechanged', debounce(updateTrendingMarkup, 500));
