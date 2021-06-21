@@ -1,5 +1,6 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
-import { getTrendingFilms, getTrendingFilmsByPageNum } from "./api-service.js";
+import { getTrendingFilms } from "./api-service.js";
+import variables from "./variables.js";
 
 const preloader = document.querySelector('.preloader');
 const filmGrid = document.querySelector('.film__grid');
@@ -24,21 +25,18 @@ export function appendGalleryMarkup(results) {
     
 };
 
-export const renderTrendingFilms = async function (container, preloader) {
-    const movies = await getTrendingFilms(preloader);
+export const renderTrendingFilms = async function (container, preloader, page) {
+    const movies = await getTrendingFilms(preloader, page);
+
+    if (movies.error !== undefined) {
+        variables.searchError.innerText = "SOME SERVER ISSUE HAS OCCURED";
+        return;
+    }
+
+    if (container.innerText.length !== 0) {
+        container.innerHTML = '';
+    }
     container.insertAdjacentHTML('beforeend', trendingFilmsMarkupFc(movies.updatedFilmData));
-    preloader.classList.add('preloader-hidden');
-
-    return movies.totalPages;
-
-
-};
-
-export const renderTrendingFilmsByPageNum = async function (container, preloader, page) {
-    const movies = await getTrendingFilmsByPageNum(preloader, page);
-    container.innerHTML = '';
-    container.insertAdjacentHTML('beforeend', trendingFilmsMarkupFc(movies.updatedFilmData));
-    preloader.classList.add('preloader-hidden');
-    return movies.totalPages;
+    return movies.totalPages; 
 };
 

@@ -1,4 +1,3 @@
-// import Pages from "./js-modules/pagination.js";
 const API_KEY = 'bf52702752a5ae3d0e879b91a59cc623';
 
 export const getGenres = async function () {
@@ -10,64 +9,47 @@ export const getGenres = async function () {
     localStorage.setItem('genres', JSON.stringify(genres));
 };
 
-export const getTrendingFilms = async function (preloader) {
+export const getTrendingFilms = async function (preloader, page=1) {
   preloader.classList.remove('preloader-hidden');
 
-  const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}&page=1`;
+  try {
+    const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}&page=${page}`;
 
   const response = await fetch(url);
     const data = await response.json();
     
     const localGenres = localStorage.getItem('genres');
   const genres = JSON.parse(localGenres);
-    
-    const updatedFilmData = data.results.reduce((arr, el) => {
-        el.release_date = el.release_date.slice(0, 4);
-        
-        const filmGenres = el.genre_ids.map((genreId) => {
-
-            const genre = genres.find((el) => el.id === genreId);
-            genreId = genre.name;
-            return genreId;
-        });
-
-        el.genre_ids = filmGenres.join(', ');
-
-    arr.push(el);
-        return arr;
-    }, []);
   
-  const totalPages = data.total_pages;
-    sessionStorage.setItem('totalPages', totalPages);
-
-    // return updatedFilmData;
-  sessionStorage.setItem('arrayWithMovies', JSON.stringify(updatedFilmData));
-  return { updatedFilmData, totalPages };
-};
-
-export const getTrendingFilmsByPageNum = async function (preloader, page) {
-  preloader.classList.remove('preloader-hidden');
-
-  const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}&page=${page}`;
-
-  const response = await fetch(url);
-    const data = await response.json();
-    
-    const localGenres = localStorage.getItem('genres');
-  const genres = JSON.parse(localGenres);
-    
-
-  const totalPages = data.total_pages;
+    const totalPages = data.total_pages;
     const updatedFilmData = data.results.reduce((arr, el) => {
+
+      if (el.release_date.length === 0 || el.release_date === undefined) {
+        el.release_date = 'Unknown release date';
+      }
+      else {
         el.release_date = el.release_date.slice(0, 4);
-      // for popap
+      }
+
+      if (el.overview.length === 0) {
+        el.overview = 'Overview is not provided.';
+      }
+
+        
+        
+      // for popup
         el.vote = el.vote_average;
         el.votes = el.vote_count;
-        el.popularity = el.popularity;
-        el.overview = el.overview;
-      // for popap
-        
-        const filmGenres = el.genre_ids.map((genreId) => {
+        el.popularity = parseFloat(el.popularity).toFixed(2);
+        // el.overview = el.overview;
+      // for popup
+
+      if (el.genre_ids.length === 0 || el.genre_ids === undefined) {
+        el.genre_ids = "Unspecified genre";
+      }
+
+      else {
+               const filmGenres = el.genre_ids.map((genreId) => {
 
             const genre = genres.find((el) => el.id === genreId);
             genreId = genre.name;
@@ -75,13 +57,29 @@ export const getTrendingFilmsByPageNum = async function (preloader, page) {
         });
 
         el.genre_ids = filmGenres.join(', ');
+      }
+
+       if (el.poster_path === null) {
+        el.poster_path = "http://lexingtonvenue.com/media/poster-placeholder.jpg";
+      }
+
+       else {
+         el.poster_path = `https://image.tmdb.org/t/p/original${el.poster_path}`;
+      }
+        
+ 
 
     arr.push(el);
         return arr;
     }, []);
-
   
+
   sessionStorage.setItem('arrayWithMovies', JSON.stringify(updatedFilmData));
 
+   preloader.classList.add('preloader-hidden');
   return { updatedFilmData, totalPages };
+  } catch (error) {
+    preloader.classList.add('preloader-hidden');
+    return { error };
+  }
 };
