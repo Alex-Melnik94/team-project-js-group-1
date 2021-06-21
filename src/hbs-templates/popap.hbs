@@ -1,8 +1,8 @@
 <div class="popap__image-block">
-    <img class="popap__image" src="{{imgFilm}}" alt="poster">           
+    <img class="popap__image" src="{{poster_path}}" alt="{{title}}">           
 </div>
 <div>
-    <h2 class="popap__title">{{titleFilm}}</h2>
+    <h2 class="popap__title">{{title}}</h2>
     <div class="popap__film-block">
         <div class="popap__block-info">
             <p class="popap__film-info">Vote / Votes</p>
@@ -11,16 +11,16 @@
             <p class="popap__film-info">Genre</p>
         </div>
         <div>
-            <p class="popap__film-vote"><span class="popap__film-res__number accent votes">{{vote}}</span> / <span class="popap__film-res__number votes">{{votes}}</span></p>
+            <p class="popap__film-vote"><span class="popap__film-res__number accent votes">{{vote_average}}</span> / <span class="popap__film-res__number votes">{{vote_count}}</span></p>
             <p class="popap__film-res__number">{{popularity}}</p>
-            <p class="popap__film-res">{{titleFilm}}</p>
-            <p class="popap__film-res">{{genreFilm}}</p>
+            <p class="popap__film-res">{{original_title}}</p>
+            <p class="popap__film-res">{{genres}}</p>
         </div> 
     </div>
       
     <div class="popap__block-description">
         <h3 class="description__title">About </h3>
-        <p class="description__text">{{description}}</p>
+        <p class="description__text">{{overview}}</p>
     </div>
 
     <div class="popap__buttons">
