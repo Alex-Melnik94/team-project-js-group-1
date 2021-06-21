@@ -52,7 +52,6 @@ function onClickFilm(e) {
     // ...функция добавления фильма в Watched массив в Local Storage
     function addToWatchedFilmsInLocalStorage() {
         const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
-        console.log(existingWatchedFilmsArray);
 
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
@@ -67,9 +66,7 @@ function onClickFilm(e) {
         // ...если ещё нет фильмов в watchedFilms
         if (!existingWatchedFilmsArray) {
             let watchedFilmsArray = [];
-            console.log(watchedFilmsArray);
             watchedFilmsArray.push(arrItemsFilm);
-            console.log(watchedFilmsArray);
             localStorage.setItem('watchedFilms', JSON.stringify(watchedFilmsArray));
         };
 
@@ -88,7 +85,6 @@ function onClickFilm(e) {
     // ...функция добавления фильма в Queue массив в Local Storage
     function addFilmToQueueInLocalStorage() {
         const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
-        console.log(existingFilmsInQueueArray);
 
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
@@ -103,9 +99,7 @@ function onClickFilm(e) {
         // ...если ещё нет фильмов в queueFilms
         if (!existingFilmsInQueueArray) {
             let queueFilmsArray = [];
-            console.log(queueFilmsArray);
             queueFilmsArray.push(arrItemsFilm);
-            console.log(queueFilmsArray);
             localStorage.setItem('queueFilms', JSON.stringify(queueFilmsArray));
         };
 
