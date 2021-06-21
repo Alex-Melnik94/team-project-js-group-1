@@ -50,3 +50,7 @@ export function debounce(func, wait, immediate = false) {
     if (callNow) func.apply(savedThis, savedArgs);
   };
 };
+
+export function camelToKebabCase(word) {
+  return word.replace(/([A-Z])/g, ch => '-' + ch.toLowerCase());
+}
