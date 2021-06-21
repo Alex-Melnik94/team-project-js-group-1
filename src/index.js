@@ -11,6 +11,8 @@ import './js-modules/popap';
 import Pages from "./js-modules/pagination.js";
 import initUpArrow from "./js-modules/up-arrow.js";
 
+import './js-modules/btnListener.js';
+
 
 // Рендер панели с пагинацией и первой страницы с трендовыми фильмами
 const pagination = new Pages();
