@@ -35,15 +35,6 @@ export const getTrendingFilms = async function (preloader, page=1) {
         el.overview = 'Overview is not provided.';
       }
 
-        
-        
-      // for popup
-        el.vote = el.vote_average;
-        el.votes = el.vote_count;
-        el.popularity = parseFloat(el.popularity).toFixed(2);
-        // el.overview = el.overview;
-      // for popup
-
       if (el.genre_ids.length === 0 || el.genre_ids === undefined) {
         el.genre_ids = "Unspecified genre";
       }
@@ -67,14 +58,14 @@ export const getTrendingFilms = async function (preloader, page=1) {
          el.poster_path = `https://image.tmdb.org/t/p/original${el.poster_path}`;
       }
         
- 
+//  console.log(el.id);
 
     arr.push(el);
         return arr;
     }, []);
   
-
-  sessionStorage.setItem('arrayWithMovies', JSON.stringify(updatedFilmData));
+  //   const arrWithMovieIds = updatedFilmData.map(el => el.id);
+  // sessionStorage.setItem('arrayWithMovieIDs', JSON.stringify(arrWithMovieIds));
 
    preloader.classList.add('preloader-hidden');
   return { updatedFilmData, totalPages };
@@ -83,3 +74,15 @@ export const getTrendingFilms = async function (preloader, page=1) {
     return { error };
   }
 };
+
+
+export const fetchMovieForModal = async function (id) {
+  try {
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return { data };
+  } catch (error) {
+    return { error };
+  }
+}
