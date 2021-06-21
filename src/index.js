@@ -10,6 +10,7 @@ import variables from './js-modules/variables.js';
 import './js-modules/popap';
 import Pages from "./js-modules/pagination.js";
 import initUpArrow from "./js-modules/up-arrow.js";
+import './js-modules/library';
 
 import './js-modules/btnListener.js';
 
