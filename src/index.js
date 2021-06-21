@@ -10,7 +10,6 @@ import variables from './js-modules/variables.js';
 import './js-modules/popap';
 import Pages from "./js-modules/pagination.js";
 import initUpArrow from "./js-modules/up-arrow.js";
-import { debounce } from "./js-modules/utilities.js";
 
 
 // Рендер панели с пагинацией и первой страницы с трендовыми фильмами
@@ -25,7 +24,7 @@ const updateTrendingMarkup = async function () {
     await renderTrendingFilms(variables.filmGrid, variables.preloader, newPage);
     
 }
-pagination.container.addEventListener('pagechanged', debounce(updateTrendingMarkup, 500));
+pagination.listen(updateTrendingMarkup);
 // *********************************************************************
 
 getGenres();

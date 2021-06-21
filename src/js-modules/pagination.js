@@ -33,15 +33,16 @@
 //   `<` / `>` - shift current page f'wd and b'wd by one
 //   `<<` / `>>` - shift current page f'wd and b'wd by 10
 
+import { camelToKebabCase } from "./utilities";
+import { debounce } from "./utilities.js";
 
-const camelToKebabCase = (word) => {
-  return word.replace(/([A-Z])/g, ch => '-' + ch.toLowerCase());
-}
 
-const pageControls = ['leftFastButton', 'leftButton', 'firstPage', 'leftEllipsis',
-  'rightEllipsis', 'lastPage', 'rightButton', 'rightFastButton'];
 
 export default class Pages {
+
+  #listener;
+  #PAGE_CONTROLS = ['leftFastButton', 'leftButton', 'firstPage', 'leftEllipsis',
+  'rightEllipsis', 'lastPage', 'rightButton', 'rightFastButton'];
 
   constructor (containerClass) {
     this._currentPage = 1;
@@ -56,7 +57,7 @@ export default class Pages {
   }
 
   getPaginationRefs() {
-    const controlRefs = pageControls.reduce((acc, controlItem) => {
+    const controlRefs = this.#PAGE_CONTROLS.reduce((acc, controlItem) => {
       const controlItemRef = this.container.querySelector(`[data-action="${camelToKebabCase(controlItem)}"]`);
       return {...acc, [controlItem]: controlItemRef}
     }, {});
@@ -101,7 +102,7 @@ export default class Pages {
 
   initMap() {
     return {
-      ...pageControls.reduce((acc, controlItem) => {
+      ...this.#PAGE_CONTROLS.reduce((acc, controlItem) => {
         return /left|right/.test(controlItem) ? {...acc, [controlItem]: true} : acc
       }, {}),
  
@@ -140,7 +141,7 @@ export default class Pages {
   }
 
   refreshPaginationMarkup() {
-    pageControls.forEach(controlItem => {
+    this.#PAGE_CONTROLS.forEach(controlItem => {
       this._refs.[controlItem].dataset.active = Boolean(this._mapping.[controlItem]);
     })
 
@@ -160,6 +161,7 @@ export default class Pages {
     this._totalPages = _totalPages;
     this.refreshMap();
     this.refreshPaginationMarkup();
+    this.show();
   }
 
   shiftPage(offset) {
@@ -198,4 +200,22 @@ export default class Pages {
   get container() {
     return this._container;
   }
+
+  show() {
+    this._container.classList.remove('pagination-hidden');
+  }
+
+  hide() {
+    this._container.classList.add('pagination-hidden');
+  }
+
+  listen(callback) {
+    this.unlisten();
+    this.#listener = debounce(callback, 500);
+    this._container.addEventListener('pagechanged', this.#listener);
+}
+  
+  unlisten() {
+    this._container.removeEventListener('pagechanged', this.#listener);
+  } 
 }

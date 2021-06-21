@@ -27,17 +27,18 @@
 
   @include transit($cubicBezierMain);
 
-  &:hover,
-  &:focus {
-    background-color: $accentColor;
-    color: $mainBgColor;
-    cursor: pointer;
+  &:not([data-action*="ellipsis"]):hover,
+  &:not([data-action*="ellipsis"]):focus {
+      background-color: $accentColor;
+      color: $mainBgColor;
+      cursor: pointer;
   }
+
 }
 
 .pagination-nav[data-active="false"] {
-  color: white;
-  background-color: gray;
+  color: #eeeeee;
+  background-color: #cccccc;
 }
 
 .pagination-icon {
@@ -56,5 +57,13 @@
   .mobile-hidden {
     display: none;
   }
+}
+
+.pagination.pagination-hidden {
+  display: none;
+}
+
+.pagination-nav[data-active="false"] {
+  display: none;
 }
 
