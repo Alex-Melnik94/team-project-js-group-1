@@ -1,7 +1,8 @@
 import './sass/main.scss';
 import { getGenres } from "./js-modules/api-service.js";
 
-import config from './js-modules/searchfilmsConfig.js';
+import './js-modules/galleryMarkup.js';
+
 import themeSwitcher from './js-modules/themeSwitcher.js';
 
 import { renderTrendingFilms} from "./js-modules/render-service.js";

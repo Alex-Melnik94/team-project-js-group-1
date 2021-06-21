@@ -22,6 +22,7 @@ export function appendGalleryMarkup(results) {
     
 };
 
+
 export const renderTrendingFilms = async function (container, preloader, page) {
     const movies = await getTrendingFilms(preloader, page);
 
