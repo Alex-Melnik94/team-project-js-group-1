@@ -1,3 +1,5 @@
+import variables from "./variables.js";
+
 const homeBtn = document.querySelector('.js-home-btn');
 const libraryBtn = document.querySelector('.js-library-btn');
 const headerHome = document.querySelector('.section__header');
