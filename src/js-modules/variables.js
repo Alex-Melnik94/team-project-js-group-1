@@ -10,4 +10,10 @@ export default {
     libraryBtns: document.querySelector('.library'),
     btnWatched: document.querySelector('.js-btn-watched'),
     btnQueue: document.querySelector('.js-btn-queue'),
+    searchInput: document.querySelector('.header__search'),
+    btnCloseModal: document.querySelector('[data-action="close-popap"]'),
+    modalContentBox: document.querySelector('[data-film="popap"]'),
+    backdropBox: document.querySelector('.popap'),
+
 }
+

@@ -1,17 +1,12 @@
 
 {{#each this}}
-<li class="film__item">
-    <img alt="{{title}}" src="{{poster_path}}" onerror="this.src='https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg';"/>
+
+<li class="film__item" data-id="{{id}}">
+    <img class="film__poster" alt="{{title}}" src="{{poster_path}}" onerror="this.src='https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg';"/>
 
     <div class="film__info">
         <h2 class="film__name">{{original_title}}</h2>
         <p class="film__description">{{genre_ids}} <span>|</span> {{release_date}}</p>
     </div>
-    {{!-- for modal --}}
-    <p class="visually-hidden">{{vote}}</p>
-    <p class="visually-hidden">{{votes}}</p>
-    <p class="visually-hidden">{{popularity}}</p>
-    <p class="visually-hidden">{{overview}}</p>
-    {{!-- for modal --}}
 </li>
 {{/each}}
