@@ -1,29 +1,39 @@
 <div class="pagination">
-    <ul class="pagination-list">
-        <li class="page-item">
-            <a class="page-link" href="#">
-                <svg class="pagination-icon">
-                    <use href="./images/sprite.svg#icon-arrow-left"></use>
-                </svg>
-            </a>
-        </li>
+    <div class="pagination-nav mobile-hidden" data-action="left-fast-button">
+        <svg class="pagination-icon">
+            <use href="./images/sprite.svg#icon-arrow-left"></use>
+        </svg>
+        <svg class="pagination-icon">
+            <use href="./images/sprite.svg#icon-arrow-left"></use>
+        </svg>
+    </div>
+    <div class="pagination-nav" data-action="left-button">
+        <svg class="pagination-icon">
+            <use href="./images/sprite.svg#icon-arrow-left"></use>
+        </svg>
+    </div>   
 
-        <li class="page-item"><a class="page-link is-active" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item"><a class="page-link" href="#">6</a></li>
-        <li class="page-item"><a class="page-link" href="#">7</a></li>
-        <li class="page-item"><a class="page-link" href="#">8</a></li>
-        <li class="page-item"><a class="page-link" href="#">9</a></li>
+    <div class="pagination-nav mobile-hidden" data-action="first-page">1</div>
+    <div class="pagination-nav mobile-hidden" data-action="left-ellipsis">...</div>
+    <div class="pagination-nav pagination-page-active" data-action="page">3</a></div>
+    <div class="pagination-nav" data-action="page">4</div>
+    <div class="pagination-nav" data-action="page">5</div>
+    <div class="pagination-nav" data-action="page">6</div>
+    <div class="pagination-nav" data-action="page">7</div>
+    <div class="pagination-nav mobile-hidden" data-action="right-ellipsis">...</div>
+    <div class="pagination-nav mobile-hidden" data-action="last-page">9</div>
 
-        <li class="page-item"> 
-            <a class="page-link" href="#">
-                <svg class="pagination-icon">
-                    <use href="./images/sprite.svg#icon-arrow-right"></use>
-                </svg>
-            </a>
-        </li>
-    </ul>
+    <div class="pagination-nav" data-action="right-button"> 
+        <svg class="pagination-icon">
+            <use href="./images/sprite.svg#icon-arrow-right"></use>
+        </svg>
+    </div>
+    <div class="pagination-nav mobile-hidden" data-action="right-fast-button"> 
+        <svg class="pagination-icon">
+            <use href="./images/sprite.svg#icon-arrow-right"></use>
+        </svg>
+        <svg class="pagination-icon">
+            <use href="./images/sprite.svg#icon-arrow-right"></use>
+        </svg>
+    </div>
 </div>
