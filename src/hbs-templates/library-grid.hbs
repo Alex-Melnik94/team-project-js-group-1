@@ -1,0 +1,8 @@
+{{#each this}}
+<li class="film__item" data-id="{{id}}">
+    <img class="film__poster" alt="{{title}}" src="{{poster_path}}" <div class="film__info">
+    <h2 class="film__name">{{original_title}}</h2>
+    <p class="film__description">{{genre_ids}} <span>|</span> {{release_date}}</p>
+    </div>
+</li>
+{{/each}}
