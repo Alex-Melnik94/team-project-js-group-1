@@ -19,7 +19,7 @@ import './js-modules/library';
 import './js-modules/btnListener.js';
 
 // Рендер панели с пагинацией и первой страницы с трендовыми фильмами
-const pagination = new Pages();
+export const pagination = new Pages('.pagination');
 const initMainMarkup = async function () {
   const totalPages = await renderTrendingFilms(variables.filmGrid, variables.preloader);
   pagination.moveToPage(1, totalPages);
