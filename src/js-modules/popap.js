@@ -38,21 +38,30 @@ async function onClickFilm(e) {
     // ...функция добавления фильма в Watched массив в Local Storage
     function addToWatchedFilmsInLocalStorage() {
         const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
-
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+        // console.log(existingWatchedFilmsArray)
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
 
             // ...проверка на совпадение: есть ли уже этот фильм в массиве?
-            if (!existingWatchedFilmsArray.some(film => film.titleFilm === arrItemsFilm.titleFilm)) {
-                existingWatchedFilmsArray.push(arrItemsFilm);
-                localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
+            // if (!existingWatchedFilmsArray.find(film => film.id === filmObjFromSessionStorage.titleFilm)) {
+            //     existingWatchedFilmsArray.push(filmObjFromSessionStorage);
+            //     localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
+            // }
+            const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
+            if (searchedFilm) {
+                return;
             }
+
+            existingWatchedFilmsArray.unshift(filmObjFromSessionStorage);
+            localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
+
         };
 
         // ...если ещё нет фильмов в watchedFilms
-        if (!existingWatchedFilmsArray) {
-            let watchedFilmsArray = [];
-            watchedFilmsArray.push(arrItemsFilm);
+        if (existingWatchedFilmsArray === null) {
+            const watchedFilmsArray = [];
+            watchedFilmsArray.push(filmObjFromSessionStorage);
             localStorage.setItem('watchedFilms', JSON.stringify(watchedFilmsArray));
         };
 
@@ -71,21 +80,32 @@ async function onClickFilm(e) {
     // ...функция добавления фильма в Queue массив в Local Storage
     function addFilmToQueueInLocalStorage() {
         const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
 
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
 
             // ...проверка на совпадение: есть ли уже этот фильм в массиве?
-            if (!existingFilmsInQueueArray.some(film => film.titleFilm === arrItemsFilm.titleFilm)) {
-                existingFilmsInQueueArray.push(arrItemsFilm);
-                localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
+            // if (!existingFilmsInQueueArray.some(film => film.titleFilm === filmObjFromSessionStorage.titleFilm)) {
+            //     existingFilmsInQueueArray.push(filmObjFromSessionStorage);
+            //     localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
+            // }
+
+
+            const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
+            if (searchedFilm) {
+                return;
             }
+
+            existingFilmsInQueueArray.unshift(filmObjFromSessionStorage);
+            localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
+
         };
 
         // ...если ещё нет фильмов в queueFilms
-        if (!existingFilmsInQueueArray) {
-            let queueFilmsArray = [];
-            queueFilmsArray.push(arrItemsFilm);
+        if (existingFilmsInQueueArray === null) {
+            const queueFilmsArray = [];
+            queueFilmsArray.push(filmObjFromSessionStorage);
             localStorage.setItem('queueFilms', JSON.stringify(queueFilmsArray));
         };
 
