@@ -39,7 +39,7 @@ async function onClickFilm(e) {
     function addToWatchedFilmsInLocalStorage() {
         const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
         const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
-        // console.log(existingWatchedFilmsArray)
+
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
 

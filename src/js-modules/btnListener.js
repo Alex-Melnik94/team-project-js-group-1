@@ -1,9 +1,12 @@
 import variables from "./variables.js";
+import renderFilmGrid from '../hbs-templates/trending-films.hbs';
 
 variables.homeBtn.addEventListener('click', onHomeBtnClick);
 variables.libraryBtn.addEventListener('click', onLibraryBtnClick);
 variables.btnWatched.addEventListener('click', onWatchedBtnClick);
 variables.btnQueue.addEventListener('click', onQueueBtnClick);
+variables.headerWatchedBtn.addEventListener('click', onHeaderWatchedButtonClick);
+variables.headerQueueBtn.addEventListener('click', onHeaderQueueButtonClick);
 
 function onHomeBtnClick(e) {
     variables.headerLibrary.classList.add('section__header');
@@ -21,6 +24,13 @@ function onLibraryBtnClick(e) {
     variables.libraryBtns.classList.remove('visually-hidden');
     variables.searchInput.classList.add('hidden');
     variables.searchError.classList.add('visually-hidden');
+
+    // Automoatically render watched films
+
+    if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
+    const watchedFilmsArr = localStorage.getItem('watchedFilms');
+    const parsedArray = JSON.parse(watchedFilmsArr);
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderFilmGrid(parsedArray));
 }
 
 function onWatchedBtnClick(e) {
@@ -31,4 +41,21 @@ function onWatchedBtnClick(e) {
 function onQueueBtnClick(e) {
     variables.btnQueue.classList.add('checked');
     variables.btnWatched.classList.remove('checked');
+}
+
+function onHeaderWatchedButtonClick() {
+    if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
+
+    const watchedFilmsArr = localStorage.getItem('watchedFilms');
+    const parsedArray = JSON.parse(watchedFilmsArr);
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderFilmGrid(parsedArray));
+
+}
+
+function onHeaderQueueButtonClick() {
+    if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
+
+    const queueFilmsArr = localStorage.getItem('queueFilms');
+    const parsedArray = JSON.parse(queueFilmsArr);
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderFilmGrid(parsedArray));
 }
