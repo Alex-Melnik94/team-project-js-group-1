@@ -140,13 +140,19 @@
   background-color: transparent;
   font-size: 12px;
   text-transform: uppercase;
-  width: 130px;
+  min-width: 130px;
   height: 44px;
   color: #ffffff;
+  cursor: pointer;
 
   @media screen and (min-width: 768px) {
-    width: 136px;
+    min-width: 136px;
   }
+}
+
+.library__btn:hover,
+.library__btn:focus {
+  box-shadow: 0px 8px 43px 0px rgba(255, 107, 1, 0.6);
 }
 
 .checked {
