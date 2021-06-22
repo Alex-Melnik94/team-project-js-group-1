@@ -1,11 +1,11 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
 
-import Pages from "./pagination.js";
+import { pagination } from "../index"; //  !!! Updated by Krokodil
 import api from './apiService.js'
 import './btnListener.js';
 import variables from "./variables.js";
 
-const pagination = new Pages();
+// const pagination = new Pages();    //  !!! Updated by Krokodil
 
 
 export function appendGalleryMarkup(fetchMovies) {
