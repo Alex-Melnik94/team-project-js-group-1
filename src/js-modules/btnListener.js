@@ -20,7 +20,7 @@ function onLibraryBtnClick(e) {
     variables.headerHome.classList.remove('section__header');
     variables.libraryBtns.classList.remove('visually-hidden');
     variables.searchInput.classList.add('hidden');
-
+    variables.searchError.classList.add('visually-hidden');
 }
 
 function onWatchedBtnClick(e) {
