@@ -16,5 +16,7 @@ export default {
     btnCloseSvg: document.querySelector('.popap__svg-close'),
     headerWatchedBtn: document.querySelector('.js-btn-watched'),
     headerQueueBtn: document.querySelector('.js-btn-queue'),
+    fetchTrendingMoviesToggle: document.querySelector('.switch-button'),
+    fetchTrendingMoviesBtn: document.querySelector('.switch-button-checkbox'),
 }
 

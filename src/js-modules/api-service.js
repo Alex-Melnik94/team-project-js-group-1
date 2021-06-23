@@ -1,3 +1,4 @@
+import variables from "./variables";
 const API_KEY = 'bf52702752a5ae3d0e879b91a59cc623';
 
 export const getGenres = async function () {
@@ -10,10 +11,20 @@ export const getGenres = async function () {
 };
 
 export const getTrendingFilms = async function (preloader, page = 1) {
+  let timeFrame;
+
+  if (!variables.fetchTrendingMoviesBtn.checked) {
+    timeFrame = 'day';
+  }
+
+  else if (variables.fetchTrendingMoviesBtn.checked) {
+    timeFrame = 'week';
+  }
+
   preloader.classList.remove('preloader-hidden');
 
   try {
-    const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}&page=${page}`;
+    const url = `https://api.themoviedb.org/3/trending/movie/${timeFrame}?api_key=${API_KEY}&page=${page}`;
 
     const response = await fetch(url);
     const data = await response.json();
