@@ -50,7 +50,7 @@ export default class Pages {
 
     this._mapping = this.initMap();
 
-    this._container = document.querySelector('.pagination')
+    this._container = document.querySelector(containerClass);
     this._refs = this.getPaginationRefs();
 
     this.container.addEventListener('click', this.onPaginationClick.bind(this));
@@ -114,41 +114,54 @@ export default class Pages {
   }
 
   refreshMap() {
+    const disableLeftControls = () => {
+      this._mapping.leftFastButton = false;
+      this._mapping.leftButton = false;
+      this._mapping.firstPage = 0;
+      this._mapping.leftEllipsis = false;
+    }
+
+    const disableRightControls = () => {
+      this._mapping.rightEllipsis = false;
+      this._mapping.lastPage = 0;
+      this._mapping.rightButton = false;
+      this._mapping.rightFastButton = false;
+    }
+
     this._mapping = this.initMap();
 
     let offset = 0;
 
     if (this._currentPage <= 3) {
-      this._mapping.leftFastButton = false;
-      this._mapping.leftButton = false;
-      this._mapping.firstPage = 0;
-      this._mapping.leftEllipsis = false;
+      disableLeftControls();
       offset = 3 - this._currentPage;
     }
 
     if (this._currentPage >= this._totalPages - 2) {
-      this._mapping.rightEllipsis = false;
-      this._mapping.lastPage = 0;
-      this._mapping.rightButton = false;
-      this._mapping.rightFastButton = false;
+      disableRightControls();
       offset = this._totalPages - this._currentPage - 2;
     }
 
     this._mapping.pages = this._mapping.pages.map((page, idx) => {
-      return this._currentPage - 2 + idx + offset;
+      const value = this._currentPage - 2 + idx + offset;
+      return value < 1 || value > this._totalPages ? 0 : value;
     });
+
+    if (Math.max(...this._mapping.pages) >= this._totalPages) {
+      disableRightControls();
+    }
 
   }
 
   refreshPaginationMarkup() {
     this.#PAGE_CONTROLS.forEach(controlItem => {
-      this._refs.[controlItem].dataset.active = Boolean(this._mapping.[controlItem]);
+      this._refs[controlItem].dataset.active = Boolean(this._mapping[controlItem]);
     })
 
     this._refs.pages.forEach((page, idx) => {
       page.textContent = this._mapping.pages[idx];
       page.classList.remove('pagination-page-active');
-      page.dataset.active = true;
+      page.dataset.active = this._mapping.pages[idx] > 0;
     });
 
     this._refs.lastPage.textContent = this._totalPages;
@@ -209,9 +222,14 @@ export default class Pages {
     this._container.classList.add('pagination-hidden');
   }
 
-  listen(callback) {
+  listen(callback, debounceTime = 500) {
     this.unlisten();
-    this.#listener = debounce(callback, 500);
+
+    this.#listener = debounce(() => {
+      window.scrollTo({ top: 0, left: pageXOffset, behavior: 'smooth' });
+      callback();
+    }, debounceTime);
+
     this._container.addEventListener('pagechanged', this.#listener);
 }
   

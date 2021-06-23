@@ -2,10 +2,16 @@
 
 .section__header {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
-    url(/images/header-background.jpg);
+    url(/images/bg-tablet.jpg);
   height: 230px;
   max-width: 100%;
   background-position: center;
+  background-repeat: no-repeat;
+
+  @media screen and (min-width: 1024px) {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(/images/header-background.jpg);
+  }
 }
 
 .header__navigation {
@@ -153,6 +159,9 @@
 .library__btn:hover,
 .library__btn:focus {
   box-shadow: 0px 8px 43px 0px rgba(255, 107, 1, 0.6);
+  transition-property: box-shadow;
+  transition-duration: $transitionTime;
+  transition-timing-function: $cubicBezierMain;
 }
 
 .checked {
