@@ -17,13 +17,21 @@ firebase.initializeApp(firebaseConfig);
 
 let timerId;
 
-const authContainer = document.querySelector('.mdl-cell');
-const authButton = document.querySelector('[data-value="show-auth"]');
-authButton.addEventListener('click', () => {
-  authContainer.classList.toggle('cell-hidden');
+const authContainer = document.querySelector('.auth-backdrop');
+const authOpenButton = document.querySelector('.auth-open');
+const authCloseButton = document.querySelector('.auth-close');
+
+authOpenButton.addEventListener('click', () => {
+  authContainer.classList.remove('auth-hidden');
+  document.body.classList.add('auth-open');
 });
 
-const authOutputField = document.querySelector('.auth-output');
+authCloseButton.addEventListener('click', evt => {
+  authContainer.classList.add('auth-hidden');
+  document.body.classList.remove('auth-open');
+});
+
+const authOutputField = document.querySelector('.auth-form .output');
 
 const authNotify = (message, type = 'alert') => {
   authClearOutput();
@@ -48,12 +56,17 @@ const authClearOutput = () => {
  * Handles the sign in button press.
  */
 
-function toggleSignIn() {
+function handleLogIn() {
+  clearsignUp();
+
   if (firebase.auth().currentUser) {
-    firebase.auth().signOut();
+    firebase
+      .auth()
+      .signOut()
+      .then(() => authNotify('You have signed out succesfully', 'note'));
   } else {
-    const email = document.querySelector('#email').value;
-    const password = document.querySelector('#password').value;
+    const email = document.querySelector('#logemail').value;
+    const password = document.querySelector('#logpass').value;
 
     if (email.length < 4) {
       authNotify('Please enter an email address.');
@@ -67,6 +80,7 @@ function toggleSignIn() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then(({ user }) => authNotify(`Signed to ${user.displayName || 'anonymous'}`, 'note'))
       .catch(function (error) {
         // Handle Errors here.
         const errorCode = error.code;
@@ -77,20 +91,19 @@ function toggleSignIn() {
         } else {
           authNotify(errorMessage);
         }
-
-        document.querySelector('#auth-sign-in').disabled = false;
       });
   }
-
-  document.querySelector('#auth-sign-in').disabled = true;
 }
 
 /**
  * Handles the sign up button press.
  */
 function handleSignUp() {
-  const email = document.querySelector('#email').value;
-  const password = document.querySelector('#password').value;
+  clearLogin();
+
+  const email = document.querySelector('#signemail').value;
+  const password = document.querySelector('#signpass').value;
+  const userName = document.querySelector('#signname').value;
 
   if (email.length < 4) {
     authNotify('Please enter an email address.');
@@ -104,6 +117,17 @@ function handleSignUp() {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
+    .then(({ user }) => {
+      return user.updateProfile({
+        displayName: userName,
+        photoURL: null,
+      });
+    })
+    .then(() => {
+      authNotify(`${userName}, wellcome to our Filmoteka!`, 'note');
+      document.querySelector('#logheader').textContent = `Signed to: ${userName}`;
+      document.querySelector('#logbtn').textContent = 'Sign out';
+    })
     .catch(function (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -130,7 +154,7 @@ function sendEmailVerification() {
 }
 
 function sendPasswordReset() {
-  const email = document.querySelector('#email').value;
+  const email = document.querySelector('#logemail').value;
 
   firebase
     .auth()
@@ -151,44 +175,43 @@ function sendPasswordReset() {
     });
 }
 
+const clearLogin = () => {
+  document.querySelector('#logemail').value = '';
+  document.querySelector('#logpass').value = '';
+};
+
+const clearsignUp = () => {
+  document.querySelector('#signemail').value = '';
+  document.querySelector('#signpass').value = '';
+  document.querySelector('#signname').value = '';
+};
+
 /**
  * initApp handles setting up UI event listeners and registering Firebase auth listeners:
  *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
  *    out, and that is where we update the UI.
  */
 function initApp() {
-  // Listening for auth state changes.
+  //   // Listening for auth state changes.
   firebase.auth().onAuthStateChanged(function (user) {
-    document.querySelector('#auth-verify-email').disabled = true;
-
     if (user) {
-      // User is signed in.
+      //       // User is signed in.
       const { displayName, email, emailVerified, photoURL, isAnonymous, uid, providerData } = user;
 
-      document.querySelector('#auth-sign-in-status').textContent = 'Signed in';
-      document.querySelector('#auth-sign-in').textContent = 'Sign out';
-      document.querySelector('#auth-account-details').textContent = JSON.stringify(
-        user,
-        null,
-        '  ',
-      );
-
-      if (!emailVerified) {
-        document.querySelector('#auth-verify-email').disabled = false;
-      }
+      document.querySelector('#logheader').textContent = `Signed to: ${
+        firebase.auth().currentUser.displayName || 'anonymous'
+      }`;
+      document.querySelector('#logbtn').textContent = 'Sign out';
     } else {
-      // User is signed out.
-      document.querySelector('#auth-sign-in-status').textContent = 'Signed out';
-      document.querySelector('#auth-sign-in').textContent = 'Sign in';
-      document.querySelector('#auth-account-details').textContent = 'null';
+      //       // User is signed out.
+      document.querySelector('#logheader').textContent = 'Sign in:';
+      document.querySelector('#logbtn').textContent = 'Sign in';
     }
-    document.querySelector('#auth-sign-in').disabled = false;
   });
 
-  document.querySelector('#auth-sign-in').addEventListener('click', toggleSignIn);
-  document.querySelector('#auth-sign-up').addEventListener('click', handleSignUp);
-  document.querySelector('#auth-verify-email').addEventListener('click', sendEmailVerification);
-  document.querySelector('#auth-password-reset').addEventListener('click', sendPasswordReset);
+  document.querySelector('#logbtn').addEventListener('click', handleLogIn);
+  document.querySelector('#signbtn').addEventListener('click', handleSignUp);
+  document.querySelector('#passreset').addEventListener('click', sendPasswordReset);
 }
 
 window.onload = function () {

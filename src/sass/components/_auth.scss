@@ -81,7 +81,7 @@
   }
 }
 
-.auth-output {
+.auth-form .output {
   &.alert {
     color: red;
   }
@@ -91,9 +91,9 @@
   }
 
   &.animate {
-    animation-name: blinkingText;
-    animation-duration: 250ms;
-    animation-iteration-count: 2;
+    // animation-name: blinkingText;
+    // animation-duration: 250ms;
+    // animation-iteration-count: 2;
   }
 }
 

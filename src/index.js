@@ -1,6 +1,7 @@
 import './sass/main.scss';
 
 import './js-modules/auth.js';
+import './js-modules/auth-form.js';
 
 import { getGenres } from './js-modules/api-service.js';
 
