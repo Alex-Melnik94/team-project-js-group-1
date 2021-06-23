@@ -51,17 +51,14 @@ function onLoadMore(e) {
 }
 function onSearch(e) {
   e.preventDefault();                
-  variables.preloader.classList.remove('preloader-hidden');
+  
   api.searchQuery = e.currentTarget.elements.query.value.trim();
-    if (api.searchQuery === '') {
+  if (api.searchQuery === '') {
     return;
   }
   e.currentTarget.elements.query.value = '';
-  
+  variables.preloader.classList.remove('preloader-hidden');
   api.fetchMovies().then(appendGalleryMarkup)
-    
-  
-    
 }
 
 variables.searchInput.addEventListener('submit', onSearch);

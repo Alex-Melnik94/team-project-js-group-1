@@ -12,7 +12,7 @@
   opacity: 1;
   pointer-events: initial;
   background-color: rgba(0, 0, 0, 0.25);
-
+  transition: opacity 500ms $timing-function;
   @media screen and (max-width: 1023px) {
     overflow-y: scroll;
   }
@@ -23,14 +23,13 @@
   pointer-events: none;
 }
 
-
 .popap__box {
   position: absolute;
   top: 20px;
   left: 50%;
-
+  box-shadow: 0 0 1em 0.5em $accentColor;
   transform: translate(-50%, 0);
-
+  transition: transform 500ms $timing-function;
   @media screen and (min-width: 768px) {
     top: 231px;
   }
@@ -134,8 +133,6 @@
 .popap__film-block {
   display: flex;
 }
-
-
 
 .popap__film-info {
   width: 69px;
@@ -274,18 +271,16 @@
   pointer-events: none;
 }
 
-
-
 .popap__video-div {
   width: 100%;
   margin-top: 10px;
 }
 
 .popap__video {
-   width: 100%;
+  width: 100%;
   height: auto;
 
-    @media screen and (min-width: 768px) {
+  @media screen and (min-width: 768px) {
     height: 320px;
   }
 
