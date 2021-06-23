@@ -3,26 +3,6 @@ import popapFilmMarkup from "../hbs-templates/popap.hbs";
 import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId } from "./api-service.js";
 import variables from "./variables.js";
 
-
-export function appendGalleryMarkup(results) {
-
-  const result = results.length;
-  if (result !== 0) {
-    variables.preloader.classList.add('preloader-hidden');
-    variables.filmGrid.innerHTML = trendingFilmsMarkupFc(results);
-    variables.searchError.textContent = '';
-  }
-
-  if (result === 0) {
-    variables.preloader.classList.add('preloader-hidden');
-    variables.searchError.textContent =
-      'Search result not successful. Enter the correct movie name and search again!';
-  }
-
-
-};
-
-
 export const renderTrendingFilms = async function (container, preloader, page) {
   const movies = await getTrendingFilms(preloader, page);
 

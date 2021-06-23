@@ -189,11 +189,15 @@ body.dark-theme {
 }
 
 .toolbar {
-  display: flex;
-  justify-content: flex-end;
-  padding: 46px 10px;
+  position: absolute;
+  top: 240px;
+  left: 60%;
+  @media screen and (min-width: 768px) {
+    top: 240px;
+    left: 80%;
+  }
   @media screen and (min-width: 1024px) {
-    padding: 86px 20px;
+    top: 250px;
   }
 }
 
@@ -219,10 +223,6 @@ body.dark-theme {
   height: 20px;
   border-radius: 50em;
   padding: 3px 0;
-  @media screen and (min-width: 1024px) {
-    width: 64px;
-    height: 27px;
-  }
 }
 
 .theme-switch__toggle {
@@ -254,18 +254,14 @@ body.dark-theme {
 .theme-switch__marker {
   position: relative;
   background-color: $accentColor;
-  width: 19px;
-  height: 19px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   z-index: 2;
   pointer-events: none;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-  transform: translateX(3px);
-  transition: transform 250ms var(--timing-function);
-  @media screen and (min-width: 1024px) {
-    width: 25px;
-    height: 25px;
-  }
+  transform: translateX(0px);
+  transition: transform 500ms $timing-function;
 }
 
 .theme-switch__toggle:checked + .theme-switch__track {

@@ -5,13 +5,13 @@ const API_KEY = 'bf52702752a5ae3d0e879b91a59cc623';
 export default {
   searchQuery: '',
   
-  page: 1,
   
   
-  async fetchMovies() {
+  
+  async fetchMovies(page = 1) {
     
     try {
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${this.page}&query=${this.searchQuery}`;
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page}&query=${this.searchQuery}`;
     return fetch(url).then(res => res.json()).then(data => {
         const localGenres = localStorage.getItem('genres');
         const genres = JSON.parse(localGenres);
@@ -74,7 +74,7 @@ export default {
     catch (error) {
       
     return { error };
-     }
+    }
   }
 
   
