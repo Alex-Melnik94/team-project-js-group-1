@@ -11,20 +11,11 @@
 
   opacity: 1;
   pointer-events: initial;
-  overflow-y: scroll;
   background-color: rgba(0, 0, 0, 0.25);
 
-  transition-property: opacity;
-  transition-duration: 250ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-
-  // @media screen and (max-width: 1023px) {
-  //   overflow-y: scroll;
-  // }
-
-  // @media screen and (max-height: 594px) {
-  //   overflow-y: scroll;
-  // }
+  @media screen and (max-width: 1023px) {
+    overflow-y: scroll;
+  }
 }
 
 .popap.is-hidden {
@@ -32,36 +23,31 @@
   pointer-events: none;
 }
 
-// .backdrop.is-hidden .popap__box {
-//   transform: translate(-50%, 0) scale(1, 1);
-// }
 
 .popap__box {
   position: absolute;
   top: 20px;
-  left: 52%;
+  left: 50%;
 
-  transform: translate(-52%, 0);
+  transform: translate(-50%, 0);
 
   @media screen and (min-width: 768px) {
     top: 231px;
-    left: 54%;
-
-    transform: translate(-54%, 0);
   }
 
   @media screen and (min-width: 1024px) {
     top: 100px;
-    left: 54.3%;
-
-    transform: translate(-54.3%, 0);
   }
 }
 .popap__content {
   width: 280px;
   height: auto;
-  background-color: #ffffff;
+  background-color: $background-color;
   padding: 48px 20px 41px;
+
+  &.dark-theme {
+    background-color: $footerTextColor;
+  }
 
   @media screen and (min-width: 768px) {
     display: flex;
@@ -94,13 +80,13 @@
   outline: none;
 }
 
-//   .popap__button-close:hover,
-//   .popap__button-close:focus {
-//   }
-
 .popap__svg-close {
   width: 30px;
   height: 30px;
+
+  &.dark-theme {
+    fill: $background-color;
+  }
 }
 
 // content
@@ -149,13 +135,7 @@
   display: flex;
 }
 
-.popap__block-info {
-  margin-right: 39px;
 
-  @media screen and (min-width: 1024px) {
-    margin-right: 83px;
-  }
-}
 
 .popap__film-info {
   width: 69px;
@@ -166,7 +146,20 @@
 
   font-style: normal;
   line-height: 1.33;
+}
+
+.popap__block-info {
+  margin-right: 39px;
+
   color: #8c8c8c;
+
+  &.dark-theme {
+    color: bisque;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin-right: 83px;
+  }
 }
 
 .popap__film-vote {
@@ -203,7 +196,6 @@
 }
 
 //   block about
-
 .popap__block-description {
   margin-top: 20px;
   margin-bottom: 21px;
@@ -233,7 +225,6 @@
 }
 
 // button
-
 .popap__buttons {
   display: flex;
 }
@@ -244,8 +235,8 @@
   justify-content: center;
   text-transform: uppercase;
 
-  width: 112px;
-  height: 44px;
+  width: 70px;
+  height: 34px;
 
   border: 1px solid #000000;
   box-sizing: border-box;
@@ -256,11 +247,15 @@
   line-height: 1.33;
 
   @media screen and (min-width: 768px) {
-    width: 125px;
+    // width: 125px;
+    width: 88px;
+    height: 37px;
   }
 
   @media screen and (min-width: 1024px) {
-    width: 136px;
+    // width: 136px;
+    width: 122px;
+    height: 44px;
   }
 }
 

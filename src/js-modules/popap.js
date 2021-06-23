@@ -1,9 +1,17 @@
 import variables from './variables.js';
 import { renderDataForModal, renderTrailerMarkup } from "./render-service.js";
 
+let popapBox ='';
+let titleRubrics = '';
+const body = document.querySelector('body');
+
 variables.filmGrid.addEventListener('click', onClickFilm);
 // функция клика по карточке фильма
 async function onClickFilm(e) {
+    
+    // отключаем скролл на body при открытии модалки
+    body.classList.add('body-overflow');
+
     // ID search depending on clicked node
 
     if (e.target.nodeName === "UL") {
@@ -14,6 +22,16 @@ async function onClickFilm(e) {
 
     await renderDataForModal(id);
     openModal();
+
+    // добавляю класс dark-theme для модалки и её элементов
+    if(body.classList.contains('dark-theme')) {
+        popapBox = document.querySelector('.popap__content')
+        titleRubrics = document.querySelector('.popap__block-info')
+
+        popapBox.classList.add('dark-theme');
+        titleRubrics.classList.add('dark-theme');
+        variables.btnCloseSvg.classList.add('dark-theme');
+    }
 
     const trailerBtn = document.querySelector('.trailer-btn');
     trailerBtn.addEventListener('click', renderTrailer);
@@ -147,4 +165,10 @@ function closeModal() {
     variables.backdropBox.classList.add('is-hidden');
     window.removeEventListener('keydown', onEscKeyPress);
     variables.modalContentBox.innerHTML = '';
+    body.classList.remove('body-overflow');
+    
+    if(popapBox.classList.contains('dark-theme')) {
+        popapBox.classList.remove('dark-theme')
+        variables.btnCloseSvg.classList.remove('dark-theme');
+    }
 };
