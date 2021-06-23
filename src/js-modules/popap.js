@@ -22,6 +22,8 @@ async function onClickFilm(e) {
         const res = await renderTrailerMarkup(id);
         const videoSection = document.querySelector('.popap__video-div');
 
+
+
         videoSection.insertAdjacentHTML('beforeend', res.markup);
         trailerBtn.disabled = 'true';
         trailerBtn.classList.add('trailer-btn--disabled');
@@ -40,6 +42,7 @@ async function onClickFilm(e) {
         const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
         const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
 
+        dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
 
@@ -52,6 +55,25 @@ async function onClickFilm(e) {
             if (searchedFilm) {
                 return;
             }
+
+            // ***************************
+
+            // if (filmObjFromSessionStorage.release_date.length === 0 || filmObjFromSessionStorage.release_date === undefined) {
+            //     filmObjFromSessionStorage.release_date = 'Unknown release date';
+            // }
+            // if (el.release_date.length === 0 || el.release_date === undefined) {
+            //     el.release_date = 'Unknown release date';
+            // }
+            // else {
+            //     el.release_date = el.release_date.slice(0, 4);
+            // }
+
+            // if (filmObjFromSessionStorage.genres.length === 0 || filmObjFromSessionStorage.genres === undefined) {
+            //     filmObjFromSessionStorage.genres = "Unspecified genre";
+            // }
+
+
+            // ******************************
 
             existingWatchedFilmsArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
@@ -82,6 +104,7 @@ async function onClickFilm(e) {
         const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
         const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
 
+        dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
 
@@ -96,6 +119,22 @@ async function onClickFilm(e) {
             if (searchedFilm) {
                 return;
             }
+
+            // ************************************
+
+            // if (filmObjFromSessionStorage.release_date.length === 0 || filmObjFromSessionStorage.release_date === undefined) {
+            //     filmObjFromSessionStorage.release_date = 'Unknown release date';
+            // }
+            // filmObjFromSessionStorage.release_date = filmObjFromSessionStorage.release_date.slice(0, 4);
+            // console.log(filmObjFromSessionStorage.release_date);
+
+            // if (filmObjFromSessionStorage.genres.length === 0 || filmObjFromSessionStorage.genres === undefined) {
+            //     filmObjFromSessionStorage.genres = "Unspecified genre";
+            // }
+
+
+
+            // *************************************
 
             existingFilmsInQueueArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
@@ -148,3 +187,19 @@ function closeModal() {
     window.removeEventListener('keydown', onEscKeyPress);
     variables.modalContentBox.innerHTML = '';
 };
+
+function dataCheck(arr) {
+    if (arr.release_date.length === 0 || arr.release_date === undefined) {
+        arr.release_date = 'Unknown release date';
+    }
+    if (arr.release_date.length === 0 || arr.release_date === undefined) {
+        arr.release_date = 'Unknown release date';
+    }
+    else {
+        arr.release_date = arr.release_date.slice(0, 4);
+    }
+
+    if (arr.genres.length === 0 || arr.genres === undefined) {
+        arr.genres = "Unspecified genre";
+    }
+}

@@ -1,5 +1,6 @@
 import variables from "./variables.js";
 import renderFilmGrid from '../hbs-templates/trending-films.hbs';
+import renderQueueAndWatched from '../hbs-templates/queue-and-watched-films.hbs';
 
 variables.homeBtn.addEventListener('click', onHomeBtnClick);
 variables.libraryBtn.addEventListener('click', onLibraryBtnClick);
@@ -25,12 +26,12 @@ function onLibraryBtnClick(e) {
     variables.searchInput.classList.add('hidden');
     variables.searchError.classList.add('visually-hidden');
 
-    // Automoatically render watched films
+    // Automatically render watched films
 
     if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
     const watchedFilmsArr = localStorage.getItem('watchedFilms');
     const parsedArray = JSON.parse(watchedFilmsArr);
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderFilmGrid(parsedArray));
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
 
 function onWatchedBtnClick(e) {
@@ -48,7 +49,7 @@ function onHeaderWatchedButtonClick() {
 
     const watchedFilmsArr = localStorage.getItem('watchedFilms');
     const parsedArray = JSON.parse(watchedFilmsArr);
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderFilmGrid(parsedArray));
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 
 }
 
@@ -57,5 +58,5 @@ function onHeaderQueueButtonClick() {
 
     const queueFilmsArr = localStorage.getItem('queueFilms');
     const parsedArray = JSON.parse(queueFilmsArr);
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderFilmGrid(parsedArray));
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
