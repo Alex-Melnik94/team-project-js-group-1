@@ -22,6 +22,8 @@ async function onClickFilm(e) {
         const res = await renderTrailerMarkup(id);
         const videoSection = document.querySelector('.popap__video-div');
 
+
+
         videoSection.insertAdjacentHTML('beforeend', res.markup);
         trailerBtn.disabled = 'true';
         trailerBtn.classList.add('trailer-btn--disabled');
@@ -40,14 +42,10 @@ async function onClickFilm(e) {
         const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
         const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
 
+        dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
 
-            // ...проверка на совпадение: есть ли уже этот фильм в массиве?
-            // if (!existingWatchedFilmsArray.find(film => film.id === filmObjFromSessionStorage.titleFilm)) {
-            //     existingWatchedFilmsArray.push(filmObjFromSessionStorage);
-            //     localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
-            // }
             const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
             if (searchedFilm) {
                 return;
@@ -82,15 +80,9 @@ async function onClickFilm(e) {
         const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
         const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
 
+        dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
-
-            // ...проверка на совпадение: есть ли уже этот фильм в массиве?
-            // if (!existingFilmsInQueueArray.some(film => film.titleFilm === filmObjFromSessionStorage.titleFilm)) {
-            //     existingFilmsInQueueArray.push(filmObjFromSessionStorage);
-            //     localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
-            // }
-
 
             const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
             if (searchedFilm) {
@@ -148,3 +140,16 @@ function closeModal() {
     window.removeEventListener('keydown', onEscKeyPress);
     variables.modalContentBox.innerHTML = '';
 };
+
+function dataCheck(arr) {
+    if (arr.release_date.length === 0 || arr.release_date === undefined) {
+        arr.release_date = 'Unknown release date';
+    }
+    else {
+        arr.release_date = arr.release_date.slice(0, 4);
+    }
+
+    if (arr.genres.length === 0 || arr.genres === undefined) {
+        arr.genres = "Unspecified genre";
+    }
+}
