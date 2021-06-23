@@ -145,9 +145,6 @@ function dataCheck(arr) {
     if (arr.release_date.length === 0 || arr.release_date === undefined) {
         arr.release_date = 'Unknown release date';
     }
-    if (arr.release_date.length === 0 || arr.release_date === undefined) {
-        arr.release_date = 'Unknown release date';
-    }
     else {
         arr.release_date = arr.release_date.slice(0, 4);
     }
