@@ -1,4 +1,4 @@
-// !needed throttle
+import { throttle } from "./utilities.js"
 
 const upArrow = document.querySelector('[data-action="back-to-top"]');
 
@@ -12,5 +12,5 @@ const scrollManager = () => {
 
 export default function initUpArrow() {
   upArrow.addEventListener('click', onUpArrowClick);
-  window.addEventListener('scroll', scrollManager);  // !throttle this callback!
+  window.addEventListener('scroll', throttle(scrollManager, 500));
 }

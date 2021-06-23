@@ -1,15 +1,16 @@
 @import './utils/variables';
+@import './utils/mixins';
 
 @import './base/fonts';
 @import './base/normalize';
 @import './base/defaults';
 
+@import './components/auth';
 @import './components/film-cards-section';
 @import './components/footer';
 @import './components/header';
 @import './components/modal-film-card';
 @import './components/pagination';
-@import './components/pagination-test';
 @import './components/preloader';
 @import './components/up-arrow';
 @import './components/gener';

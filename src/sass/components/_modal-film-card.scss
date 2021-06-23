@@ -1,214 +1,213 @@
 // popap
 .popap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 999;
 
-    width: 100%;
-    height: 100%;
-  
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100%;
 
-    transition-property: opacity;
-    transition-duration: 250ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  pointer-events: initial;
+  background-color: rgba(0, 0, 0, 0.25);
 
-    @media screen and (max-width: 767px) {
-      overflow-y: scroll;
-    }
-  
-    @media screen and (max-height: 594px) {
-      overflow-y: scroll;
-    }
+  @media screen and (max-width: 1023px) {
+    overflow-y: scroll;
   }
-  
-  .popap.is-hidden {
-    opacity: 0;
-    pointer-events: none;;
+}
+
+.popap.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+.popap__box {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+
+  transform: translate(-50%, 0);
+
+  @media screen and (min-width: 768px) {
+    top: 231px;
   }
 
-  // .backdrop.is-hidden .modal-area {
-  //   transform: translate(-50%, 0) scale(1, 1);
-  // }
-  
-  .popap__content {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-
-    transform: translate(-50%, 0);
-
-    width: 280px;
-    height: auto;
-    background-color: #FFFFFF;
-    padding: 48px 20px 41px;
-
-    @media screen and (min-width: 768px) {
-      top: 231px;
-
-      display: flex;
-
-      width: 618px;
-      padding: 42px 29px 40px 28px;
-    }
-
-    @media screen and (min-width: 1024px) {
-      top: 100px;
-
-      width: 884px;
-      padding: 50px 30px 40px;
-    }
+  @media screen and (min-width: 1024px) {
+    top: 100px;
   }
-  
-  
+}
+.popap__content {
+  width: 280px;
+  height: auto;
+  background-color: $background-color;
+  padding: 48px 20px 41px;
+
+  &.dark-theme {
+    background-color: $footerTextColor;
+  }
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+
+    width: 618px;
+    padding: 42px 29px 40px 28px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 884px;
+    padding: 50px 30px 40px;
+  }
+}
 
 // button-close
 
 .popap__button-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    padding: 0;
-    margin: 0;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    outline: none;
-  }
-  
-//   .popap__button-close:hover,
-//   .popap__button-close:focus {
-//   }
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-.popap__svg-close {
-    width: 30px;
-    height: 30px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
 }
 
+.popap__svg-close {
+  width: 30px;
+  height: 30px;
+
+  &.dark-theme {
+    fill: $background-color;
+  }
+}
 
 // content
 .popap__image-block {
   @media screen and (min-width: 768px) {
-      margin-right: 30px;
+    margin-right: 30px;
   }
 
   @media screen and (min-width: 1024px) {
     margin-right: 32px;
+  }
 }
-}
 
-  .popap__image {
-    display: block;
-    margin: 0 auto 30px auto;
+.popap__image {
+  display: block;
+  margin: 0 auto 30px auto;
 
-    width: 240px;
-    height: 357px;
+  width: 240px;
+  height: auto;
 
-    @media screen and (min-width: 768px) {
-      width: 264px;
-      height: 374px;
-      margin-bottom: 0;
-    }
-
-    @media screen and (min-width: 1024px) {
-      width: 396px;
-      height: 478px;
-    }
+  @media screen and (min-width: 768px) {
+    width: 264px;
+    margin-bottom: 0;
   }
 
-  .popap__title {
-    margin-bottom: 20px;
-
-    font-style: normal;
-    font-size: 20px;
-    line-height: 1.15;
-    text-transform: uppercase;
-
-    @media screen and (min-width: 1024px) {
-      font-size: 30px;
-    }
+  @media screen and (min-width: 1024px) {
+    width: 396px;
   }
+}
+
+.popap__title {
+  margin-bottom: 20px;
+
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1.15;
+  text-transform: uppercase;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 30px;
+  }
+}
 
 //   block info
-  .popap__film-block {
-      display: flex;
+.popap__film-block {
+  display: flex;
+}
+
+
+
+.popap__film-info {
+  width: 69px;
+  margin-bottom: 10px;
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  .popap__block-info {
-      margin-right: 39px;
+  font-style: normal;
+  line-height: 1.33;
+}
 
-      @media screen and (min-width: 1024px) {
-        margin-right: 83px;
-      }
+.popap__block-info {
+  margin-right: 39px;
+
+  color: #8c8c8c;
+
+  &.dark-theme {
+    color: bisque;
   }
 
-  .popap__film-info {
-    margin-bottom: 10px;
-    &:last-child {
-        margin-bottom: 0;
-    }
+  @media screen and (min-width: 1024px) {
+    margin-right: 83px;
+  }
+}
 
-    font-style: normal;
-    line-height: 1.33;
-    color: #8C8C8C;
+.popap__film-vote {
+  font-style: normal;
+  line-height: 1.33;
+  color: #8c8c8c;
+}
+
+.votes {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  border-radius: 5px;
+  background: #f7f7f7;
+  color: #000000;
+}
+
+.popap__film-res__number {
+  margin-bottom: 11px;
+
+  line-height: 1.17;
+}
+
+.popap__film-res {
+  margin-bottom: 10px;
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  .popap__film-vote{
-    font-style: normal;
-    line-height: 1.33;
-    color: #8C8C8C;
-  }
-
-  .votes{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 36px;
-    border-radius: 5px;
-    background: #F7F7F7;
-    color: #000000;
-  }
-
-  .popap__film-res__number {
-    margin-bottom: 11px;
-
-    line-height: 1.17;
-  }
-
-  .popap__film-res {
-    margin-bottom: 10px;
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    font-style: normal;
-    line-height: 1.33;
-  }
-
-
+  font-style: normal;
+  line-height: 1.33;
+}
 
 //   block about
-
 .popap__block-description {
-    margin-top: 20px;
-    margin-bottom: 21px;
+  margin-top: 20px;
+  margin-bottom: 21px;
 
-    font-style: normal;
-
+  font-style: normal;
 }
 
 .description__title {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 
-    line-height: 1.33;
-    text-transform: uppercase;
+  line-height: 1.33;
+  text-transform: uppercase;
 }
 
 .description__text {
@@ -226,42 +225,71 @@
 }
 
 // button
-
 .popap__buttons {
-    display: flex;
+  display: flex;
 }
 .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
 
-    width: 112px;
-    height: 44px;
+  width: 70px;
+  height: 34px;
 
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    border-radius: 5px;
-    background-color: #fff;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: #fff;
 
-    font-style: normal;
-    line-height: 1.33;
+  font-style: normal;
+  line-height: 1.33;
 
-    @media screen and (min-width: 768px) {
-      width: 125px;
+  @media screen and (min-width: 768px) {
+    // width: 125px;
+    width: 88px;
+    height: 37px;
   }
 
   @media screen and (min-width: 1024px) {
-    width: 136px;
-  }  
+    // width: 136px;
+    width: 122px;
+    height: 44px;
+  }
 }
 
-.popap__button:first-child {
+.popap__button:not(:last-child) {
   margin-right: 15px;
 }
 
-.accent{
-  background: #FF6B01;
-  color: #FFFFFF;
+.accent {
+  background: #ff6b01;
+  color: #ffffff;
   border: none;
+}
+
+.trailer-btn--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+
+
+.popap__video-div {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.popap__video {
+   width: 100%;
+  height: auto;
+
+    @media screen and (min-width: 768px) {
+    height: 320px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    height: 300px;
+  }
 }

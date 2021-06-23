@@ -23,6 +23,9 @@
 //        'const paginationContainerRef = pagination.container;'
 //   current page saved in container data-property:
 //        'const currentPage = pagination.container.dataset.page;'
+//  custom event "pagechanged" dispatched on pagination container when user selects new page.
+//  It can be then caught in outer code, smth like:
+//        'pagination.container.addEventListener('pagechanged', *callback*);'  
 
 // Visual interface:
 //   `boxes with figures` - allow to change current page within +/- 1-2 offset range
@@ -30,168 +33,140 @@
 //   `<` / `>` - shift current page f'wd and b'wd by one
 //   `<<` / `>>` - shift current page f'wd and b'wd by 10
 
+import { camelToKebabCase } from "./utilities";
+import { debounce } from "./utilities.js";
+
+
 
 export default class Pages {
+
+  #listener;
+  #PAGE_CONTROLS = ['leftFastButton', 'leftButton', 'firstPage', 'leftEllipsis',
+  'rightEllipsis', 'lastPage', 'rightButton', 'rightFastButton'];
+
   constructor (containerClass) {
     this._currentPage = 1;
     this._totalPages = 5;
 
-    this._mapping = {};
-    this.refreshMap();
+    this._mapping = this.initMap();
 
-    // this._container = document.querySelector(containerClass);
-    this._container = document.body; // change when markup is done
-    this._markup = this.makePaginationMarkup();
+    this._container = document.querySelector(containerClass);
     this._refs = this.getPaginationRefs();
 
-    // this._container.addEventListener('click', this.onPaginationClick.bind(this));
-    this._markup.addEventListener('click', this.onPaginationClick.bind(this)); // change to this._container when markup is done
-
-    console.log(this);
+    this.container.addEventListener('click', this.onPaginationClick.bind(this));
   }
 
-  getPaginationRefs() {  // change all this stuff immediately when markup is completed. 
-    return {
-      leftFastButton: this._markup.querySelector('div:nth-child(1)'),
-      leftButton: this._markup.querySelector('div:nth-child(2)'),
-      firstPage: this._markup.querySelector('div:nth-child(3)'),
-      leftEllipsis: this._markup.querySelector('div:nth-child(4)'),
+  getPaginationRefs() {
+    const controlRefs = this.#PAGE_CONTROLS.reduce((acc, controlItem) => {
+      const controlItemRef = this.container.querySelector(`[data-action="${camelToKebabCase(controlItem)}"]`);
+      return {...acc, [controlItem]: controlItemRef}
+    }, {});
 
-      pages: [this._markup.querySelector('div:nth-child(5)'),
-      this._markup.querySelector('div:nth-child(6)'),
-      this._markup.querySelector('div:nth-child(7)'),
-      this._markup.querySelector('div:nth-child(8)'),
-      this._markup.querySelector('div:nth-child(9)'),],
+    const pageRefs = [...this.container.querySelectorAll('[data-action="page"]')];
       
-      rightEllipsis: this._markup.querySelector('div:nth-child(10)'),
-      lastPage: this._markup.querySelector('div:nth-child(11)'),
-      rightButton : this._markup.querySelector('div:nth-child(12)'),
-      rightFastButton: this._markup.querySelector('div:nth-child(13)'),
-    }
+    return {...controlRefs, pages: pageRefs};
   }
 
   onPaginationClick(evt) {
     const target = evt.target.closest('.pagination-nav'); // closest used for the case if some deeper structure implemented
+    
     if (!target) return;
+    if (target.dataset.active === 'false') return;
+    if (target.dataset.action.includes('ellipsis')) return;
 
-    const role = target.textContent;
+    let page = target.textContent;
 
-    switch (role) {
-      case '<<': this.shiftPageLeftFast();
+    switch (target.dataset.action) {
+      case 'left-fast-button': this.shiftPageLeftFast();
       break;
     
-      case '>>': this.shiftPageRightFast();
+      case 'right-fast-button': this.shiftPageRightFast();
       break;
       
-      case '<': this.shiftPageLeft();
+      case 'left-button': this.shiftPageLeft();
       break;
       
-      case '>': this.shiftPageRight();
+      case 'right-button': this.shiftPageRight();
       break;
+      
+      default:
+        page = Number(page);
+        if (page !== this._currentPage) {
+          this.moveToPage(page);
+        } else return;
     }
 
-    if (role - role === 0) {
-      this.moveToPage(Number(role));
-    }
+    let pageEvent = new Event('pagechanged');
+    this._container.dispatchEvent(pageEvent);
+  }
 
-    // console.log('Clicked on', target.textContent);
+  initMap() {
+    return {
+      ...this.#PAGE_CONTROLS.reduce((acc, controlItem) => {
+        return /left|right/.test(controlItem) ? {...acc, [controlItem]: true} : acc
+      }, {}),
+ 
+      pages: Array.from({ length: 5 }, () => 0),
+      
+      firstPage: 1,
+      lastPage: this._totalPages,     
+    };
   }
 
   refreshMap() {
-    this._mapping = {
-      leftFastButton: true,
-      leftButton: true,
-      leftMost: 1,
-      leftEllipsis: true,
+    const disableLeftControls = () => {
+      this._mapping.leftFastButton = false;
+      this._mapping.leftButton = false;
+      this._mapping.firstPage = 0;
+      this._mapping.leftEllipsis = false;
+    }
 
-      pages: Array.from({ length: 5 }, () => 0),
-      
-      rightEllipsis: true,
-      rightMost: this._totalPages,
-      rightButton: true,
-      rightFastButton: true,
-    };
+    const disableRightControls = () => {
+      this._mapping.rightEllipsis = false;
+      this._mapping.lastPage = 0;
+      this._mapping.rightButton = false;
+      this._mapping.rightFastButton = false;
+    }
+
+    this._mapping = this.initMap();
 
     let offset = 0;
 
     if (this._currentPage <= 3) {
-      this._mapping.leftFastButton = false;
-      this._mapping.leftButton = false;
-      this._mapping.leftMost = 0;
-      this._mapping.leftEllipsis = false;
+      disableLeftControls();
       offset = 3 - this._currentPage;
     }
 
     if (this._currentPage >= this._totalPages - 2) {
-      this._mapping.rightEllipsis = false;
-      this._mapping.rightMost = 0;
-      this._mapping.rightButton = false;
-      this._mapping.rightFastButton = false;
+      disableRightControls();
       offset = this._totalPages - this._currentPage - 2;
     }
 
-    // console.log('in refreshMap');
-    // console.log('Current page', this._currentPage);
-    // console.log('offset', offset);
-    // console.log('this', this);
-
     this._mapping.pages = this._mapping.pages.map((page, idx) => {
-      return this._currentPage - 2 + idx + offset;
+      const value = this._currentPage - 2 + idx + offset;
+      return value < 1 || value > this._totalPages ? 0 : value;
     });
 
-  }
+    if (Math.max(...this._mapping.pages) >= this._totalPages) {
+      disableRightControls();
+    }
 
-  makePaginationMarkup() {
-
-    // use hbs template instead when markup is ready;
-    const ulRef = document.createElement('div');
-    ulRef.classList.add('pagination');
-    const liRef = Array.from({ length: 13, }, () => document.createElement('div'))
-    liRef.forEach(li => li.classList.add('pagination-nav'));
- 
-    liRef[0].textContent = '<<';
-    liRef[1].textContent = '<';
-    liRef[2].textContent = '1';
-    liRef[3].textContent = '...';
-    liRef[9].textContent = '...';
-    liRef[10].textContent = this._totalPages;
-    liRef[11].textContent = '>';
-    liRef[12].textContent = '>>';
-
-    ulRef.append(...liRef);
-    return ulRef;
   }
 
   refreshPaginationMarkup() {
-    this._refs.leftFastButton.dataset.active = this._mapping.leftFastButton;
-    this._refs.leftButton.dataset.active = this._mapping.leftButton;
-    this._refs.firstPage.dataset.active = Boolean(this._mapping.leftMost);
-    this._refs.leftEllipsis.dataset.active = this._mapping.leftEllipsis;
+    this.#PAGE_CONTROLS.forEach(controlItem => {
+      this._refs[controlItem].dataset.active = Boolean(this._mapping[controlItem]);
+    })
 
     this._refs.pages.forEach((page, idx) => {
       page.textContent = this._mapping.pages[idx];
       page.classList.remove('pagination-page-active');
+      page.dataset.active = this._mapping.pages[idx] > 0;
     });
 
-    this._refs.rightEllipsis.dataset.active = this._mapping.rightEllipsis;
-    this._refs.lastPage.dataset.active = Boolean(this._mapping.rightMost);
-    this._refs.rightButton.dataset.active = this._mapping.rightButton;
-    this._refs.rightFastButton.dataset.active = this._mapping.rightFastButton;
-
     this._refs.lastPage.textContent = this._totalPages;
-
     this._refs.pages.find(page => page.textContent === '' + this._currentPage).classList.add('pagination-page-active');
-
     this._container.dataset.page = this._currentPage;
-    
-    // console.log('in refreshPaginationMarkup');
-    // console.log('Current page', this._currentPage);
-    // console.log('this', this);
-  }
-
-  renderPagination() {
-    const _container = document.body; // remove when markup ready;
-    _container.append(this._markup);
   }
 
   moveToPage(newPage, _totalPages = this._totalPages) {
@@ -199,10 +174,7 @@ export default class Pages {
     this._totalPages = _totalPages;
     this.refreshMap();
     this.refreshPaginationMarkup();
-    this.renderPagination();
-
-    // console.log('in moveToPage')
-    // console.log(this);
+    this.show();
   }
 
   shiftPage(offset) {
@@ -241,9 +213,27 @@ export default class Pages {
   get container() {
     return this._container;
   }
-}
 
-// let PAGE = 15;
-// let TOTAL_PAGES = 792;
-// const pagination = new Pages();
-// pagination.moveToPage(PAGE, TOTAL_PAGES);
+  show() {
+    this._container.classList.remove('pagination-hidden');
+  }
+
+  hide() {
+    this._container.classList.add('pagination-hidden');
+  }
+
+  listen(callback, debounceTime = 500) {
+    this.unlisten();
+
+    this.#listener = debounce(() => {
+      window.scrollTo({ top: 0, left: pageXOffset, behavior: 'smooth' });
+      callback();
+    }, debounceTime);
+
+    this._container.addEventListener('pagechanged', this.#listener);
+}
+  
+  unlisten() {
+    this._container.removeEventListener('pagechanged', this.#listener);
+  } 
+}

@@ -1,0 +1,69 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+
+  user-select: none;
+
+  @media screen and (min-width: 320px) {
+    margin-bottom: 40px;
+  }
+
+  & > .pagination-nav:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.pagination-nav {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+
+  background-color: $mainBgColor;
+  color: $mainTextColor;
+
+  @include transit($cubicBezierMain);
+
+  &:not([data-action*="ellipsis"]):hover,
+  &:not([data-action*="ellipsis"]):focus {
+      background-color: $accentColor;
+      color: $mainBgColor;
+      cursor: pointer;
+  }
+
+}
+
+.pagination-nav[data-active="false"] {
+  color: #eeeeee;
+  background-color: #cccccc;
+}
+
+.pagination-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.pagination-page-active {
+  background-color: $accentColor;
+  color: $mainBgColor;
+}
+
+
+@media screen and (max-width: 767px) {
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+.pagination.pagination-hidden {
+  display: none;
+}
+
+.pagination-nav[data-active="false"] {
+  display: none;
+}
+
