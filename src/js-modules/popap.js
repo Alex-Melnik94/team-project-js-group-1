@@ -147,8 +147,6 @@ async function onClickFilm(e) {
 
     // ...функция удаления фильма из Queue массива в Local Storage
     function removeFilmFromQueueInLocalStorage() {
-
-        console.log('Это ремув');
         const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
         if (searchedFilm) {
             existingFilmsInQueueArray.splice(existingFilmsInQueueArray.indexOf(searchedFilm), 1);
@@ -160,7 +158,6 @@ async function onClickFilm(e) {
         addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
     };
 };
-
 
 
 
