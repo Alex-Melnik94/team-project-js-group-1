@@ -1,11 +1,11 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
 
-import { pagination } from "../index"; //  !!! Updated by Krokodil
+import { pagination } from "../index"; 
 import api from './apiService.js'
 import './btnListener.js';
 import variables from "./variables.js";
 
-// const pagination = new Pages();    //  !!! Updated by Krokodil
+
 
 
 export function appendGalleryMarkup(fetchMovies) {
@@ -25,10 +25,30 @@ export function appendGalleryMarkup(fetchMovies) {
     variables.searchError.textContent =
     'Search result not successful. Enter the correct movie name and search again!';
   }
+  if (films.error !== undefined) {
+    variables.searchError.innerText = "Some server issue has occured";
+    return;
+  }
   
+  pagination.listen(onLoadMore);
+};
+export function updateGalleryMarkup(fetchMovies) {
+    
+  const films = fetchMovies;
   
+  if (films.updatedFilmData.length !== 0) {
+    variables.preloader.classList.add('preloader-hidden');
+    variables.filmGrid.innerHTML = trendingFilmsMarkupFc(films.updatedFilmData);
+    variables.searchError.textContent = '';
+  }
+  
+  pagination.listen(onLoadMore);
 };
 
+function onLoadMore(e) {
+  const nextPage = pagination.page;
+  api.fetchMovies(nextPage).then(updateGalleryMarkup);
+}
 function onSearch(e) {
   e.preventDefault();                
   variables.preloader.classList.remove('preloader-hidden');
