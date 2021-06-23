@@ -11,6 +11,7 @@ export const renderTrendingFilms = async function (container, preloader, page) {
     return;
   }
 
+
   if (container.innerText.length !== 0) {
     container.innerHTML = '';
   }
