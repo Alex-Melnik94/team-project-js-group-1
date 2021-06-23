@@ -228,7 +228,8 @@
 .popap__buttons {
   display: flex;
 }
-.button {
+
+.popap__button {
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -257,10 +258,10 @@
     width: 122px;
     height: 44px;
   }
-}
 
-.popap__button:not(:last-child) {
-  margin-right: 15px;
+  &:not(:last-child){
+    margin-right: 15px;
+  }
 }
 
 .accent {
