@@ -33,15 +33,37 @@ async function onClickFilm(e) {
     const addToWatchedBtn = document.querySelector('.js-watched-btn');
     const addToQueueBtn = document.querySelector('.js-queue-btn');
 
+    // ...создаем переменные для фильмов в просмотренных, в очереди и текущего фильма
+    const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
+    const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
+    const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+
+    // ...проверка: добавлен ли фильм ранеее в просмотренные
+    if (existingWatchedFilmsArray) {
+        const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
+
+        if (searchedFilm) {
+        addToWatchedBtn.textContent = 'remove from watched';
+        addToWatchedBtn.addEventListener('click', removeFromWatchedFilmsInLocalStorage);
+        };
+    };
+
+    // ...проверка: добавлен ли фильм ранеее в очередь
+    if (existingFilmsInQueueArray) {
+        const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
+
+        if (searchedFilm) {
+        addToQueueBtn.textContent = 'remove from queue';
+        addToQueueBtn.addEventListener('click', removeFilmFromQueueInLocalStorage);
+        };
+    };
+
     // ...добавляем слушателей по клику на них
     addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
     addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
 
     // ...функция добавления фильма в Watched массив в Local Storage
     function addToWatchedFilmsInLocalStorage() {
-        const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
-        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
-
         dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
@@ -49,7 +71,7 @@ async function onClickFilm(e) {
             const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
             if (searchedFilm) {
                 return;
-            }
+            };
 
             existingWatchedFilmsArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
@@ -63,23 +85,31 @@ async function onClickFilm(e) {
             localStorage.setItem('watchedFilms', JSON.stringify(watchedFilmsArray));
         };
 
-        // ...делаем кнопку addToWatchedBtn disabled и убираем с неё слушателя
-        addToWatchedBtn.disabled = true;
+        // ...убираем слушателя с кнопки addToWatchedBtn
         addToWatchedBtn.removeEventListener('click', addToWatchedFilmsInLocalStorage);
 
-        // ...меняем текстовый контент на кнопке - как альтернативная доп.функция
-        // addToWatchedBtn.textContent = 'remove from watched';
+        // ...меняем текстовый контент на кнопке
+        addToWatchedBtn.textContent = 'remove from watched';
 
-        // ...добавляем нового слушателя с другой функцией удаления фильма из просмотренных - как альтернативная доп.функция
-        // ...removeFromWatchedFilmsInLocalStorage ещё не написана
-        // addToWatchedBtn.addEventListener('click', removeFromWatchedFilmsInLocalStorage);
+        // ...добавляем нового слушателя с функцией удаления фильма из просмотренных
+        addToWatchedBtn.addEventListener('click', removeFromWatchedFilmsInLocalStorage);
+    };
+
+    // ...функция удаления фильма из Watched массива в Local Storage
+    function removeFromWatchedFilmsInLocalStorage() {
+        const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
+        if (searchedFilm) {
+            existingWatchedFilmsArray.splice(existingWatchedFilmsArray.indexOf(searchedFilm), 1);
+            localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
+        };
+
+        addToWatchedBtn.textContent = 'add to watched';
+        addToWatchedBtn.removeEventListener('click', removeFromWatchedFilmsInLocalStorage);
+        addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
     };
 
     // ...функция добавления фильма в Queue массив в Local Storage
     function addFilmToQueueInLocalStorage() {
-        const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
-        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
-
         dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
@@ -87,7 +117,7 @@ async function onClickFilm(e) {
             const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
             if (searchedFilm) {
                 return;
-            }
+            };
 
             existingFilmsInQueueArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
@@ -101,9 +131,27 @@ async function onClickFilm(e) {
             localStorage.setItem('queueFilms', JSON.stringify(queueFilmsArray));
         };
 
-        // ...делаем кнопку addToQueueBtn disabled и убираем с неё слушателя
-        addToQueueBtn.disabled = true;
+        // ...убираем слушателя с кнопки addToQueueBtn 
         addToQueueBtn.removeEventListener('click', addFilmToQueueInLocalStorage);
+
+        // ...меняем текстовый контент на кнопке
+        addToQueueBtn.textContent = 'remove from queue';
+
+        // ...добавляем нового слушателя с функцией удаления фильма из просмотренных
+        addToQueueBtn.addEventListener('click', removeFilmFromQueueInLocalStorage);
+    };
+
+    // ...функция удаления фильма из Queue массива в Local Storage
+    function removeFilmFromQueueInLocalStorage() {
+        const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
+        if (searchedFilm) {
+            existingFilmsInQueueArray.splice(existingFilmsInQueueArray.indexOf(searchedFilm), 1);
+            localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
+        };
+
+        addToQueueBtn.textContent = 'add to queue';
+        addToQueueBtn.removeEventListener('click', removeFilmFromQueueInLocalStorage);
+        addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
     };
 };
 
