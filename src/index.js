@@ -14,7 +14,6 @@ import variables from './js-modules/variables.js';
 import './js-modules/popap';
 
 import './js-modules/modal-footer.js';
-import './js-modules/gener.js';
 
 import Pages from './js-modules/pagination.js';
 import initUpArrow from './js-modules/up-arrow.js';
