@@ -190,14 +190,25 @@ body.dark-theme {
 
 .toolbar {
   position: absolute;
-  top: 240px;
-  left: 60%;
+
+
+
+   @media screen and (max-width: 767px) {
+    top: 240px;
+    left: 50%;
+  transform: translateX(-50%);
+  }
+
+
   @media screen and (min-width: 768px) {
     top: 240px;
-    left: 80%;
+    left: 50%;
+    transform: translateX(135%);
   }
   @media screen and (min-width: 1024px) {
-    top: 250px;
+    top: 240px;
+    left: 50%;
+    transform: translateX(235%);
   }
 }
 

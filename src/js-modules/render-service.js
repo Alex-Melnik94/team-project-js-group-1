@@ -8,6 +8,10 @@ export const renderTrendingFilms = async function (container, preloader, page) {
 
   if (movies.error !== undefined) {
     variables.searchError.innerText = "Some server issue has occured";
+
+    setTimeout(() => {
+      variables.searchError.innerText = '';
+    }, 4000);
     return;
   }
 
