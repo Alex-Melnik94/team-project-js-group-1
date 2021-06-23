@@ -22,16 +22,7 @@ async function onClickFilm(e) {
 
     await renderDataForModal(id);
     openModal();
-
-    // добавляю класс dark-theme для модалки и её элементов
-    if(body.classList.contains('dark-theme')) {
-        popapBox = document.querySelector('.popap__content')
-        titleRubrics = document.querySelector('.popap__block-info')
-
-        popapBox.classList.add('dark-theme');
-        titleRubrics.classList.add('dark-theme');
-        variables.btnCloseSvg.classList.add('dark-theme');
-    }
+    themeSwitcherPopap();
 
     const trailerBtn = document.querySelector('.trailer-btn');
     trailerBtn.addEventListener('click', renderTrailer);
@@ -142,6 +133,17 @@ function openModal() {
     variables.backdropBox.classList.remove('is-hidden');
 };
 
+// добавляю класс dark-theme для модалки и её элементов
+function themeSwitcherPopap() {
+    if(body.classList.contains('dark-theme')) {
+        popapBox = document.querySelector('.popap__content')
+        titleRubrics = document.querySelector('.popap__block-info')
+
+        popapBox.classList.add('dark-theme');
+        titleRubrics.classList.add('dark-theme');
+        variables.btnCloseSvg.classList.add('dark-theme');
+    }
+}
 
 // зыкрытие модалки по клику backdrop
 variables.backdropBox.addEventListener('click', onBackdropClick);
@@ -167,7 +169,7 @@ function closeModal() {
     variables.modalContentBox.innerHTML = '';
     body.classList.remove('body-overflow');
     
-    if(popapBox.classList.contains('dark-theme')) {
+    if(popapBox.nodeName==='DIV' && popapBox.classList.contains('dark-theme')){
         popapBox.classList.remove('dark-theme')
         variables.btnCloseSvg.classList.remove('dark-theme');
     }
