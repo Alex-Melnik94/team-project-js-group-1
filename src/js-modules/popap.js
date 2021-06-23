@@ -55,6 +55,10 @@ async function onClickFilm(e) {
         addToWatchedBtn.textContent = 'remove from watched';
         addToWatchedBtn.addEventListener('click', removeFromWatchedFilmsInLocalStorage);
         };
+
+        if (!searchedFilm) {
+            addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
+        };
     };
 
     // ...проверка: добавлен ли фильм ранеее в очередь
@@ -65,12 +69,12 @@ async function onClickFilm(e) {
         addToQueueBtn.textContent = 'remove from queue';
         addToQueueBtn.addEventListener('click', removeFilmFromQueueInLocalStorage);
         };
+
+        if (!searchedFilm) {
+            addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
+        };
     };
-
-    // ...добавляем слушателей по клику на них
-    addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
-    addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
-
+  
     // ...функция добавления фильма в Watched массив в Local Storage
     function addToWatchedFilmsInLocalStorage() {
         dataCheck(filmObjFromSessionStorage)
@@ -163,7 +167,6 @@ async function onClickFilm(e) {
         addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
     };
 };
-
 
 
 
