@@ -46,34 +46,10 @@ async function onClickFilm(e) {
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
 
-            // ...проверка на совпадение: есть ли уже этот фильм в массиве?
-            // if (!existingWatchedFilmsArray.find(film => film.id === filmObjFromSessionStorage.titleFilm)) {
-            //     existingWatchedFilmsArray.push(filmObjFromSessionStorage);
-            //     localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
-            // }
             const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
             if (searchedFilm) {
                 return;
             }
-
-            // ***************************
-
-            // if (filmObjFromSessionStorage.release_date.length === 0 || filmObjFromSessionStorage.release_date === undefined) {
-            //     filmObjFromSessionStorage.release_date = 'Unknown release date';
-            // }
-            // if (el.release_date.length === 0 || el.release_date === undefined) {
-            //     el.release_date = 'Unknown release date';
-            // }
-            // else {
-            //     el.release_date = el.release_date.slice(0, 4);
-            // }
-
-            // if (filmObjFromSessionStorage.genres.length === 0 || filmObjFromSessionStorage.genres === undefined) {
-            //     filmObjFromSessionStorage.genres = "Unspecified genre";
-            // }
-
-
-            // ******************************
 
             existingWatchedFilmsArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
@@ -108,33 +84,10 @@ async function onClickFilm(e) {
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
 
-            // ...проверка на совпадение: есть ли уже этот фильм в массиве?
-            // if (!existingFilmsInQueueArray.some(film => film.titleFilm === filmObjFromSessionStorage.titleFilm)) {
-            //     existingFilmsInQueueArray.push(filmObjFromSessionStorage);
-            //     localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
-            // }
-
-
             const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
             if (searchedFilm) {
                 return;
             }
-
-            // ************************************
-
-            // if (filmObjFromSessionStorage.release_date.length === 0 || filmObjFromSessionStorage.release_date === undefined) {
-            //     filmObjFromSessionStorage.release_date = 'Unknown release date';
-            // }
-            // filmObjFromSessionStorage.release_date = filmObjFromSessionStorage.release_date.slice(0, 4);
-            // console.log(filmObjFromSessionStorage.release_date);
-
-            // if (filmObjFromSessionStorage.genres.length === 0 || filmObjFromSessionStorage.genres === undefined) {
-            //     filmObjFromSessionStorage.genres = "Unspecified genre";
-            // }
-
-
-
-            // *************************************
 
             existingFilmsInQueueArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
