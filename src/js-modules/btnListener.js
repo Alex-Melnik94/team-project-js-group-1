@@ -78,7 +78,6 @@ function onTrendingMoviesBtnClick() {
 
     const pagination = new Pages('.pagination');
 
-    //render markup
     const resetMainMarkup = async function () {
         const totalPages = await renderTrendingFilms(variables.filmGrid, variables.preloader);
         pagination.moveToPage(1, totalPages);
