@@ -8,6 +8,10 @@ export const renderTrendingFilms = async function (container, preloader, page) {
 
   if (movies.error !== undefined) {
     variables.searchError.innerText = "Some server issue has occured";
+
+    setTimeout(() => {
+      variables.searchError.innerText = '';
+    }, 5000);
     return;
   }
 
@@ -68,17 +72,6 @@ export async function renderDataForModal(movieId) {
 
   sessionStorage.setItem('modalMovieInfo', JSON.stringify(dataForRendering));
   variables.modalContentBox.insertAdjacentHTML('beforeend', popapFilmMarkup(dataForRendering));
-
-  // Find buttons and add event listeners
-  // const trailerBtn = document.querySelector('.trailer-btn');
-  // trailerBtn.addEventListener('click', renderTrailer);
-
-  // async function renderTrailer() {
-  //   const res = await renderTrailerMarkup(id);
-  //   console.log(res.markup);
-  // };
-
-  // return { trailerBtn };
 }
 
 

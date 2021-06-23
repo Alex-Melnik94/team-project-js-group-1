@@ -1,47 +1,45 @@
 <header class="section__header">
     <div class="container header">
         <nav class="header__navigation">
- <a class="logo" href="index.html">
-            <svg
-            width="24"
-            height="24"
-             class="logo__icon">
-                     <use
-              href="./images/sprite.svg#icon-film"
-            ></use>
-                 </svg>
-            <p class="logo__text">Filmoteka</p>
-        </a>
-        <ul class="header__links">
-            <li class="link__home"> <a class="link__item current js-home-btn" href="index.html">Home</a> </li>
-            <li class="link__library"> <a class="link__item js-library-btn" href="">my library</a> </li>
-        </ul>
+            <a class="logo" href="index.html">
+                <svg width="24" height="24" class="logo__icon">
+                    <use href="./images/sprite.svg#icon-film"></use>
+                </svg>
+                <p class="logo__text">Filmoteka</p>
+            </a>
+            <ul class="header__links">
+                <li class="link__home"> <a class="link__item current js-home-btn" href="index.html">Home</a> </li>
+                <li class="link__library"> <a class="link__item js-library-btn" href="">my library</a> </li>
+            </ul>
         </nav>
         <form action="" class="header__search">
 
             <input name="query" class="search__input" type="text" placeholder="Поиск фильмов" autocomplete="off">
-                            <svg class="search__icon"
-            width="12"
-
-            height="12">
-                     <use
-              href="./images/sprite.svg#icon-search"
-            ></use>
-                 </svg>
-                <p class="search__result visually-hidden">Search result not successful. Enter the correct movie name and </p>
+            <svg class="search__icon" width="12" height="12">
+                <use href="./images/sprite.svg#icon-search"></use>
+            </svg>
+            <p class="search__result visually-hidden">Search result not successful. Enter the correct movie name and
+            </p>
         </form>
-       <div class="library visually-hidden">
+        <div class="library visually-hidden">
             <ul class="library__list">
                 <li class="library__item">
-                <button class="library__btn js-btn-watched checked">Watched</button>
+                    <button class="library__btn js-btn-watched checked">Watched</button>
                 </li>
                 <li class="library__item">
-                <button class="library__btn js-btn-queue">queue</button>
+                    <button class="library__btn js-btn-queue">queue</button>
                 </li>
             </ul>
         </div>
         <p class="search-error"></p>
     </div>
+
+    <!-- Разметка для 'Today/This week' Toggle -->
+    <div class="switch-button">
+        <input class="switch-button-checkbox" type="checkbox"></input>
+        <label class="switch-button-label" for=""><span class="switch-button-label-span">Today</span></label>
+    </div>
+
 
     <div class="toolbar">
         <!-- Разметка переключателя темы -->
@@ -49,7 +47,7 @@
             <svg class="theme-switch__icon" role="img" aria-label="Иконка солнца">
                 <use href="./images/sprite.svg#iconsun"></use>
             </svg>
-    
+
             <div class="theme-switch__control">
                 <input class="theme-switch__toggle" type="checkbox" name="theme" id="theme-switch-toggle"
                     aria-label="Переключить между тёмной и светлой темой" />
@@ -57,13 +55,15 @@
                 </label>
                 <div aria-hidden="true" class="theme-switch__marker"></div>
             </div>
-    
+
             <svg class="theme-switch__icon" aria-label="Иконка луны">
                 <use href="./images/sprite.svg#iconmoon"></use>
             </svg>
         </div>
     </div>
 
+
     <div class="auth-open"></div>
     
+
 </header>

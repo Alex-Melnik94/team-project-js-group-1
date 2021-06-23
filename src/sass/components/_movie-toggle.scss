@@ -1,0 +1,91 @@
+.switch-button {
+  background: rgba(209, 209, 209, 0.7);
+  border-radius: 30px;
+  border: 2px solid white;
+  overflow: hidden;
+  width: 240px;
+  text-align: center;
+  font-size: 17px;
+  letter-spacing: 1px;
+  color: #000000;
+  padding-right: 120px;
+  
+  position: absolute;
+  left: 50%;
+
+ 
+
+ @media screen and (max-width: 767px) {
+    top: 180px;
+    transform: translateX(-50%)  scale(0.6);
+  }
+
+  @media screen and (min-width: 768px) {
+    top: 170px;
+    transform: translateX(-150%)  scale(0.6);
+  }
+  @media screen and (min-width: 1024px) {
+    top: 170px;
+    transform: translateX(-200%)  scale(0.7);
+  }
+
+  &:before {
+    content: "This week";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  &-checkbox {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
+
+    &:checked + .switch-button-label:before {
+      transform: translateX(120px);
+      transition: transform 300ms linear;
+    }
+
+    & + .switch-button-label {
+      position: relative;
+      padding: 15px 0;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+
+      &:before {
+        content: "";
+        background: $accent-color;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 30px;
+        transform: translateX(0);
+        transition: transform 300ms;
+      }
+
+      .switch-button-label-span {
+        position: relative;
+      }
+    }
+  }
+}
+
+.switch-button--is-hidden {
+    display: none;
+}
