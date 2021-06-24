@@ -2,6 +2,7 @@
   
 const body = document.querySelector('body');
 const switcher = document.querySelector('.theme-switch__toggle');
+const movieToggle = document.querySelector('.switch-button');
 
 const Theme = {
   LIGHT: 'light-theme',
@@ -20,9 +21,11 @@ function setClassList(evt) {
   if (switcher.checked) {
     body.classList.add(Theme.DARK);
     body.classList.remove(Theme.LIGHT);
+    movieToggle.classList.remove(Theme.DARK);
   } else {
     body.classList.add(Theme.LIGHT);
     body.classList.remove(Theme.DARK);
+    movieToggle.classList.remove(Theme.DARK);
   }
 }
 
@@ -40,5 +43,6 @@ const currentTheme = localStorage.getItem('theme');
 
 if (currentTheme === Theme.DARK) {
   body.classList.add(Theme.DARK);
+  movieToggle.classList.add(Theme.DARK);
   switcher.checked = true;
 }

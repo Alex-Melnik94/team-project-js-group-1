@@ -19,18 +19,19 @@
 
 .films {
   display: flex;
+  padding: 100px 0px 60px 0px;
 
-  @media screen and (max-width: 767px) {
-    padding: 60px 0px;
-  }
+  // @media screen and (max-width: 767px) {
+  //   padding: 60px 0px;
+  // }
 
-  @media screen and (min-width: 768px) {
-    padding: 60px 0px;
-  }
+  // @media screen and (min-width: 768px) {
+  //   padding: 60px 0px;
+  // }
 
-  @media screen and (min-width: 1024px) {
-    padding: 60px 0px;
-  }
+  // @media screen and (min-width: 1024px) {
+  //   padding: 100px 0px 60px 0px;
+  // }
 }
 
 .film__grid {
