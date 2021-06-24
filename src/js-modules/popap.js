@@ -63,7 +63,7 @@ async function onClickFilm(e) {
 
     if (existingWatchedFilmsArray === null) {
         addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
-    }
+    };
 
     // ...проверка: добавлен ли фильм ранеее в очередь
     if (existingFilmsInQueueArray) {
@@ -81,7 +81,7 @@ async function onClickFilm(e) {
   
     if (existingFilmsInQueueArray === null) {
         addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
-    }
+    };
 
     // ...функция добавления фильма в Watched массив в Local Storage
     function addToWatchedFilmsInLocalStorage() {
@@ -99,7 +99,6 @@ async function onClickFilm(e) {
 
             existingWatchedFilmsArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
-            console.log(JSON.parse(localStorage.getItem('watchedFilms')));
         };
 
         // ...если ещё нет фильмов в watchedFilms
@@ -151,7 +150,6 @@ async function onClickFilm(e) {
 
             existingFilmsInQueueArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
-
         };
 
         // ...если ещё нет фильмов в queueFilms
