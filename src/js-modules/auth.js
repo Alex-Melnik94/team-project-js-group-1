@@ -23,12 +23,12 @@ const authCloseButton = document.querySelector('.auth-close');
 
 authOpenButton.addEventListener('click', () => {
   authContainer.classList.remove('auth-hidden');
-  document.body.classList.add('auth-open');
+  document.body.classList.add('auth-modal-open');
 });
 
 authCloseButton.addEventListener('click', evt => {
   authContainer.classList.add('auth-hidden');
-  document.body.classList.remove('auth-open');
+  document.body.classList.remove('auth-modal-open');
 });
 
 const authOutputField = document.querySelector('.auth-form .output');

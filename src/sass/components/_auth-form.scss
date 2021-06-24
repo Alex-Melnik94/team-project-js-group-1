@@ -82,13 +82,13 @@
   padding-bottom: 3rem;
 }
 
-[type='checkbox']:checked,
-[type='checkbox']:not(:checked) {
+.auth-form [type='checkbox']:checked,
+.auth-form [type='checkbox']:not(:checked) {
   position: absolute;
   left: -9999px;
 }
-.checkbox:checked + label,
-.checkbox:not(:checked) + label {
+.auth-form .checkbox:checked + label,
+.auth-form .checkbox:not(:checked) + label {
   position: relative;
   display: block;
   text-align: center;
@@ -100,8 +100,8 @@
   cursor: pointer;
   background-color: $accentColor;
 }
-.checkbox:checked + label:before,
-.checkbox:not(:checked) + label:before {
+.auth-form .checkbox:checked + label:before,
+.auth-form .checkbox:not(:checked) + label:before {
   position: absolute;
   display: block;
   width: 36px;
@@ -125,7 +125,7 @@
   font-size: 24px;
   transition: all 0.5s ease;
 }
-.checkbox:checked + label:before {
+.auth-form .checkbox:checked + label:before {
   transform: translateX(44px) rotate(-270deg);
 }
 
@@ -175,7 +175,7 @@
 .card-back {
   transform: rotateY(180deg);
 }
-.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
+.auth-form .checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
   transform: rotateY(180deg);
 }
 .center-wrap {
@@ -453,7 +453,7 @@
   pointer-events: initial;
 
   color: #c4c3ca;
-  background-color: rgba(31, 32, 41, 0.9);
+  background-color: rgba(0, 0, 0, 0.9);
   overflow-x: hidden;
 }
 
