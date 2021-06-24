@@ -61,6 +61,10 @@ async function onClickFilm(e) {
         };
     };
 
+    if (existingWatchedFilmsArray === null) {
+        addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
+    }
+
     // ...проверка: добавлен ли фильм ранеее в очередь
     if (existingFilmsInQueueArray) {
         const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
@@ -75,8 +79,15 @@ async function onClickFilm(e) {
         };
     };
   
+    if (existingFilmsInQueueArray === null) {
+        addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
+    }
+
     // ...функция добавления фильма в Watched массив в Local Storage
     function addToWatchedFilmsInLocalStorage() {
+        const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+        
         dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
@@ -88,7 +99,7 @@ async function onClickFilm(e) {
 
             existingWatchedFilmsArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
-
+            console.log(JSON.parse(localStorage.getItem('watchedFilms')));
         };
 
         // ...если ещё нет фильмов в watchedFilms
@@ -110,6 +121,9 @@ async function onClickFilm(e) {
 
     // ...функция удаления фильма из Watched массива в Local Storage
     function removeFromWatchedFilmsInLocalStorage() {
+        const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+
         const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
         if (searchedFilm) {
             existingWatchedFilmsArray.splice(existingWatchedFilmsArray.indexOf(searchedFilm), 1);
@@ -123,6 +137,9 @@ async function onClickFilm(e) {
 
     // ...функция добавления фильма в Queue массив в Local Storage
     function addFilmToQueueInLocalStorage() {
+        const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+
         dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
@@ -156,6 +173,9 @@ async function onClickFilm(e) {
 
     // ...функция удаления фильма из Queue массива в Local Storage
     function removeFilmFromQueueInLocalStorage() {
+        const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+        
         const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
         if (searchedFilm) {
             existingFilmsInQueueArray.splice(existingFilmsInQueueArray.indexOf(searchedFilm), 1);
