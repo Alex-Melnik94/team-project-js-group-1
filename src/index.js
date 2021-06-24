@@ -30,12 +30,12 @@ import './js-modules/btnListener.js';
 
 // Рендер панели с пагинацией и первой страницы с трендовыми фильмами
 export const pagination = new Pages('.pagination');
-const initMainMarkup = async function () {
+export const initMainMarkup = async function () {
   const totalPages = await renderTrendingFilms(variables.filmGrid, variables.preloader);
   pagination.moveToPage(1, totalPages);
 };
 // Полноценная пагинация по трендовым фильмам
-const updateTrendingMarkup = async function () {
+export const updateTrendingMarkup = async function () {
   const newPage = pagination.page;
   await renderTrendingFilms(variables.filmGrid, variables.preloader, newPage);
 };

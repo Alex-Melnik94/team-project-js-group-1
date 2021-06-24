@@ -18,5 +18,7 @@ export default {
     headerQueueBtn: document.querySelector('.js-btn-queue'),
     fetchTrendingMoviesToggle: document.querySelector('.switch-button'),
     fetchTrendingMoviesBtn: document.querySelector('.switch-button-checkbox'),
+    genreSorter: document.querySelector('.genre-modal'),
+    
 }
 
