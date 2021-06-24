@@ -1,14 +1,19 @@
 import variables from "./variables.js";
 import renderQueueAndWatched from '../hbs-templates/queue-and-watched-films.hbs';
+
+// import Pages from './pagination.js';
+import { pagination } from '../index.js';
+
 import { renderTrendingFilms,  renderFilmsSortedByGenre} from '../js-modules/render-service.js';
 import { initMainMarkup, updateTrendingMarkup, pagination } from '../index.js'
+
 
 variables.homeBtn.addEventListener('click', onHomeBtnClick);
 variables.libraryBtn.addEventListener('click', onLibraryBtnClick);
 variables.btnWatched.addEventListener('click', onWatchedBtnClick);
 variables.btnQueue.addEventListener('click', onQueueBtnClick);
-variables.headerWatchedBtn.addEventListener('click', onHeaderWatchedButtonClick);
-variables.headerQueueBtn.addEventListener('click', onHeaderQueueButtonClick);
+variables.headerWatchedBtn.addEventListener('click', onHeaderWatchedButtonClick.bind(variables.headerWatchedBtn));
+variables.headerQueueBtn.addEventListener('click', onHeaderQueueButtonClick.bind(variables.headerQueueBtn));
 variables.fetchTrendingMoviesBtn.addEventListener('input', onTrendingMoviesBtnClick);
 
 // <<<Uncomment to activate sorting by genres>>>
@@ -47,7 +52,7 @@ const watchedFilmsArr = localStorage.getItem('watchedFilms');
         return;
     }
 
-
+    
 
     variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
@@ -62,6 +67,10 @@ function onQueueBtnClick(e) {
     variables.btnWatched.classList.remove('checked');
 }
 
+function defineCardsPerPage () {
+    return 10;
+}
+
 function onHeaderWatchedButtonClick() {
     if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
 
@@ -74,7 +83,27 @@ function onHeaderWatchedButtonClick() {
         return;
     }
 
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
+    console.log('this in onHeaderWatchedButtonClick', this);
+    const cardsPerPage = defineCardsPerPage();
+    console.log('cardsPerPage', cardsPerPage);
+    const currentPage = this === variables.headerWatchedBtn ? 1 : pagination.page;
+    console.log('currentPage', currentPage);
+    const lastPage = parsedArray.length;
+    console.log('lastPage', lastPage);
+    const totalPages = Math.ceil(parsedArray.length / cardsPerPage);
+    console.log('totalPages', totalPages);
+    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
+    console.log('firstFilmToRender', firstFilmToRender);
+    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, lastPage);
+    console.log('lastFilmToRender', lastFilmToRender);
+
+    const parcedArrayToRender = parsedArray.slice(firstFilmToRender, lastFilmToRender);
+    console.log('parcedArrayToRender', parcedArrayToRender);
+    
+    pagination.moveToPage(currentPage, totalPages);
+    pagination.listen(onHeaderWatchedButtonClick);
+
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parcedArrayToRender));
 
 }
 
@@ -90,8 +119,29 @@ function onHeaderQueueButtonClick() {
         return;
     }
 
+    console.log('this in onHeaderQueueButtonClick', this);
+    const cardsPerPage = defineCardsPerPage();
+    console.log('cardsPerPage', cardsPerPage);
+    const currentPage = this === variables.headerQueueBtn ? 1 : pagination.page;
+    console.log('currentPage', currentPage);
+    const lastPage = parsedArray.length;
+    console.log('lastPage', lastPage);
+    const totalPages = Math.ceil(parsedArray.length / cardsPerPage);
+    console.log('totalPages', totalPages);
+    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
+    console.log('firstFilmToRender', firstFilmToRender);
+    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, lastPage);
+    console.log('lastFilmToRender', lastFilmToRender);
+
+    const parcedArrayToRender = parsedArray.slice(firstFilmToRender, lastFilmToRender);
+    console.log('parcedArrayToRender', parcedArrayToRender);
+    
+    pagination.moveToPage(currentPage, totalPages);
+    pagination.listen(onHeaderQueueButtonClick);
+
     variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
+
 
 function onTrendingMoviesBtnClick() {
     let timeFrame;
@@ -103,6 +153,10 @@ function onTrendingMoviesBtnClick() {
         timeFrame = false;
         localStorage.setItem('trendingMoviesToggleChecked', timeFrame);
     }
+
+
+    // const pagination = new Pages('.pagination');
+
 
     const resetMainMarkup = async function () {
         const totalPages = await renderTrendingFilms(variables.filmGrid, variables.preloader);

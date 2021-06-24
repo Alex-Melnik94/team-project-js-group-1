@@ -151,6 +151,10 @@ export default class Pages {
       disableRightControls();
     }
 
+    if (Math.min(...this._mapping.pages) <= 1) {
+      disableLeftControls();
+    }
+
   }
 
   refreshPaginationMarkup() {
@@ -208,6 +212,10 @@ export default class Pages {
   
   get page() {
     return this._currentPage;
+  }
+
+  set page(newPage) {
+    this._currentPage = newPage;
   }
 
   get container() {
