@@ -23,7 +23,7 @@ export function appendGalleryMarkup(fetchMovies) {
   if (films.updatedFilmData.length === 0) {
     variables.preloader.classList.add('preloader-hidden');
     variables.searchError.textContent =
-      'Search result not successful. Enter the correct movie name and search again!';
+      'Search result is not successful. Please enter the correct movie name and try again!';
 
     setTimeout(() => {
       variables.searchError.innerText = '';

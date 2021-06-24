@@ -65,7 +65,7 @@ async function onClickFilm(e) {
         addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
     };
 
-    // ...проверка: добавлен ли фильм ранеее в очередь
+    // ...проверка: добавлен ли фильм ранее в очередь
     if (existingFilmsInQueueArray) {
         const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
 
