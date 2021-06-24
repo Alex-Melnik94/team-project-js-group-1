@@ -1,9 +1,6 @@
 import variables from "./variables.js";
 import renderQueueAndWatched from '../hbs-templates/queue-and-watched-films.hbs';
 
-// import Pages from './pagination.js';
-import { pagination } from '../index.js';
-
 import { renderTrendingFilms,  renderFilmsSortedByGenre} from '../js-modules/render-service.js';
 import { initMainMarkup, updateTrendingMarkup, pagination } from '../index.js'
 
