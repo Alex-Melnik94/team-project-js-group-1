@@ -31,10 +31,21 @@ function onLibraryBtnClick(e) {
     variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');
 
     // Automatically render watched films
-
-    if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
-    const watchedFilmsArr = localStorage.getItem('watchedFilms');
+const watchedFilmsArr = localStorage.getItem('watchedFilms');
     const parsedArray = JSON.parse(watchedFilmsArr);
+
+        if (variables.filmGrid.innerHTML.length !== 0) {
+        variables.filmGrid.innerHTML = "";
+    }
+
+        if (parsedArray === null || parsedArray.length === 0) {
+        const notification = '<p class="film__notification">No added movies yet</p>';
+        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        return;
+    }
+
+
+
     variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
 
@@ -53,6 +64,13 @@ function onHeaderWatchedButtonClick() {
 
     const watchedFilmsArr = localStorage.getItem('watchedFilms');
     const parsedArray = JSON.parse(watchedFilmsArr);
+
+        if (parsedArray === null || parsedArray.length === 0) {
+        const notification = '<p class="film__notification">No added movies yet</p>';
+        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        return;
+    }
+
     variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 
 }
@@ -62,6 +80,13 @@ function onHeaderQueueButtonClick() {
 
     const queueFilmsArr = localStorage.getItem('queueFilms');
     const parsedArray = JSON.parse(queueFilmsArr);
+
+        if (parsedArray === null || parsedArray.length === 0) {
+        const notification = '<p class="film__notification">No added movies yet</p>';
+        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        return;
+    }
+
     variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
 
