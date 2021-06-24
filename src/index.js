@@ -14,6 +14,7 @@ import initUpArrow from "./js-modules/up-arrow.js";
 import './js-modules/library';
 
 import './js-modules/btnListener.js';
+import './js-modules/isOpenGenre';
 
 
 // Рендер панели с пагинацией и первой страницы с трендовыми фильмами
