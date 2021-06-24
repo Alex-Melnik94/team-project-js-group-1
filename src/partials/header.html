@@ -12,7 +12,8 @@
                 <li class="link__library"> <a class="link__item js-library-btn" href="">my library</a> </li>
             </ul>
         </nav>
-        <form action="" class="header__search">
+        <div class="search-nav">
+            <form action="" class="header__search">
 
             <input name="query" class="search__input" type="text" placeholder="Type to search" autocomplete="off">
             <svg class="search__icon" width="12" height="12">
@@ -20,7 +21,102 @@
             </svg>
             <p class="search__result visually-hidden">Search result notification</p>
         </form>
+              
+              <div class="genre-container">
+                <button
+                 type="button" 
+                 class="value-btn"
+                 aria-expanded="false"
+                 aria-controls="menu-container"
+                 data-menu-button>
+                    <span class="value">genre</span>
+                    <svg
+                     class="arrow-down"
+                     aria-label="Переключатель меню">
+                        <use 
+                            href="./images/sprite.svg#icon-arrow-down">
+                        </use>
+                    </svg>    
+                    <svg
+                     class="icon-close"
+                     aria-label="Переключатель меню">
+                        <use 
+                            href="./images/sprite.svg#icon-close">
+                        </use>
+                        
+                    </svg>
+                </button>
+
+                <div class="genre-modal" id="genre-modal" data-menu>
+                    <ul class="menu-genre">
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                        <li class="genre-item">
+                            <a href="" class="link">genre</a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+              
         <div class="library visually-hidden">
+
             <ul class="library__list">
                 <li class="library__item">
                     <button class="library__btn js-btn-watched checked">Watched</button>

@@ -23,6 +23,10 @@ import './js-modules/library';
 
 
 import './js-modules/btnListener.js';
+import './js-modules/isOpenGenre';
+
+
+import './js-modules/btnListener.js';
 
 // Рендер панели с пагинацией и первой страницы с трендовыми фильмами
 export const pagination = new Pages('.pagination');
