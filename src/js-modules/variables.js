@@ -13,5 +13,10 @@ export default {
     btnCloseModal: document.querySelector('[data-action="close-popap"]'),
     modalContentBox: document.querySelector('[data-film="popap"]'),
     backdropBox: document.querySelector('.popap'),
+    btnCloseSvg: document.querySelector('.popap__svg-close'),
+    headerWatchedBtn: document.querySelector('.js-btn-watched'),
+    headerQueueBtn: document.querySelector('.js-btn-queue'),
+    fetchTrendingMoviesToggle: document.querySelector('.switch-button'),
+    fetchTrendingMoviesBtn: document.querySelector('.switch-button-checkbox'),
 }
 

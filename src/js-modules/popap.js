@@ -1,9 +1,17 @@
 import variables from './variables.js';
 import { renderDataForModal, renderTrailerMarkup } from "./render-service.js";
 
+let popapBox ='';
+let titleRubrics = '';
+const body = document.querySelector('body');
+
 variables.filmGrid.addEventListener('click', onClickFilm);
 // функция клика по карточке фильма
 async function onClickFilm(e) {
+    
+    // отключаем скролл на body при открытии модалки
+    body.classList.add('body-overflow');
+
     // ID search depending on clicked node
 
     if (e.target.nodeName === "UL") {
@@ -14,6 +22,7 @@ async function onClickFilm(e) {
 
     await renderDataForModal(id);
     openModal();
+    themeSwitcherPopap();
 
     const trailerBtn = document.querySelector('.trailer-btn');
     trailerBtn.addEventListener('click', renderTrailer);
@@ -21,6 +30,8 @@ async function onClickFilm(e) {
     async function renderTrailer() {
         const res = await renderTrailerMarkup(id);
         const videoSection = document.querySelector('.popap__video-div');
+
+
 
         videoSection.insertAdjacentHTML('beforeend', res.markup);
         trailerBtn.disabled = 'true';
@@ -31,31 +42,63 @@ async function onClickFilm(e) {
     const addToWatchedBtn = document.querySelector('.js-watched-btn');
     const addToQueueBtn = document.querySelector('.js-queue-btn');
 
-    // ...добавляем слушателей по клику на них
-    addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
-    addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
+    // ...создаем переменные для фильмов в просмотренных, в очереди и текущего фильма
+    const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
+    const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
+    const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+
+    // ...проверка: добавлен ли фильм ранеее в просмотренные
+    if (existingWatchedFilmsArray) {
+        const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
+
+        if (searchedFilm) {
+        addToWatchedBtn.textContent = 'remove from watched';
+        addToWatchedBtn.addEventListener('click', removeFromWatchedFilmsInLocalStorage);
+        };
+
+        if (!searchedFilm) {
+            addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
+        };
+    };
+
+    if (existingWatchedFilmsArray === null) {
+        addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
+    };
+
+    // ...проверка: добавлен ли фильм ранее в очередь
+    if (existingFilmsInQueueArray) {
+        const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
+
+        if (searchedFilm) {
+        addToQueueBtn.textContent = 'remove from queue';
+        addToQueueBtn.addEventListener('click', removeFilmFromQueueInLocalStorage);
+        };
+
+        if (!searchedFilm) {
+            addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
+        };
+    };
+  
+    if (existingFilmsInQueueArray === null) {
+        addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
+    };
 
     // ...функция добавления фильма в Watched массив в Local Storage
     function addToWatchedFilmsInLocalStorage() {
         const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
         const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
-        // console.log(existingWatchedFilmsArray)
+        
+        dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
 
-            // ...проверка на совпадение: есть ли уже этот фильм в массиве?
-            // if (!existingWatchedFilmsArray.find(film => film.id === filmObjFromSessionStorage.titleFilm)) {
-            //     existingWatchedFilmsArray.push(filmObjFromSessionStorage);
-            //     localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
-            // }
             const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
             if (searchedFilm) {
                 return;
-            }
+            };
 
             existingWatchedFilmsArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
-
         };
 
         // ...если ещё нет фильмов в watchedFilms
@@ -65,16 +108,30 @@ async function onClickFilm(e) {
             localStorage.setItem('watchedFilms', JSON.stringify(watchedFilmsArray));
         };
 
-        // ...делаем кнопку addToWatchedBtn disabled и убираем с неё слушателя
-        addToWatchedBtn.disabled = true;
+        // ...убираем слушателя с кнопки addToWatchedBtn
         addToWatchedBtn.removeEventListener('click', addToWatchedFilmsInLocalStorage);
 
-        // ...меняем текстовый контент на кнопке - как альтернативная доп.функция
-        // addToWatchedBtn.textContent = 'remove from watched';
+        // ...меняем текстовый контент на кнопке
+        addToWatchedBtn.textContent = 'remove from watched';
 
-        // ...добавляем нового слушателя с другой функцией удаления фильма из просмотренных - как альтернативная доп.функция
-        // ...removeFromWatchedFilmsInLocalStorage ещё не написана
-        // addToWatchedBtn.addEventListener('click', removeFromWatchedFilmsInLocalStorage);
+        // ...добавляем нового слушателя с функцией удаления фильма из просмотренных
+        addToWatchedBtn.addEventListener('click', removeFromWatchedFilmsInLocalStorage);
+    };
+
+    // ...функция удаления фильма из Watched массива в Local Storage
+    function removeFromWatchedFilmsInLocalStorage() {
+        const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+
+        const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
+        if (searchedFilm) {
+            existingWatchedFilmsArray.splice(existingWatchedFilmsArray.indexOf(searchedFilm), 1);
+            localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
+        };
+
+        addToWatchedBtn.textContent = 'add to watched';
+        addToWatchedBtn.removeEventListener('click', removeFromWatchedFilmsInLocalStorage);
+        addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
     };
 
     // ...функция добавления фильма в Queue массив в Local Storage
@@ -82,24 +139,17 @@ async function onClickFilm(e) {
         const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
         const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
 
+        dataCheck(filmObjFromSessionStorage)
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
-
-            // ...проверка на совпадение: есть ли уже этот фильм в массиве?
-            // if (!existingFilmsInQueueArray.some(film => film.titleFilm === filmObjFromSessionStorage.titleFilm)) {
-            //     existingFilmsInQueueArray.push(filmObjFromSessionStorage);
-            //     localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
-            // }
-
 
             const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
             if (searchedFilm) {
                 return;
-            }
+            };
 
             existingFilmsInQueueArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
-
         };
 
         // ...если ещё нет фильмов в queueFilms
@@ -109,12 +159,32 @@ async function onClickFilm(e) {
             localStorage.setItem('queueFilms', JSON.stringify(queueFilmsArray));
         };
 
-        // ...делаем кнопку addToQueueBtn disabled и убираем с неё слушателя
-        addToQueueBtn.disabled = true;
+        // ...убираем слушателя с кнопки addToQueueBtn 
         addToQueueBtn.removeEventListener('click', addFilmToQueueInLocalStorage);
+
+        // ...меняем текстовый контент на кнопке
+        addToQueueBtn.textContent = 'remove from queue';
+
+        // ...добавляем нового слушателя с функцией удаления фильма из просмотренных
+        addToQueueBtn.addEventListener('click', removeFilmFromQueueInLocalStorage);
+    };
+
+    // ...функция удаления фильма из Queue массива в Local Storage
+    function removeFilmFromQueueInLocalStorage() {
+        const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+        
+        const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
+        if (searchedFilm) {
+            existingFilmsInQueueArray.splice(existingFilmsInQueueArray.indexOf(searchedFilm), 1);
+            localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
+        };
+
+        addToQueueBtn.textContent = 'add to queue';
+        addToQueueBtn.removeEventListener('click', removeFilmFromQueueInLocalStorage);
+        addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
     };
 };
-
 
 
 
@@ -124,6 +194,17 @@ function openModal() {
     variables.backdropBox.classList.remove('is-hidden');
 };
 
+// добавляю класс dark-theme для модалки и её элементов
+function themeSwitcherPopap() {
+    if(body.classList.contains('dark-theme')) {
+        popapBox = document.querySelector('.popap__content')
+        titleRubrics = document.querySelector('.popap__block-info')
+
+        popapBox.classList.add('dark-theme');
+        titleRubrics.classList.add('dark-theme');
+        variables.btnCloseSvg.classList.add('dark-theme');
+    }
+}
 
 // зыкрытие модалки по клику backdrop
 variables.backdropBox.addEventListener('click', onBackdropClick);
@@ -147,4 +228,23 @@ function closeModal() {
     variables.backdropBox.classList.add('is-hidden');
     window.removeEventListener('keydown', onEscKeyPress);
     variables.modalContentBox.innerHTML = '';
+    body.classList.remove('body-overflow');
+    
+    if(popapBox.nodeName==='DIV' && popapBox.classList.contains('dark-theme')){
+        popapBox.classList.remove('dark-theme')
+        variables.btnCloseSvg.classList.remove('dark-theme');
+    }
 };
+
+function dataCheck(arr) {
+    if (arr.release_date.length === 0 || arr.release_date === undefined) {
+        arr.release_date = 'Unknown release date';
+    }
+    else {
+        arr.release_date = arr.release_date.slice(0, 4);
+    }
+
+    if (arr.genres.length === 0 || arr.genres === undefined) {
+        arr.genres = "Unspecified genre";
+    }
+}

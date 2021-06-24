@@ -5,9 +5,12 @@
 @import './base/normalize';
 @import './base/defaults';
 
+@import './components/auth';
+@import './components/auth-form';
 @import './components/film-cards-section';
 @import './components/footer';
 @import './components/header';
+@import './components/movie-toggle';
 @import './components/modal-film-card';
 @import './components/pagination';
 @import './components/preloader';
