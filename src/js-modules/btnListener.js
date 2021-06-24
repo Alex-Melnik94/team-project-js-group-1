@@ -1,8 +1,12 @@
 import variables from "./variables.js";
 import renderQueueAndWatched from '../hbs-templates/queue-and-watched-films.hbs';
-import { renderTrendingFilms } from '../js-modules/render-service.js';
+
 // import Pages from './pagination.js';
 import { pagination } from '../index.js';
+
+import { renderTrendingFilms,  renderFilmsSortedByGenre} from '../js-modules/render-service.js';
+import { initMainMarkup, updateTrendingMarkup, pagination } from '../index.js'
+
 
 variables.homeBtn.addEventListener('click', onHomeBtnClick);
 variables.libraryBtn.addEventListener('click', onLibraryBtnClick);
@@ -11,6 +15,9 @@ variables.btnQueue.addEventListener('click', onQueueBtnClick);
 variables.headerWatchedBtn.addEventListener('click', onHeaderWatchedButtonClick.bind(variables.headerWatchedBtn));
 variables.headerQueueBtn.addEventListener('click', onHeaderQueueButtonClick.bind(variables.headerQueueBtn));
 variables.fetchTrendingMoviesBtn.addEventListener('input', onTrendingMoviesBtnClick);
+
+// <<<Uncomment to activate sorting by genres>>>
+// variables.genreSorter.addEventListener('click', onGenreBtnClick);
 
 function onHomeBtnClick(e) {
     variables.headerLibrary.classList.add('section__header');
@@ -147,7 +154,9 @@ function onTrendingMoviesBtnClick() {
         localStorage.setItem('trendingMoviesToggleChecked', timeFrame);
     }
 
+
     // const pagination = new Pages('.pagination');
+
 
     const resetMainMarkup = async function () {
         const totalPages = await renderTrendingFilms(variables.filmGrid, variables.preloader);
@@ -162,4 +171,41 @@ function onTrendingMoviesBtnClick() {
 
     resetMainMarkup();
 
+}
+
+async function onGenreBtnClick(e) {
+    if (e.target.nodeName !== 'A') {
+        return;
+}
+    e.preventDefault();
+
+    const localGenres = localStorage.getItem('genres');
+    const genres = JSON.parse(localGenres);
+    const genreName = e.target.innerText;
+
+    if (genreName.toLowerCase() === "all genres") {
+     pagination.listen(updateTrendingMarkup);
+        initMainMarkup();
+        variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
+        return;
+}
+
+    variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');
+    const genre = genres.find((el) => el.name === genreName);
+    const genreId = genre.id;
+    
+
+        const resetMainMarkup = async function () {
+        const totalPages = await renderFilmsSortedByGenre(variables.filmGrid, variables.preloader, genreId);
+            pagination.moveToPage(1, totalPages);
+    };
+
+    const sortedMoviesMarkup = async function () {
+        const newPage = pagination.page;
+        await renderFilmsSortedByGenre(variables.filmGrid, variables.preloader, genreId, newPage);
+    };
+    pagination.listen(sortedMoviesMarkup);
+
+    resetMainMarkup();
+    
 }
