@@ -29,12 +29,10 @@ export default {
           if (el.overview.length === 0) {
             el.overview = 'Overview is not provided.';
           }
-          // for popup
+ 
           el.vote = el.vote_average;
           el.votes = el.vote_count;
           el.popularity = parseFloat(el.popularity).toFixed(2);
-          // el.overview = el.overview;
-          // for popup
 
           if (el.genre_ids.length === 0 || el.genre_ids === undefined) {
             el.genre_ids = "Unspecified genre";

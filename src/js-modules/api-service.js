@@ -69,14 +69,9 @@ export const getTrendingFilms = async function (preloader, page = 1) {
         el.poster_path = `https://image.tmdb.org/t/p/original${el.poster_path}`;
       }
 
-      //  console.log(el.id);
-
       arr.push(el);
       return arr;
     }, []);
-
-    //   const arrWithMovieIds = updatedFilmData.map(el => el.id);
-    // sessionStorage.setItem('arrayWithMovieIDs', JSON.stringify(arrWithMovieIds));
 
     preloader.classList.add('preloader-hidden');
     return { updatedFilmData, totalPages };
