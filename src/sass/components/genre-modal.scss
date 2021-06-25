@@ -1,0 +1,72 @@
+.genre-modal {
+    display: none;
+    top: 0;
+    width: 100%;
+    padding: 7px 7px;
+    border-radius: 3px;
+    background: rgba(140, 140, 140, 0.5);
+    opacity: 1;
+  
+    cursor: pointer;
+    z-index: 1;
+  
+    &.is-open {
+      display: flex;
+      flex-direction: column;
+      width: 500px;
+      margin: auto;
+  
+      @media screen and (min-width: 768px) {
+        width: 300px;
+      }
+  
+      @media screen and (min-width: 1024px) {
+        width: 500px;
+      }
+    }
+  }
+  
+  .menu-genre {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  
+    & .button-genre {
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+  .genreBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    width: 90px;
+    height: 20px;
+    margin: 0 5px 5px 0;
+    border: 1px solid $mainBgColor;
+    border-radius: 5px;
+  
+    background-color: $footerTextColor;
+    color: $mainBgColor;
+  
+    @include transit($cubicBezierMain);
+  
+    &:hover,
+    &:focus {
+      background-color: $accent-color;
+      color: $mainTextColor;
+      cursor: pointer;
+    }
+  
+    @media screen and (min-width: 768px) {
+      width: 67px;
+      margin: 0 3px 3px 0;
+    }
+  
+    @media screen and (min-width: 1024px) {
+      width: 90px;
+      margin: 0 5px 5px 0;
+    }
+  }
