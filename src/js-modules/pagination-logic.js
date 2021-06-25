@@ -1,10 +1,4 @@
 import variables from './variables.js';
-import { pagination } from '../index.js';
-
-const onMovedToHomePage = () => {
-  const TOTAL_PAGES = 20;
-  pagination.moveToPage(1, TOTAL_PAGES);
-}
 
 const onMovedToLibrary = () => {
 
@@ -19,8 +13,6 @@ const onMovedToLibrary = () => {
   
 }
 
-variables.libraryBtn.addEventListener('click', onMovedToHomePage);
-
-variables.headerHome.addEventListener('click', onMovedToLibrary);
+variables.libraryBtn.addEventListener('click', onMovedToLibrary);
 
 

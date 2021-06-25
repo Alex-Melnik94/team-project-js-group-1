@@ -1,7 +1,7 @@
-.auth-form .link {
+.auth-form .auth-link {
   color: #c4c3ca;
 }
-.auth-form .link:hover {
+.auth-form .auth-link:hover {
   color: $accentColor;
 }
 
@@ -468,6 +468,7 @@ body.auth-modal-open .auth-form .checkbox:checked ~ .card-3d-wrap .card-3d-wrapp
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  z-index: 100;
 
   opacity: 1;
   pointer-events: initial;

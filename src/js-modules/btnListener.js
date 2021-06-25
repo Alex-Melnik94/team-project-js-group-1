@@ -18,11 +18,13 @@ variables.fetchTrendingMoviesBtn.addEventListener('input', onTrendingMoviesBtnCl
 
 function onHomeBtnClick(e) {
     e.preventDefault();
-    variables.headerLibrary.classList.add('section__header');
-    variables.headerLibrary.classList.remove('my__library');
+    variables.headerHome.classList.add('section__header');    // headerLibrary amended to headerHome
+    variables.headerHome.classList.remove('my__library');  // headerLibrary amended to headerHome
     variables.searchInput.classList.remove('hidden');
     variables.libraryBtns.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
+    initMainMarkup();
+    pagination.listen(initMainMarkup);
 
     // <<<Uncomment to activate sorting by genres>>>
     // variables.genreSorter.addEventListener('click', onGenreBtnClick);
@@ -73,9 +75,12 @@ function onQueueBtnClick(e) {
     variables.btnWatched.classList.remove('checked');
 }
 
-function defineCardsPerPage () {
-    return 10;
-}
+function defineCardsPerPage() {
+    const screenWidth = window.innerWidth;
+      if (screenWidth < 768) return 4;
+      if (screenWidth < 1024) return 8;
+      return 9;
+  }
 
 function onHeaderWatchedButtonClick() {
     if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
