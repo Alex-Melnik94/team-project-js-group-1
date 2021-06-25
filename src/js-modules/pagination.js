@@ -179,6 +179,9 @@ export default class Pages {
     this.refreshMap();
     this.refreshPaginationMarkup();
     this.show();
+
+    console.log('----------------');
+    console.log('this after moveToPage', this);
   }
 
   shiftPage(offset) {
@@ -232,6 +235,9 @@ export default class Pages {
 
   listen(callback, debounceTime = 500) {
     this.unlisten();
+
+    console.log('----------------');
+    console.log('*callback in page listener*', callback);
 
     this.#listener = debounce(() => {
       window.scrollTo({ top: 0, left: pageXOffset, behavior: 'smooth' });

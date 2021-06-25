@@ -17,6 +17,7 @@ variables.fetchTrendingMoviesBtn.addEventListener('input', onTrendingMoviesBtnCl
 // variables.genreSorter.addEventListener('click', onGenreBtnClick);
 
 function onHomeBtnClick(e) {
+    e.preventDefault();
     variables.headerLibrary.classList.add('section__header');
     variables.headerLibrary.classList.remove('my__library');
     variables.searchInput.classList.remove('hidden');
@@ -88,6 +89,7 @@ function onHeaderWatchedButtonClick() {
         return;
     }
 
+    console.log('----------------');
     console.log('this in onHeaderWatchedButtonClick', this);
     const cardsPerPage = defineCardsPerPage();
     console.log('cardsPerPage', cardsPerPage);
@@ -124,6 +126,7 @@ function onHeaderQueueButtonClick() {
         return;
     }
 
+    console.log('----------------');
     console.log('this in onHeaderQueueButtonClick', this);
     const cardsPerPage = defineCardsPerPage();
     console.log('cardsPerPage', cardsPerPage);
@@ -144,7 +147,7 @@ function onHeaderQueueButtonClick() {
     pagination.moveToPage(currentPage, totalPages);
     pagination.listen(onHeaderQueueButtonClick);
 
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parcedArrayToRender));
 }
 
 
