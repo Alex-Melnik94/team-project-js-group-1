@@ -179,6 +179,9 @@ export default class Pages {
     this.refreshMap();
     this.refreshPaginationMarkup();
     this.show();
+
+    console.log('----------------');
+    console.log('this after moveToPage', this);
   }
 
   shiftPage(offset) {
