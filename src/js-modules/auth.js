@@ -25,12 +25,12 @@ const passReset = document.querySelector('#passreset');
 
 authOpenButton.addEventListener('click', () => {
   authContainer.classList.remove('auth-hidden');
-  document.body.classList.add('auth-modal-open');
+  document.body.classList.add('auth-modal-open', 'body-overflow');
 });
 
-authCloseButton.addEventListener('click', evt => {
+authCloseButton.addEventListener('click', () => {
   authContainer.classList.add('auth-hidden');
-  document.body.classList.remove('auth-modal-open');
+  document.body.classList.remove('auth-modal-open', 'body-overflow');
 });
 
 passwordInput.forEach(icon => {
