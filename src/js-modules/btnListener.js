@@ -94,6 +94,7 @@ function paginateLibrary(array, first = true) {
     const paginatedArray = array.slice(firstFilmToRender, lastFilmToRender);
 
     // console.log('----------------');
+    // console.log('isFirstInvoke', first);
     // console.log('cardsPerPage', cardsPerPage);
     // console.log('currentPage', currentPage);
     // console.log('lastPage', lastPage);
