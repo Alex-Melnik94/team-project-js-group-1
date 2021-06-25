@@ -22,6 +22,10 @@ function onHomeBtnClick(e) {
     variables.searchInput.classList.remove('hidden');
     variables.libraryBtns.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
+
+    // <<<Uncomment to activate sorting by genres>>>
+    // variables.genreSorter.addEventListener('click', onGenreBtnClick);
+    // variables.genreSorter.removeEventListener('click', renderLibraryFilmsSortedByGenre);
 }
 
 function onLibraryBtnClick(e) {
@@ -34,6 +38,10 @@ function onLibraryBtnClick(e) {
     variables.searchInput.classList.add('hidden');
     variables.searchError.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');
+
+    // <<<Uncomment to activate sorting by genres>>>
+    // variables.genreSorter.removeEventListener('click', onGenreBtnClick);
+    // variables.genreSorter.addEventListener('click', renderLibraryFilmsSortedByGenre);
 
     // Automatically render watched films
 const watchedFilmsArr = localStorage.getItem('watchedFilms');
@@ -151,10 +159,6 @@ function onTrendingMoviesBtnClick() {
         localStorage.setItem('trendingMoviesToggleChecked', timeFrame);
     }
 
-
-    // const pagination = new Pages('.pagination');
-
-
     const resetMainMarkup = async function () {
         const totalPages = await renderTrendingFilms(variables.filmGrid, variables.preloader);
         pagination.moveToPage(1, totalPages);
@@ -206,3 +210,69 @@ async function onGenreBtnClick(e) {
     resetMainMarkup();
     
 }
+
+function renderLibraryFilmsSortedByGenre(e) {
+    if (e.target.nodeName !== 'A') {
+        return;
+}
+    e.preventDefault();
+variables.filmGrid.innerHTML = '';
+    const genreName = e.target.innerText;
+    
+    if (variables.headerWatchedBtn.classList.contains('checked')) {
+
+            if (genreName.toLowerCase() === "all genres") {
+                onHeaderWatchedButtonClick();
+                return;
+    }
+    
+    const watchedFilmsArr = localStorage.getItem('watchedFilms');
+    const parsedArray = JSON.parse(watchedFilmsArr);
+
+        if (parsedArray === null || parsedArray.length === 0) {
+        const notification = '<p class="film__notification">No added movies yet</p>';
+        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        return;
+        }
+        
+        const sortedFilms = parsedArray.filter(el => el.genres.includes(genreName));
+
+if (sortedFilms.length === 0) {
+        const notification = `<p class="film__notification">No added movies with this genre</p>`;
+        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        return;
+        }
+
+        variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(sortedFilms));
+        return;
+    }
+    
+    if (variables.headerQueueBtn.classList.contains('checked')) {
+                if (genreName.toLowerCase() === "all genres") {
+                onHeaderQueueButtonClick();
+                return;
+    }
+    
+        const queueFilmsArr = localStorage.getItem('queueFilms');
+
+    const parsedArray = JSON.parse(queueFilmsArr);
+
+        if (parsedArray === null || parsedArray.length === 0) {
+        const notification = '<p class="film__notification">No added movies yet</p>';
+        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        return;
+        }
+        
+        const sortedFilms = parsedArray.filter(el => el.genres.includes(genreName));
+
+if (sortedFilms.length === 0) {
+        const notification = `<p class="film__notification">No added movies with this genre</p>`;
+        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        return;
+        }
+
+
+        variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(sortedFilms));
+        return;
+    }
+     }
