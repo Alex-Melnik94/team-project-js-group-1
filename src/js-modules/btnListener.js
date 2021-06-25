@@ -18,11 +18,13 @@ variables.fetchTrendingMoviesBtn.addEventListener('input', onTrendingMoviesBtnCl
 
 function onHomeBtnClick(e) {
     e.preventDefault();
-    variables.headerLibrary.classList.add('section__header');
-    variables.headerLibrary.classList.remove('my__library');
+    variables.headerHome.classList.add('section__header');    // headerLibrary amended to headerHome
+    variables.headerHome.classList.remove('my__library');  // headerLibrary amended to headerHome
     variables.searchInput.classList.remove('hidden');
     variables.libraryBtns.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
+    initMainMarkup();
+    pagination.listen(initMainMarkup);
 
     // <<<Uncomment to activate sorting by genres>>>
     // variables.genreSorter.addEventListener('click', onGenreBtnClick);
