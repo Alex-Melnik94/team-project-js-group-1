@@ -20,6 +20,8 @@ function onHomeBtnClick(e) {
     e.preventDefault();
     variables.headerHome.classList.add('section__header');    // headerLibrary amended to headerHome
     variables.headerHome.classList.remove('my__library');  // headerLibrary amended to headerHome
+    variables.libraryBtn.classList.remove('current');
+    variables.homeBtn.classList.add('current');
     variables.searchInput.classList.remove('hidden');
     variables.libraryBtns.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
