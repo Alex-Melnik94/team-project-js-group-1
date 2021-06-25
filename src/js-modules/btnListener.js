@@ -20,8 +20,6 @@ function onHomeBtnClick(e) {
     e.preventDefault();
     variables.headerHome.classList.add('section__header');    // headerLibrary amended to headerHome
     variables.headerHome.classList.remove('my__library');  // headerLibrary amended to headerHome
-    variables.libraryBtn.classList.remove('current');
-    variables.homeBtn.classList.add('current');
     variables.searchInput.classList.remove('hidden');
     variables.libraryBtns.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
@@ -77,9 +75,12 @@ function onQueueBtnClick(e) {
     variables.btnWatched.classList.remove('checked');
 }
 
-function defineCardsPerPage () {
-    return 10;
-}
+function defineCardsPerPage() {
+    const screenWidth = window.innerWidth;
+      if (screenWidth < 768) return 4;
+      if (screenWidth < 1024) return 8;
+      return 9;
+  }
 
 function onHeaderWatchedButtonClick() {
     if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
