@@ -84,6 +84,28 @@ function defineCardsPerPage() {
       return 9;
   }
 
+function paginateLibrary(array, first = true) {
+    const cardsPerPage = defineCardsPerPage();
+    const currentPage = first ? 1 : pagination.page;
+    const lastPage = array.length;
+    const totalPages = Math.ceil(lastPage / cardsPerPage);
+    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
+    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, lastPage);
+    const paginatedArray = array.slice(firstFilmToRender, lastFilmToRender);
+
+    // console.log('----------------');
+    // console.log('isFirstInvoke', first);
+    // console.log('cardsPerPage', cardsPerPage);
+    // console.log('currentPage', currentPage);
+    // console.log('lastPage', lastPage);
+    // console.log('totalPages', totalPages);
+    // console.log('firstFilmToRender', firstFilmToRender);
+    // console.log('lastFilmToRender', lastFilmToRender);
+    // console.log('paginatedArray', paginatedArray);
+
+    return {paginatedArray, currentPage, totalPages};
+}
+
 function onHeaderWatchedButtonClick() {
     if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
 
@@ -96,29 +118,13 @@ function onHeaderWatchedButtonClick() {
         return;
     }
 
-    console.log('----------------');
-    console.log('this in onHeaderWatchedButtonClick', this);
-    const cardsPerPage = defineCardsPerPage();
-    console.log('cardsPerPage', cardsPerPage);
-    const currentPage = this === variables.headerWatchedBtn ? 1 : pagination.page;
-    console.log('currentPage', currentPage);
-    const lastPage = parsedArray.length;
-    console.log('lastPage', lastPage);
-    const totalPages = Math.ceil(parsedArray.length / cardsPerPage);
-    console.log('totalPages', totalPages);
-    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
-    console.log('firstFilmToRender', firstFilmToRender);
-    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, lastPage);
-    console.log('lastFilmToRender', lastFilmToRender);
-
-    const parcedArrayToRender = parsedArray.slice(firstFilmToRender, lastFilmToRender);
-    console.log('parcedArrayToRender', parcedArrayToRender);
+    const isFirstInvoke = this === variables.headerWatchedBtn;
+    const {paginatedArray, currentPage, totalPages} = paginateLibrary(parsedArray, isFirstInvoke);
     
     pagination.moveToPage(currentPage, totalPages);
     pagination.listen(onHeaderWatchedButtonClick);
 
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parcedArrayToRender));
-
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
 }
 
 function onHeaderQueueButtonClick() {
@@ -133,28 +139,13 @@ function onHeaderQueueButtonClick() {
         return;
     }
 
-    console.log('----------------');
-    console.log('this in onHeaderQueueButtonClick', this);
-    const cardsPerPage = defineCardsPerPage();
-    console.log('cardsPerPage', cardsPerPage);
-    const currentPage = this === variables.headerQueueBtn ? 1 : pagination.page;
-    console.log('currentPage', currentPage);
-    const lastPage = parsedArray.length;
-    console.log('lastPage', lastPage);
-    const totalPages = Math.ceil(parsedArray.length / cardsPerPage);
-    console.log('totalPages', totalPages);
-    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
-    console.log('firstFilmToRender', firstFilmToRender);
-    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, lastPage);
-    console.log('lastFilmToRender', lastFilmToRender);
-
-    const parcedArrayToRender = parsedArray.slice(firstFilmToRender, lastFilmToRender);
-    console.log('parcedArrayToRender', parcedArrayToRender);
+    const isFirstInvoke = this === variables.headerQueueBtn;
+    const {paginatedArray, currentPage, totalPages} = paginateLibrary(parsedArray, isFirstInvoke);
     
     pagination.moveToPage(currentPage, totalPages);
     pagination.listen(onHeaderQueueButtonClick);
 
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parcedArrayToRender));
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
 }
 
 
