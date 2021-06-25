@@ -12,9 +12,7 @@ variables.btnQueue.addEventListener('click', onQueueBtnClick);
 variables.headerWatchedBtn.addEventListener('click', onHeaderWatchedButtonClick.bind(variables.headerWatchedBtn));
 variables.headerQueueBtn.addEventListener('click', onHeaderQueueButtonClick.bind(variables.headerQueueBtn));
 variables.fetchTrendingMoviesBtn.addEventListener('input', onTrendingMoviesBtnClick);
-
-// <<<Uncomment to activate sorting by genres>>>
-// variables.genreSorter.addEventListener('click', onGenreBtnClick);
+variables.genreSorter.addEventListener('click', onGenreBtnClick);
 
 function onHomeBtnClick(e) {
     e.preventDefault();
@@ -28,9 +26,8 @@ function onHomeBtnClick(e) {
     initMainMarkup();
     pagination.listen(initMainMarkup);
 
-    // <<<Uncomment to activate sorting by genres>>>
-    // variables.genreSorter.addEventListener('click', onGenreBtnClick);
-    // variables.genreSorter.removeEventListener('click', renderLibraryFilmsSortedByGenre);
+    variables.genreSorter.addEventListener('click', onGenreBtnClick);
+    variables.genreSorter.removeEventListener('click', renderLibraryFilmsSortedByGenre);
 }
 
 function onLibraryBtnClick(e) {
@@ -43,10 +40,8 @@ function onLibraryBtnClick(e) {
     variables.searchInput.classList.add('hidden');
     variables.searchError.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');
-
-    // <<<Uncomment to activate sorting by genres>>>
-    // variables.genreSorter.removeEventListener('click', onGenreBtnClick);
-    // variables.genreSorter.addEventListener('click', renderLibraryFilmsSortedByGenre);
+    variables.genreSorter.removeEventListener('click', onGenreBtnClick);
+    variables.genreSorter.addEventListener('click', renderLibraryFilmsSortedByGenre);
 
     // Automatically render watched films
 const watchedFilmsArr = localStorage.getItem('watchedFilms');
@@ -176,7 +171,7 @@ function onTrendingMoviesBtnClick() {
 }
 
 async function onGenreBtnClick(e) {
-    if (e.target.nodeName !== 'A') {
+    if (e.target.nodeName !== 'BUTTON') {
         return;
 }
     e.preventDefault();
@@ -213,7 +208,7 @@ async function onGenreBtnClick(e) {
 }
 
 function renderLibraryFilmsSortedByGenre(e) {
-    if (e.target.nodeName !== 'A') {
+    if (e.target.nodeName !== 'BUTTON') {
         return;
 }
     e.preventDefault();

@@ -1,6 +1,6 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
 import popapFilmMarkup from "../hbs-templates/popap.hbs";
-import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId, getSortedFilms } from "./api-service.js";
+import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId, getSortedFilms } from "./apiService.js";
 import variables from "./variables.js";
 
 export const renderTrendingFilms = async function (container, preloader, page) {
