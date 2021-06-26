@@ -162,12 +162,6 @@
 
   @include transit($cubicBezierMain);
 
-  &:hover,
-  &:focus {
-    background-color: $accent-color;
-    color: $mainTextColor;
-    cursor: pointer;
-  }
 
   @media screen and (min-width: 320px) {
     display: none;
