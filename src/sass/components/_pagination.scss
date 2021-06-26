@@ -81,3 +81,8 @@
 .pagination-nav[data-active='false'] {
   display: none;
 }
+
+body.dark-theme .pagination-nav {
+  background-color: $mainBgColor;
+  color: white;
+}
