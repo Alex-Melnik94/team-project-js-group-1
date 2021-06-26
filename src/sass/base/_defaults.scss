@@ -3,6 +3,11 @@ body {
   font-weight: 500;
   font-size: 12px;
   line-height: 1.17;
+  background-image: url(../images/pat-back.svg);
+  background-repeat: repeat;
+  background-size: 5%;
+  transition: background-color 250ms $cubicBezierMain;
+  ;
 
   &.body-overflow {
     overflow-y: hidden;
