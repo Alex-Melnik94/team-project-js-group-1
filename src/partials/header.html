@@ -1,88 +1,80 @@
 <header class="section__header">
-    <div class="container header">
-        <nav class="header__navigation">
-            <a class="logo" href="index.html">
-                <svg width="24" height="24" class="logo__icon">
-                    <use href="./images/sprite.svg#icon-film"></use>
-                </svg>
-                <p class="logo__text">Filmoteka</p>
-            </a>
-            <ul class="header__links">
-                <li class="link__home"> <a class="link__item current js-home-btn" href="index.html">Home</a> </li>
-                <li class="link__library"> <a class="link__item js-library-btn" href="">my library</a> </li>
-            </ul>
-        </nav>
-        <div class="search-nav">
-            <form action="" class="header__search">
+  <div class="container header">
+    <nav class="header__navigation">
+      <a class="logo" href="index.html">
+        <svg width="24" height="24" class="logo__icon">
+          <use href="./images/sprite.svg#icon-film"></use>
+        </svg>
+        <p class="logo__text">Filmoteka</p>
+      </a>
+      <ul class="header__links">
+        <li class="link__home">
+          <a class="link__item current js-home-btn" href="index.html">Home</a>
+        </li>
+        <li class="link__library"><a class="link__item js-library-btn" href="">my library</a></li>
+      </ul>
+    </nav>
+    <div class="search-nav">
+      <form action="URL" class="header__search">
+        <input
+          name="query"
+          class="search__input"
+          type="text"
+          placeholder="Type to search"
+          autocomplete="off"
+        />
+        <svg class="search__icon" width="12" height="12">
+          <use href="./images/sprite.svg#icon-search"></use>
+        </svg>
+        <p class="search__result visually-hidden">Search result notification</p>
+      </form>
 
-            <input name="query" class="search__input" type="text" placeholder="Type to search" autocomplete="off">
-            <svg class="search__icon" width="12" height="12">
-                <use href="./images/sprite.svg#icon-search"></use>
-            </svg>
-            <p class="search__result visually-hidden">Search result notification</p>
-        </form>
-              
-              <div class="genre-container">
-                <button
-                 type="button" 
-                 class="value-btn"
-                 aria-expanded="false"
-                 aria-controls="menu-container"
-                 data-menu-button>
-                    <span class="value">genre</span>
-                    <svg
-                     class="arrow-down"
-                     aria-label="Переключатель меню">
-                        <use 
-                            href="./images/sprite.svg#icon-arrow-down">
-                        </use>
-                    </svg>    
-                    <svg
-                     class="icon-close"
-                     aria-label="Переключатель меню">
-                        <use 
-                            href="./images/sprite.svg#icon-close">
-                        </use>
-                        
-                    </svg>
-                </button> 
-            </div>
-        </div>
-              
-        <div class="library visually-hidden">
-
-            <ul class="library__list">
-                <li class="library__item">
-                    <button class="library__btn js-btn-watched checked">Watched</button>
-                </li>
-                <li class="library__item">
-                    <button class="library__btn js-btn-queue">queue</button>
-                </li>
-            </ul>
-        </div>
-        <p class="search-error"></p>
+      <div class="genre-container">
+        <button
+          type="button"
+          class="value-btn"
+          aria-expanded="false"
+          aria-controls="menu-container"
+          data-menu-button
+        >
+          <span class="value">genre</span>
+          <svg class="arrow-down" aria-label="Переключатель меню">
+            <use href="./images/sprite.svg#icon-arrow-down"></use>
+          </svg>
+          <svg class="icon-close" aria-label="Переключатель меню">
+            <use href="./images/sprite.svg#icon-close"></use>
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Разметка для 'Today/This week' Toggle -->
-    <!-- <div class="switch-button">
+    <div class="library visually-hidden">
+      <ul class="library__list">
+        <li class="library__item">
+          <button class="library__btn js-btn-watched checked">Watched</button>
+        </li>
+        <li class="library__item">
+          <button class="library__btn js-btn-queue">queue</button>
+        </li>
+      </ul>
+    </div>
+    <p class="search-error"></p>
+  </div>
+
+  <!-- Разметка для 'Today/This week' Toggle -->
+  <!-- <div class="switch-button">
         <input class="switch-button-checkbox" type="checkbox">
         <label class="switch-button-label" for=""><span class="switch-button-label-span">Today</span></label>
     </div> -->
 
+  <!-- Разметка переключателя темы -->
 
-    
-    <!-- Разметка переключателя темы -->
-        
-    <div class="toggle" title="toggle dark mode">
-        
-        <label>
-            <input class="theme-switch__toggle" type="checkbox" name="theme">
-            <span></span>
-        </label>
-        
-    </div>
+  <div class="toggle" title="toggle dark mode">
+    <label>
+      <input class="theme-switch__toggle" type="checkbox" name="theme" />
+      <span></span>
+    </label>
+  </div>
 
-    <div class="auth-open"></div>
-    
-
+  <div class="auth-open"></div>
 </header>
