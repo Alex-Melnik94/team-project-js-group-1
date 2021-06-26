@@ -259,6 +259,10 @@ body.auth-modal-open .auth-form .checkbox:checked ~ .card-3d-wrap .card-3d-wrapp
   transition: all 200ms linear;
 }
 
+.logged-user {
+  color: $accentColor;
+}
+
 .uil-at:before {
   height: 24px;
   width: 24px;
@@ -438,7 +442,7 @@ body.auth-modal-open .auth-form .checkbox:checked ~ .card-3d-wrap .card-3d-wrapp
 
 .auth-open {
   position: absolute;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   display: flex;
   justify-content: center;
@@ -502,7 +506,7 @@ body.auth-modal-open .auth-form .checkbox:checked ~ .card-3d-wrap .card-3d-wrapp
 
   border-radius: 50%;
   border: none;
-  background-color: rgba(255, 107, 8, 0.15);
+  background-color: rgba(255, 107, 8, 0.25);
 
   &:hover {
     color: $accentColor;

@@ -3,7 +3,10 @@ body {
   font-weight: 500;
   font-size: 12px;
   line-height: 1.17;
-
+  background-image: url(../images/pat-back.svg);
+  background-repeat: repeat;
+  background-size: 5%;
+  transition: background-color 250ms $cubicBezierMain;
   &.body-overflow {
     overflow-y: hidden;
   }
@@ -80,11 +83,11 @@ a {
     background-color: transparent;
     background-image: linear-gradient(
       -45deg,
-      rgba(255, 255, 255, 0) 30%,
-      rgba(255, 255, 255, 0.25) 40%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(255, 255, 255, 0.25) 45%,
       rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0.25) 60%,
-      rgba(255, 255, 255, 0) 70%
+      rgba(255, 255, 255, 0.25) 55%,
+      rgba(255, 255, 255, 0) 65%
     );
     transform: translateX(-100%);
   }
@@ -92,11 +95,11 @@ a {
   &.button-glitter--reverse::before {
     background-image: linear-gradient(
       -45deg,
-      rgba(255, 107, 8, 0) 35%,
-      rgba(255, 107, 8, 0.20) 45%,
-      rgba(255, 107, 8, 0.40) 50%,
-      rgba(255, 107, 8, 0.20) 55%,
-      rgba(255, 107, 8, 0) 65%
+      rgba(255, 107, 8, 0) 30%,
+      rgba(255, 107, 8, 0.2) 40%,
+      rgba(255, 107, 8, 0.4) 50%,
+      rgba(255, 107, 8, 0.2) 50%,
+      rgba(255, 107, 8, 0) 70%
     );
   }
 
