@@ -5,7 +5,6 @@
 // Usage:
 //          'let pagination = new Pages(selector);'
 //   [selector] is CSS selector to find pagination container in html
-//   Since markup not completed, this feature is frozen. Markup currently appended to the end of document body.
 //   When created, pagination is not rendered to container immediately.
 
 // Can receive:
@@ -38,6 +37,7 @@ import { debounce } from './utilities.js';
 
 export default class Pages {
   #listener;
+
   #PAGE_CONTROLS = [
     'leftFastButton',
     'leftButton',
@@ -48,6 +48,14 @@ export default class Pages {
     'rightButton',
     'rightFastButton',
   ];
+
+  #MOBILE_SCREEN_WIDTH = 320;
+  #TABLET_SCREEN_WIDTH = 768;
+  #DESKTOP_SCREEN_WIDTH = 1024;
+
+  #MOBILE_LIBRARY_PERPAGE = 4;
+  #TABLET_LIBRARY_PERPAGE = 8;
+  #DESKTOP_LIBRARY_PERPAGE = 9;
 
   constructor(containerClass) {
     this._currentPage = 1;
@@ -183,6 +191,35 @@ export default class Pages {
       .find(page => page.textContent === '' + this._currentPage)
       .classList.add('pagination-page-active');
     this._container.dataset.page = this._currentPage;
+  }
+
+  defineLibraryCardsPerPage() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < this.#TABLET_SCREEN_WIDTH) return this.#MOBILE_LIBRARY_PERPAGE;
+    if (screenWidth < this.#DESKTOP_SCREEN_WIDTH) return this.#TABLET_LIBRARY_PERPAGE;
+    return this.#DESKTOP_LIBRARY_PERPAGE;
+  }
+
+  paginateLibrary(arrayToPaginate, firstInvoke = true) {
+    const cardsPerPage = this.defineLibraryCardsPerPage();
+    const currentPage = firstInvoke ? 1 : this._currentPage;
+    const totalCards = arrayToPaginate.length;
+    const totalPages = Math.ceil(totalCards / cardsPerPage);
+    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
+    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, totalCards);
+    const array = arrayToPaginate.slice(firstFilmToRender, lastFilmToRender);
+
+    console.log('----------------');
+    console.log('isFirstInvoke', firstInvoke);
+    console.log('cardsPerPage', cardsPerPage);
+    console.log('currentPage', currentPage);
+    console.log('totalCards', totalCards);
+    console.log('totalPages', totalPages);
+    console.log('firstFilmToRender', firstFilmToRender);
+    console.log('lastFilmToRender', lastFilmToRender);
+    console.log('array', array);
+
+    return { array, currentPage, totalPages };
   }
 
   moveToPage(newPage, _totalPages = this._totalPages) {

@@ -1,30 +1,17 @@
 import './sass/main.scss';
-
 import './js-modules/trendingMoviesSwitcher.js';
-
 import './js-modules/auth.js';
-
-import { getGenres } from './js-modules/api-service.js';
-
+import { getGenres } from './js-modules/apiService.js';
 import './js-modules/galleryMarkup.js';
-
-import themeSwitcher from './js-modules/themeSwitcher.js';
-
+import './js-modules/themeSwitcher.js';
 import { renderTrendingFilms } from './js-modules/render-service.js';
 import variables from './js-modules/variables.js';
-
 import './js-modules/popap';
-
 import './js-modules/modal-footer.js';
-
-import Pages from './js-modules/pagination.js';
-import './js-modules/pagination-logic.js';
+import Pages from './js-modules/pagination.js'; 
 import initUpArrow from './js-modules/up-arrow.js';
-import './js-modules/library';
-
 import './js-modules/btnListener.js';
 import './js-modules/isOpenGenre';
-
 import './js-modules/btnListener.js';
 
 // Рендер панели с пагинацией и первой страницы с трендовыми фильмами

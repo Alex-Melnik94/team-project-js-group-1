@@ -9,26 +9,26 @@ variables.homeBtn.addEventListener('click', onHomeBtnClick);
 variables.libraryBtn.addEventListener('click', onLibraryBtnClick);
 variables.btnWatched.addEventListener('click', onWatchedBtnClick);
 variables.btnQueue.addEventListener('click', onQueueBtnClick);
-variables.headerWatchedBtn.addEventListener('click', onHeaderWatchedButtonClick.bind(variables.headerWatchedBtn));
-variables.headerQueueBtn.addEventListener('click', onHeaderQueueButtonClick.bind(variables.headerQueueBtn));
+variables.headerWatchedBtn.addEventListener('click', onHeaderWatchedButtonClick);
+variables.headerQueueBtn.addEventListener('click', onHeaderQueueButtonClick);
 variables.fetchTrendingMoviesBtn.addEventListener('input', onTrendingMoviesBtnClick);
-
-// <<<Uncomment to activate sorting by genres>>>
-// variables.genreSorter.addEventListener('click', onGenreBtnClick);
+variables.genreSorter.addEventListener('click', onGenreBtnClick);
+let activeGenre = '';
 
 function onHomeBtnClick(e) {
     e.preventDefault();
     variables.headerHome.classList.add('section__header');    // headerLibrary amended to headerHome
     variables.headerHome.classList.remove('my__library');  // headerLibrary amended to headerHome
+    variables.libraryBtn.classList.remove('current');
+    variables.homeBtn.classList.add('current');
     variables.searchInput.classList.remove('hidden');
     variables.libraryBtns.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
     initMainMarkup();
     pagination.listen(initMainMarkup);
 
-    // <<<Uncomment to activate sorting by genres>>>
-    // variables.genreSorter.addEventListener('click', onGenreBtnClick);
-    // variables.genreSorter.removeEventListener('click', renderLibraryFilmsSortedByGenre);
+    variables.genreSorter.addEventListener('click', onGenreBtnClick);
+    variables.genreSorter.removeEventListener('click', renderLibraryFilmsSortedByGenre);
 }
 
 function onLibraryBtnClick(e) {
@@ -41,28 +41,30 @@ function onLibraryBtnClick(e) {
     variables.searchInput.classList.add('hidden');
     variables.searchError.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');
+    variables.genreSorter.removeEventListener('click', onGenreBtnClick);
+    variables.genreSorter.addEventListener('click', renderLibraryFilmsSortedByGenre);
 
-    // <<<Uncomment to activate sorting by genres>>>
-    // variables.genreSorter.removeEventListener('click', onGenreBtnClick);
-    // variables.genreSorter.addEventListener('click', renderLibraryFilmsSortedByGenre);
+    if (variables.btnQueue.classList.contains('checked')) {           // needed to do this way to immediately initialize library pagination
+        variables.headerQueueBtn.dispatchEvent(new Event('click'));   // but this will make unnecessary all the code commented below  
+      } else {
+        variables.headerWatchedBtn.dispatchEvent(new Event('click')); // commented by Krokodil, delete all the comments if agree
+    } 
 
-    // Automatically render watched films
-const watchedFilmsArr = localStorage.getItem('watchedFilms');
-    const parsedArray = JSON.parse(watchedFilmsArr);
+    // // Automatically render watched films
+    // const watchedFilmsArr = localStorage.getItem('watchedFilms');
+    // const parsedArray = JSON.parse(watchedFilmsArr);
 
-        if (variables.filmGrid.innerHTML.length !== 0) {
-        variables.filmGrid.innerHTML = "";
-    }
+    //     if (variables.filmGrid.innerHTML.length !== 0) {
+    //     variables.filmGrid.innerHTML = "";
+    // }
 
-        if (parsedArray === null || parsedArray.length === 0) {
-        const notification = '<p class="film__notification">No added movies yet</p>';
-        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
-        return;
-    }
+    //     if (parsedArray === null || parsedArray.length === 0) {
+    //     const notification = '<p class="film__notification">No added movies yet</p>';
+    //     variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+    //     return;
+    // }
 
-    
-
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
+    // variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
 
 function onWatchedBtnClick(e) {
@@ -75,14 +77,7 @@ function onQueueBtnClick(e) {
     variables.btnWatched.classList.remove('checked');
 }
 
-function defineCardsPerPage() {
-    const screenWidth = window.innerWidth;
-      if (screenWidth < 768) return 4;
-      if (screenWidth < 1024) return 8;
-      return 9;
-  }
-
-function onHeaderWatchedButtonClick() {
+function onHeaderWatchedButtonClick(e) {
     if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
 
     const watchedFilmsArr = localStorage.getItem('watchedFilms');
@@ -94,32 +89,19 @@ function onHeaderWatchedButtonClick() {
         return;
     }
 
-    console.log('----------------');
-    console.log('this in onHeaderWatchedButtonClick', this);
-    const cardsPerPage = defineCardsPerPage();
-    console.log('cardsPerPage', cardsPerPage);
-    const currentPage = this === variables.headerWatchedBtn ? 1 : pagination.page;
-    console.log('currentPage', currentPage);
-    const lastPage = parsedArray.length;
-    console.log('lastPage', lastPage);
-    const totalPages = Math.ceil(parsedArray.length / cardsPerPage);
-    console.log('totalPages', totalPages);
-    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
-    console.log('firstFilmToRender', firstFilmToRender);
-    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, lastPage);
-    console.log('lastFilmToRender', lastFilmToRender);
-
-    const parcedArrayToRender = parsedArray.slice(firstFilmToRender, lastFilmToRender);
-    console.log('parcedArrayToRender', parcedArrayToRender);
+    const isFirstInvoke = Boolean(e);
+    const {array: paginatedArray, currentPage, totalPages} = pagination.paginateLibrary(parsedArray, isFirstInvoke);
     
     pagination.moveToPage(currentPage, totalPages);
     pagination.listen(onHeaderWatchedButtonClick);
 
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parcedArrayToRender));
+    console.log('!!!!!!!!!!');
+    console.log(paginatedArray);
 
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
 }
 
-function onHeaderQueueButtonClick() {
+function onHeaderQueueButtonClick(e) {
     if (variables.filmGrid.innerHTML.length !== 0) { variables.filmGrid.innerHTML = "" }
 
     const queueFilmsArr = localStorage.getItem('queueFilms');
@@ -131,28 +113,13 @@ function onHeaderQueueButtonClick() {
         return;
     }
 
-    console.log('----------------');
-    console.log('this in onHeaderQueueButtonClick', this);
-    const cardsPerPage = defineCardsPerPage();
-    console.log('cardsPerPage', cardsPerPage);
-    const currentPage = this === variables.headerQueueBtn ? 1 : pagination.page;
-    console.log('currentPage', currentPage);
-    const lastPage = parsedArray.length;
-    console.log('lastPage', lastPage);
-    const totalPages = Math.ceil(parsedArray.length / cardsPerPage);
-    console.log('totalPages', totalPages);
-    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
-    console.log('firstFilmToRender', firstFilmToRender);
-    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, lastPage);
-    console.log('lastFilmToRender', lastFilmToRender);
-
-    const parcedArrayToRender = parsedArray.slice(firstFilmToRender, lastFilmToRender);
-    console.log('parcedArrayToRender', parcedArrayToRender);
+    const isFirstInvoke = Boolean(e);
+    const {array: paginatedArray, currentPage, totalPages} = pagination.paginateLibrary(parsedArray, isFirstInvoke);
     
     pagination.moveToPage(currentPage, totalPages);
     pagination.listen(onHeaderQueueButtonClick);
 
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parcedArrayToRender));
+    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
 }
 
 
@@ -183,7 +150,7 @@ function onTrendingMoviesBtnClick() {
 }
 
 async function onGenreBtnClick(e) {
-    if (e.target.nodeName !== 'A') {
+    if (e.target.nodeName !== 'BUTTON') {
         return;
 }
     e.preventDefault();
@@ -220,67 +187,80 @@ async function onGenreBtnClick(e) {
 }
 
 function renderLibraryFilmsSortedByGenre(e) {
-    if (e.target.nodeName !== 'A') {
+
+    if (e && e.target.nodeName !== 'BUTTON') {
         return;
-}
-    e.preventDefault();
-variables.filmGrid.innerHTML = '';
-    const genreName = e.target.innerText;
-    
+    }
+
+    variables.filmGrid.innerHTML = '';
+    const genreName = Boolean(e) ? e.target.innerText: activeGenre;
+    activeGenre = genreName;
+
     if (variables.headerWatchedBtn.classList.contains('checked')) {
 
-            if (genreName.toLowerCase() === "all genres") {
-                onHeaderWatchedButtonClick();
-                return;
-    }
+        if (genreName.toLowerCase() === "all genres") {
+            variables.headerWatchedBtn.dispatchEvent(new Event('click'));
+            return;
+        }
     
-    const watchedFilmsArr = localStorage.getItem('watchedFilms');
-    const parsedArray = JSON.parse(watchedFilmsArr);
+        const watchedFilmsArr = localStorage.getItem('watchedFilms');
+        const parsedArray = JSON.parse(watchedFilmsArr);
 
         if (parsedArray === null || parsedArray.length === 0) {
-        const notification = '<p class="film__notification">No added movies yet</p>';
-        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
-        return;
+            const notification = '<p class="film__notification">No added movies yet</p>';
+            variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+            return;
         }
         
         const sortedFilms = parsedArray.filter(el => el.genres.includes(genreName));
 
-if (sortedFilms.length === 0) {
-        const notification = `<p class="film__notification">No added movies with this genre</p>`;
-        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
-        return;
+        if (sortedFilms.length === 0) {
+            const notification = `<p class="film__notification">No added movies with this genre</p>`;
+            variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+            return;
         }
 
-        variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(sortedFilms));
+        const isFirstInvoke = Boolean(e);
+        const {array: paginatedArray, currentPage, totalPages} = pagination.paginateLibrary(sortedFilms, isFirstInvoke);
+    
+        pagination.moveToPage(currentPage, totalPages);
+        pagination.listen(renderLibraryFilmsSortedByGenre);
+
+        variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
         return;
     }
     
     if (variables.headerQueueBtn.classList.contains('checked')) {
-                if (genreName.toLowerCase() === "all genres") {
-                onHeaderQueueButtonClick();
-                return;
-    }
+        if (genreName.toLowerCase() === "all genres") {
+            variables.headerQueueBtn.dispatchEvent(new Event('click'));
+            return;
+        }
     
         const queueFilmsArr = localStorage.getItem('queueFilms');
 
-    const parsedArray = JSON.parse(queueFilmsArr);
+        const parsedArray = JSON.parse(queueFilmsArr);
 
         if (parsedArray === null || parsedArray.length === 0) {
-        const notification = '<p class="film__notification">No added movies yet</p>';
-        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
-        return;
+            const notification = '<p class="film__notification">No added movies yet</p>';
+            variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+            return;
         }
         
         const sortedFilms = parsedArray.filter(el => el.genres.includes(genreName));
 
-if (sortedFilms.length === 0) {
-        const notification = `<p class="film__notification">No added movies with this genre</p>`;
-        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
-        return;
+        if (sortedFilms.length === 0) {
+            const notification = `<p class="film__notification">No added movies with this genre</p>`;
+            variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+            return;
         }
 
+        const isFirstInvoke = Boolean(e);
+        const {array: paginatedArray, currentPage, totalPages} = pagination.paginateLibrary(sortedFilms, isFirstInvoke);
+    
+        pagination.moveToPage(currentPage, totalPages);
+        pagination.listen(renderLibraryFilmsSortedByGenre);
 
-        variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(sortedFilms));
+        variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
         return;
     }
-     }
+}

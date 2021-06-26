@@ -25,12 +25,12 @@ const passReset = document.querySelector('#passreset');
 
 authOpenButton.addEventListener('click', () => {
   authContainer.classList.remove('auth-hidden');
-  document.body.classList.add('auth-modal-open');
+  document.body.classList.add('auth-modal-open', 'body-overflow');
 });
 
-authCloseButton.addEventListener('click', evt => {
+authCloseButton.addEventListener('click', () => {
   authContainer.classList.add('auth-hidden');
-  document.body.classList.remove('auth-modal-open');
+  document.body.classList.remove('auth-modal-open', 'body-overflow');
 });
 
 passwordInput.forEach(icon => {
@@ -164,7 +164,8 @@ function handleSignUp() {
     })
     .then(() => {
       authNotify(`${userName}, wellcome to our Filmoteka!`, 'success');
-      document.querySelector('#logheader').textContent = `Signed to: ${userName}`;
+      document.querySelector('#sign-in-text').textContent = 'Signed to: ';
+      document.querySelector('#logged-user').textContent = userName;
       document.querySelector('#logbtn').textContent = 'Sign out';
     })
     .catch(function (error) {
@@ -237,13 +238,13 @@ function initApp() {
       //       // User is signed in.
       const { displayName, email, emailVerified, photoURL, isAnonymous, uid, providerData } = user;
 
-      document.querySelector('#logheader').textContent = `Signed to: ${
-        firebase.auth().currentUser.displayName || 'anonymous'
-      }`;
+      document.querySelector('#sign-in-text').textContent = 'Signed to: ';
+      document.querySelector('#logged-user').textContent = firebase.auth().currentUser.displayName || 'anonymous';
       document.querySelector('#logbtn').textContent = 'Sign out';
     } else {
       //       // User is signed out.
-      document.querySelector('#logheader').textContent = 'Sign in:';
+      document.querySelector('#sign-in-text').textContent = 'Sign in';
+      document.querySelector('#logged-user').textContent = '';
       document.querySelector('#logbtn').textContent = 'Sign in';
     }
   });
