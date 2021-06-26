@@ -44,23 +44,27 @@ function onLibraryBtnClick(e) {
     variables.genreSorter.removeEventListener('click', onGenreBtnClick);
     variables.genreSorter.addEventListener('click', renderLibraryFilmsSortedByGenre);
 
-    // Automatically render watched films
-const watchedFilmsArr = localStorage.getItem('watchedFilms');
-    const parsedArray = JSON.parse(watchedFilmsArr);
+    if (variables.btnQueue.classList.contains('checked')) {           // needed to do this way to immediately initialize library pagination
+        variables.headerQueueBtn.dispatchEvent(new Event('click'));   // but this will make unnecessary all the code commented below  
+      } else {
+        variables.headerWatchedBtn.dispatchEvent(new Event('click')); // commented by Krokodil, delete all the comments if agree
+    } 
 
-        if (variables.filmGrid.innerHTML.length !== 0) {
-        variables.filmGrid.innerHTML = "";
-    }
+    // // Automatically render watched films
+    // const watchedFilmsArr = localStorage.getItem('watchedFilms');
+    // const parsedArray = JSON.parse(watchedFilmsArr);
 
-        if (parsedArray === null || parsedArray.length === 0) {
-        const notification = '<p class="film__notification">No added movies yet</p>';
-        variables.filmGrid.insertAdjacentHTML('beforeend', notification);
-        return;
-    }
+    //     if (variables.filmGrid.innerHTML.length !== 0) {
+    //     variables.filmGrid.innerHTML = "";
+    // }
 
-    
+    //     if (parsedArray === null || parsedArray.length === 0) {
+    //     const notification = '<p class="film__notification">No added movies yet</p>';
+    //     variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+    //     return;
+    // }
 
-    variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
+    // variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
 
 function onWatchedBtnClick(e) {
@@ -71,35 +75,6 @@ function onWatchedBtnClick(e) {
 function onQueueBtnClick(e) {
     variables.btnQueue.classList.add('checked');
     variables.btnWatched.classList.remove('checked');
-}
-
-function defineCardsPerPage() {
-    const screenWidth = window.innerWidth;
-      if (screenWidth < 768) return 4;
-      if (screenWidth < 1024) return 8;
-      return 9;
-  }
-
-function paginateLibrary(array, first = true) {
-    const cardsPerPage = defineCardsPerPage();
-    const currentPage = first ? 1 : pagination.page;
-    const totalCards = array.length;
-    const totalPages = Math.ceil(totalCards / cardsPerPage);
-    const firstFilmToRender = (currentPage - 1) * cardsPerPage;
-    const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, totalCards);
-    const paginatedArray = array.slice(firstFilmToRender, lastFilmToRender);
-
-    console.log('----------------');
-    console.log('isFirstInvoke', first);
-    console.log('cardsPerPage', cardsPerPage);
-    console.log('currentPage', currentPage);
-    console.log('totalCards', totalCards);
-    console.log('totalPages', totalPages);
-    console.log('firstFilmToRender', firstFilmToRender);
-    console.log('lastFilmToRender', lastFilmToRender);
-    console.log('paginatedArray', paginatedArray);
-
-    return {paginatedArray, currentPage, totalPages};
 }
 
 function onHeaderWatchedButtonClick(e) {
@@ -115,10 +90,13 @@ function onHeaderWatchedButtonClick(e) {
     }
 
     const isFirstInvoke = Boolean(e);
-    const {paginatedArray, currentPage, totalPages} = paginateLibrary(parsedArray, isFirstInvoke);
+    const {array: paginatedArray, currentPage, totalPages} = pagination.paginateLibrary(parsedArray, isFirstInvoke);
     
     pagination.moveToPage(currentPage, totalPages);
     pagination.listen(onHeaderWatchedButtonClick);
+
+    console.log('!!!!!!!!!!');
+    console.log(paginatedArray);
 
     variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
 }
@@ -136,7 +114,7 @@ function onHeaderQueueButtonClick(e) {
     }
 
     const isFirstInvoke = Boolean(e);
-    const {paginatedArray, currentPage, totalPages} = paginateLibrary(parsedArray, isFirstInvoke);
+    const {array: paginatedArray, currentPage, totalPages} = pagination.paginateLibrary(parsedArray, isFirstInvoke);
     
     pagination.moveToPage(currentPage, totalPages);
     pagination.listen(onHeaderQueueButtonClick);
@@ -243,7 +221,7 @@ function renderLibraryFilmsSortedByGenre(e) {
         }
 
         const isFirstInvoke = Boolean(e);
-        const {paginatedArray, currentPage, totalPages} = paginateLibrary(sortedFilms, isFirstInvoke);
+        const {array: paginatedArray, currentPage, totalPages} = pagination.paginateLibrary(sortedFilms, isFirstInvoke);
     
         pagination.moveToPage(currentPage, totalPages);
         pagination.listen(renderLibraryFilmsSortedByGenre);
@@ -277,7 +255,7 @@ function renderLibraryFilmsSortedByGenre(e) {
         }
 
         const isFirstInvoke = Boolean(e);
-        const {paginatedArray, currentPage, totalPages} = paginateLibrary(sortedFilms, isFirstInvoke);
+        const {array: paginatedArray, currentPage, totalPages} = pagination.paginateLibrary(sortedFilms, isFirstInvoke);
     
         pagination.moveToPage(currentPage, totalPages);
         pagination.listen(renderLibraryFilmsSortedByGenre);
