@@ -45,73 +45,7 @@
                         </use>
                         
                     </svg>
-                </button>
-
-                <div class="genre-modal" id="genre-modal" data-menu>
-                    <ul class="menu-genre">
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                        <li class="genre-item">
-                            <a href="" class="link">genre</a>
-                        </li>
-                    </ul>
-                </div>
-                
+                </button> 
             </div>
         </div>
               
@@ -119,14 +53,16 @@
 
             <ul class="library__list">
                 <li class="library__item">
-                    <button class="library__btn js-btn-watched checked">Watched</button>
+                    <button class="library__btn button-glitter js-btn-watched  checked">Watched</button>
                 </li>
                 <li class="library__item">
-                    <button class="library__btn js-btn-queue">queue</button>
+                    <button class="library__btn button-glitter js-btn-queue">queue</button>
                 </li>
             </ul>
         </div>
         <p class="search-error"></p>
+
+        <div class="auth-open"></div>
     </div>
 
     <!-- Разметка для 'Today/This week' Toggle -->
@@ -136,29 +72,17 @@
     </div> -->
 
 
-    <div class="toolbar">
-        <!-- Разметка переключателя темы -->
-        <div class="theme-switch">
-            <svg class="theme-switch__icon" role="img" aria-label="Иконка солнца">
-                <use href="./images/sprite.svg#iconsun"></use>
-            </svg>
-
-            <div class="theme-switch__control">
-                <input class="theme-switch__toggle" type="checkbox" name="theme" id="theme-switch-toggle"
-                    aria-label="Переключить между тёмной и светлой темой" />
-                <label aria-hidden="true" class="theme-switch__track" for="theme-switch-toggle">
-                </label>
-                <div aria-hidden="true" class="theme-switch__marker"></div>
-            </div>
-
-            <svg class="theme-switch__icon" aria-label="Иконка луны">
-                <use href="./images/sprite.svg#iconmoon"></use>
-            </svg>
-        </div>
+    
+    <!-- Разметка переключателя темы -->
+        
+    <div class="toggle" title="toggle dark mode">
+        
+        <label>
+            <input class="theme-switch__toggle" type="checkbox" name="theme">
+            <span></span>
+        </label>
+        
     </div>
-
-
-    <div class="auth-open"></div>
     
 
 </header>

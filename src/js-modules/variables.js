@@ -5,7 +5,7 @@ export default {
     homeBtn: document.querySelector('.js-home-btn'),
     libraryBtn: document.querySelector('.js-library-btn'),
     headerHome: document.querySelector('.section__header'),
-    headerLibrary: document.querySelector('.my__library'),
+    headerLibrary: document.querySelector('.my__library'),  // wrong!!! it will be undefined
     libraryBtns: document.querySelector('.library'),
     btnWatched: document.querySelector('.js-btn-watched'),
     btnQueue: document.querySelector('.js-btn-queue'),
@@ -21,5 +21,6 @@ export default {
     openModalBtnFooter: document.querySelector("[data-footer-modal-open]"),
     closeModalBtnFooter: document.querySelector(".data-footer-modal-close-button"),
     modalFooter: document.querySelector(".footer-backdrop"),
+    genreSorter: document.querySelector('.genre-modal'),
 }
 
