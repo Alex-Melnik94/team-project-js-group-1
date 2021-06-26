@@ -1,33 +1,22 @@
-
+import variables from './variables.js';
 
 (() => {
     
-    const btnsFooter = {
-      openModalBtnFooter: document.querySelector("[data-footer-modal-open]"),
-      closeModalBtnFooter: document.querySelector(".data-footer-modal-close-button"),
-      modalFooter: document.querySelector(".footer-backdrop"),
-      
-    };
-    console.log(btnsFooter)
-  
-    btnsFooter.openModalBtnFooter.addEventListener("click", openModalFooter);
+  variables.openModalBtnFooter.addEventListener("click", openModalFooter);
     
-    function openModalFooter(e) {
-      
-       
-        btnsFooter.modalFooter.classList.remove("footer-hidden");
+  function openModalFooter(e) {     
+        variables.modalFooter.classList.remove("footer-hidden");
         window.addEventListener("keydown", onPressEscapeFooter);
-        btnsFooter.closeModalBtnFooter.addEventListener("click", closeModalFooter);
-        btnsFooter.modalFooter.addEventListener("click", backdropCloseModalFooter);
-      
-      };
+        variables.closeModalBtnFooter.addEventListener("click", closeModalFooter);
+        variables.modalFooter.addEventListener("click", backdropCloseModalFooter);   
+  };
 
   
     function closeModalFooter() {
       
-      btnsFooter.closeModalBtnFooter.removeEventListener("click", closeModalFooter);
-      btnsFooter.modalFooter.classList.add("footer-hidden");
-      btnsFooter.modalFooter.removeEventListener("click", closeModalFooter);
+      variables.closeModalBtnFooter.removeEventListener("click", closeModalFooter);
+      variables.modalFooter.classList.add("footer-hidden");
+      variables.modalFooter.removeEventListener("click", closeModalFooter);
       window.removeEventListener('keydown', onPressEscapeFooter);
     }
     function onPressEscapeFooter(event) {
@@ -40,7 +29,7 @@
       closeModalFooter();
     }
     }
-  })();
+})();
 
 
 
@@ -54,9 +43,14 @@ for(i = 0; i < coll.length; i++) {
         const content = this.nextElementSibling;
         if (content.style.display === "block") {
            content.style.display = "none";
+          
         } else {
             content.style.display = "block";
+            
         }
         
     });
 }
+
+
+  

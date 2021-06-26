@@ -30,29 +30,37 @@
 
   
 .data-footer-modal-close-button{
-    font-size: 18px;
-    position: absolute;
-    top: 4%;
-    right: 4%;
-    background-color: $mainBgColor;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    font-size: 18px;
-   
-    z-index: 100;
-    transition: 1s;
-    transform: scale(1);
-      &:hover,
-      &:focus {
-         box-shadow: 0 0 15px $accentColor;
-      }
-    @media screen and (max-width: 480px) {
-        top: 4%;
-        right: 6%;
-      }
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  // z-index: 1;
+//   @media screen and (max-width: 767px){
+//     top: 15px;
+//     right: 20px;
+//  }
+//  @media screen and (min-width: 768px){
+//   top: 15px;
+//   right: 25px;
+// }
+}
+
+.modal__svg-close {
+  width: 30px;
+  height: 30px;
+
+  &.dark-theme {
+    fill: $background-color;
+  }
 }
 
   
@@ -380,3 +388,32 @@
   
 }
  
+
+/*Theme footer*/
+footer.light-theme {
+  background-color: $secondBgColor;
+  color: #333333;
+}
+footer.dark-theme {
+  background-color: #181818;
+  color: $mainBgColor;
+}
+/*Theme footer-modal*/
+.footer-modal.light-theme {
+  background-color: $secondBgColor;
+  color: #333333;
+}
+.footer-modal.dark-theme {
+  background-color: #545454;
+  color: $mainBgColor;
+}
+.modal__svg-close.dark-theme {
+  color:$accentColor;  
+  fill: currentColor
+}
+
+.modal__svg-close:hover,
+.modal__svg-close:focus {
+  color:$accentColor;  
+  fill: currentColor
+}

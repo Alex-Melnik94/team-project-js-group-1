@@ -18,5 +18,8 @@ export default {
     headerQueueBtn: document.querySelector('.js-btn-queue'),
     fetchTrendingMoviesToggle: document.querySelector('.switch-button'),
     fetchTrendingMoviesBtn: document.querySelector('.switch-button-checkbox'),
+    openModalBtnFooter: document.querySelector("[data-footer-modal-open]"),
+    closeModalBtnFooter: document.querySelector(".data-footer-modal-close-button"),
+    modalFooter: document.querySelector(".footer-backdrop"),
 }
 
