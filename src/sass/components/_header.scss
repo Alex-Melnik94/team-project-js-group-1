@@ -228,6 +228,7 @@
 // header my library
 
 .my__library {
+  position: relative;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
     url(/images/background-library.jpg);
   height: 230px;
