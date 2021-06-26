@@ -16,9 +16,15 @@
   align-items: center;
   width: 40px;
   height: 40px;
-  border-radius: 5px;
 
-  background-color: $mainBgColor;
+  @media screen and (min-width: 768px) {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  border-radius: 5px;
+  background-color: transparent;
   color: $mainTextColor;
 
   @include transit($cubicBezierMain);
@@ -83,6 +89,5 @@
 }
 
 body.dark-theme .pagination-nav {
-  background-color: $mainBgColor;
-  color: white;
+  color: #ffffff;
 }
