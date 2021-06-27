@@ -1,5 +1,5 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
-import popapFilmMarkup from "../hbs-templates/popap.hbs";
+import popapFilmMarkup from "../hbs-templates/modal-film-card.hbs";
 import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId } from "./api-service.js";
 import variables from "./variables.js";
 

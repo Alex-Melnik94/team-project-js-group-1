@@ -14,7 +14,7 @@ import themeSwitcher from './js-modules/themeSwitcher.js';
 import { renderTrendingFilms } from './js-modules/render-service.js';
 import variables from './js-modules/variables.js';
 
-import './js-modules/popap';
+import './js-modules/modal-film-card';
 
 import './js-modules/modal-footer.js';
 
