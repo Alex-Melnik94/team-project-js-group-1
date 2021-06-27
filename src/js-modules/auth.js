@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+// import 'firebase/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC5XShaL3vp3Iinx35hfO3S-EImalXSgec',
@@ -17,25 +17,40 @@ firebase.initializeApp(firebaseConfig);
 
 let timerId, timerId2;
 
-const authContainer = document.querySelector('.auth-backdrop');
-const authOpenButton = document.querySelector('.auth-open');
-const authCloseButton = document.querySelector('.auth-close');
-const passwordInput = document.querySelectorAll('.auth-password-eye');
-const passReset = document.querySelector('#passreset');
+// Auth Refs
 
-authOpenButton.addEventListener('click', () => {
-  authContainer.classList.remove('auth-hidden');
+const authContainerRef = document.querySelector('[data-action="auth-backdrop"]');
+const authOpenButtonRef = document.querySelector('[data-action="auth-open"]');
+const authCloseButtonRef = document.querySelector('[data-action="auth-close"]');
+
+const authNotifyField = document.querySelector('[data-action="auth-notify"]');
+
+const passwordEyeIconRefs = document.querySelectorAll('[data-action="toggle-password"]');
+const passResetBtnRef = document.querySelector('[data-action="password-reset"]');
+
+const authLoginButtonRef = document.querySelector('[data-action="log-button"]');
+const authSignupButtonRef = document.querySelector('[data-action="sign-button"]');
+
+// Auth Listeners
+authLoginButtonRef.addEventListener('click', handleLogIn);
+authSignupButtonRef.addEventListener('click', handleSignUp);
+passResetBtnRef.addEventListener('click', sendPasswordReset);
+
+authOpenButtonRef.addEventListener('click', () => {
+  authContainerRef.classList.remove('auth-hidden');
   document.body.classList.add('auth-modal-open', 'body-overflow');
 });
 
-authCloseButton.addEventListener('click', () => {
-  authContainer.classList.add('auth-hidden');
+authCloseButtonRef.addEventListener('click', () => {
+  authContainerRef.classList.add('auth-hidden');
   document.body.classList.remove('auth-modal-open', 'body-overflow');
 });
 
-passwordInput.forEach(icon => {
+passwordEyeIconRefs.forEach(icon => {
   icon.addEventListener('click', evt => {
-    const target = evt.target.closest('.auth-section').querySelector('.auth-password');
+    const target = evt.target
+      .closest('.form-field')
+      .querySelector('[data-action="input-password"]');
 
     if (!target.value) return;
 
@@ -47,7 +62,9 @@ passwordInput.forEach(icon => {
   });
 
   icon.addEventListener('mouseenter', evt => {
-    const target = evt.target.closest('.auth-section').querySelector('.auth-password');
+    const target = evt.target
+      .closest('.form-field')
+      .querySelector('[data-action="input-password"]');
 
     if (!target.value) return;
 
@@ -59,43 +76,45 @@ passwordInput.forEach(icon => {
   });
 });
 
-passReset.addEventListener('mouseenter', () => {
+passResetBtnRef.addEventListener('mouseenter', () => {
   timerId2 = setTimeout(() => authNotify('Send password reset Email?', 'note'), 1000);
 });
 
-passReset.addEventListener('mouseleave', () => {
+passResetBtnRef.addEventListener('mouseleave', () => {
   clearTimeout(timerId2);
 
-  if (authOutputField.textContent === 'Password reset Email sent!') return;
+  if (authNotifyField.textContent === 'Password reset Email sent!') return;
   authClearOutput();
 });
 
-const authOutputField = document.querySelector('.auth-form .output');
+// Auth notification
 
 const authNotify = (message, type = 'alert') => {
   authClearOutput();
 
-  authOutputField.classList.add(type);
-  authOutputField.textContent = message;
-  authOutputField.classList.add('animate');
+  authNotifyField.classList.add(type);
+  authNotifyField.textContent = message;
+  authNotifyField.classList.add('animate');
 
-  setTimeout(() => authOutputField.classList.remove('animate'), 1000);
+  setTimeout(() => authNotifyField.classList.remove('animate'), 1000);
   timerId = setTimeout(() => authClearOutput(), 8000);
 };
 
 const authClearOutput = () => {
   clearTimeout(timerId);
-  authOutputField.textContent = '\u00A0';
-  authOutputField.classList.remove('alert', 'success', 'note', 'animate');
+  authNotifyField.textContent = '\u00A0';
+  authNotifyField.classList.remove('alert', 'success', 'note', 'animate');
 };
 
+// Auth main logic
 ////////////////////////////////////////////////////////////////////////
 
 /**
  * Handles the sign in button press.
  */
 
-function handleLogIn() {
+function handleLogIn(evt) {
+  evt.preventDefault();
   clearsignUp();
 
   if (firebase.auth().currentUser) {
@@ -137,7 +156,8 @@ function handleLogIn() {
 /**
  * Handles the sign up button press.
  */
-function handleSignUp() {
+function handleSignUp(evt) {
+  evt.preventDefault();
   clearLogin();
 
   const email = document.querySelector('#signemail').value;
@@ -166,7 +186,7 @@ function handleSignUp() {
       authNotify(`${userName}, wellcome to our Filmoteka!`, 'success');
       document.querySelector('#sign-in-text').textContent = 'Signed to: ';
       document.querySelector('#logged-user').textContent = userName;
-      document.querySelector('#logbtn').textContent = 'Sign out';
+      authLoginButtonRef.textContent = 'Sign out';
     })
     .catch(function (error) {
       const errorCode = error.code;
@@ -239,19 +259,16 @@ function initApp() {
       const { displayName, email, emailVerified, photoURL, isAnonymous, uid, providerData } = user;
 
       document.querySelector('#sign-in-text').textContent = 'Signed to: ';
-      document.querySelector('#logged-user').textContent = firebase.auth().currentUser.displayName || 'anonymous';
-      document.querySelector('#logbtn').textContent = 'Sign out';
+      document.querySelector('#logged-user').textContent =
+        firebase.auth().currentUser.displayName || 'anonymous';
+      authLoginButtonRef.textContent = 'Sign out';
     } else {
       //       // User is signed out.
       document.querySelector('#sign-in-text').textContent = 'Sign in';
       document.querySelector('#logged-user').textContent = '';
-      document.querySelector('#logbtn').textContent = 'Sign in';
+      authLoginButtonRef.textContent = 'Sign in';
     }
   });
-
-  document.querySelector('#logbtn').addEventListener('click', handleLogIn);
-  document.querySelector('#signbtn').addEventListener('click', handleSignUp);
-  document.querySelector('#passreset').addEventListener('click', sendPasswordReset);
 }
 
 window.onload = function () {
