@@ -1,93 +1,102 @@
-<div class="row backdrop auth-form auth-backdrop auth-hidden">
-  <div class="col-12 text-center align-self-center py-5">
-    <div class="auth-section pb-5 pt-5 pt-sm-2 text-center">
-      <h6 class="mb-0 pb-3 auth-toggle"><span>Log In </span><span>Sign Up</span></h6>
-      <input class="checkbox auth-toggle" type="checkbox" id="reg-log" name="reg-log" />
-      <label for="reg-log" class="auth-toggle"></label>
-      <p class="output">&nbsp;</p>
-      <div class="card-3d-wrap mx-auto">
-        <div class="card-3d-wrapper">
-          <div class="card-front">
-            <div class="center-wrap">
-              <div class="auth-section text-center">
-                <h4 class="mb-4 pb-3" id="logheader"><span class="sign-in-text" id="sign-in-text">Log In</span><span class="logged-user" id="logged-user"></span></h4>
-                <div class="form-group">
-                  <input
-                    type="email"
-                    name="logemail"
-                    class="form-style"
-                    placeholder="Your Email"
-                    id="logemail"
-                    autocomplete="off"
-                  />
-                  <i class="input-icon uil uil-at"></i>
-                </div>
-                <div class="form-group mt-2">
-                  <input
-                    type="password"
-                    name="logpass"
-                    class="form-style auth-password"
-                    placeholder="Your Password"
-                    id="logpass"
-                    autocomplete="off"
-                  />
-                  <i class="input-icon uil uil-lock-alt"></i>
-                  <i class="input-icon auth-password-eye"></i>
-                </div>
-                <a href="#" class="btn mt-4 button-glitter" id="logbtn">Log In</a>
-                <p class="mb-0 mt-4 text-center">
-                  <a href="#0" class="auth-link" id="passreset">Forgot your password?</a>
-                </p>
-              </div>
+<div class="auth-backdrop auth-hidden" data-action="auth-backdrop">
+  <div class="auth-popup">
+    <h4 class="auth-toggle-header">
+      <span class="text">Log In </span><span class="text">Sign Up</span>
+    </h4>
+    <input class="auth-toggle visually-hidden" type="checkbox" id="reg-log" name="reg-log" />
+    <label for="reg-log" class="auth-toggle-label"></label>
+
+    <p class="auth-text auth-notify" data-action="auth-notify">&nbsp;</p>
+
+    <div class="card-3d-wrap">
+      <div class="card-3d-wrapper">
+        <div class="card-front">
+          <form class="form-log auth-form">
+            <h3 class="auth-header auth-log-header" id="logheader">
+              <span class="sign-in-text" id="sign-in-text">Log In</span
+              ><span class="logged-user" id="logged-user"></span>
+            </h3>
+            <div class="form-field">
+              <input
+                type="email"
+                name="logemail"
+                class="form-style"
+                placeholder="Your Email"
+                id="logemail"
+                autocomplete="off"
+              />
+              <i class="input-icon icon-at"></i>
             </div>
-          </div>
-          <div class="card-back">
-            <div class="center-wrap">
-              <div class="auth-section text-center">
-                <h4 class="mb-4 pb-3">Sign Up</h4>
-                <div class="form-group">
-                  <input
-                    type="text"
-                    name="signname"
-                    class="form-style"
-                    placeholder="Your Full Name"
-                    id="signname"
-                    autocomplete="off"
-                  />
-                  <i class="input-icon uil uil-user"></i>
-                </div>
-                <div class="form-group mt-2">
-                  <input
-                    type="email"
-                    name="signemail"
-                    class="form-style"
-                    placeholder="Your Email"
-                    id="signemail"
-                    autocomplete="off"
-                  />
-                  <i class="input-icon uil uil-at"></i>
-                </div>
-                <div class="form-group mt-2">
-                  <input
-                    type="password"
-                    name="signpass"
-                    class="form-style auth-password"
-                    placeholder="Your Password"
-                    id="signpass"
-                    autocomplete="off"
-                  />
-                  <i class="input-icon uil uil-lock-alt"></i>
-                  <i class="input-icon auth-password-eye"></i>
-                </div>
-                <a href="#" class="btn mt-4 button-glitter" id="signbtn">Sign Up</a>
-              </div>
+            <div class="form-field">
+              <input
+                type="password"
+                name="logpass"
+                class="form-style auth-password"
+                placeholder="Your Password"
+                id="logpass"
+                autocomplete="off"
+                data-action="input-password"
+              />
+              <i class="input-icon icon-lock"></i>
+              <i class="input-icon auth-password-eye" data-action="toggle-password"></i>
             </div>
-          </div>
+            <button type="submit" class="auth-button button-glitter" data-action="log-button">
+              Log In
+            </button>
+            <p class="auth-text">
+              <a href="#0" class="auth-link" data-action="password-reset">Forgot your password?</a>
+            </p>
+          </form>
+        </div>
+
+        <div class="card-back">
+          <form class="form-sign auth-form">
+            <h3 class="auth-header auth-sign-header">Sign Up</h3>
+            <div class="form-field">
+              <input
+                type="text"
+                name="signname"
+                class="form-style"
+                placeholder="Your Full Name"
+                id="signname"
+                autocomplete="off"
+              />
+              <i class="input-icon icon-user"></i>
+            </div>
+            <div class="form-field">
+              <input
+                type="email"
+                name="signemail"
+                class="form-style"
+                placeholder="Your Email"
+                id="signemail"
+                autocomplete="off"
+              />
+              <i class="input-icon icon-at"></i>
+            </div>
+            <div class="form-field">
+              <input
+                type="password"
+                name="signpass"
+                class="form-style auth-password"
+                placeholder="Your Password"
+                id="signpass"
+                autocomplete="off"
+                data-action="input-password"
+              />
+              <i class="input-icon icon-lock"></i>
+              <i class="input-icon auth-password-eye" data-action="toggle-password"></i>
+            </div>
+            <button type="submit" class="auth-button button-glitter" data-action="sign-button">
+              Sign Up
+            </button>
+          </form>
         </div>
       </div>
     </div>
   </div>
-  <button type="button" class="auth-close">
+
+  <button type="button" class="auth-close" data-action="auth-close">
     <svg class="auth-close-svg">
       <use href="./images/sprite.svg#icon-close"></use>
     </svg>
