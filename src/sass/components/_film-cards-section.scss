@@ -19,18 +19,19 @@
 
 .films {
   display: flex;
+  padding: 100px 0px 60px 0px;
 
-  @media screen and (max-width: 767px) {
-    padding: 60px 0px;
-  }
+  // @media screen and (max-width: 767px) {
+  //   padding: 60px 0px;
+  // }
 
-  @media screen and (min-width: 768px) {
-    padding: 60px 0px;
-  }
+  // @media screen and (min-width: 768px) {
+  //   padding: 60px 0px;
+  // }
 
-  @media screen and (min-width: 1024px) {
-    padding: 60px 0px;
-  }
+  // @media screen and (min-width: 1024px) {
+  //   padding: 100px 0px 60px 0px;
+  // }
 }
 
 .film__grid {
@@ -142,5 +143,24 @@ body.dark-theme .film__name {
 .film__item:not(:nth-child(3n + 3)) {
   @media screen and (min-width: 1024px) {
     margin-right: 30px;
+  }
+}
+
+.film__notification {
+  position: absolute;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 26px;
   }
 }

@@ -15,20 +15,59 @@ firebase.initializeApp(firebaseConfig);
 
 ////////////////
 
-let timerId;
+let timerId, timerId2;
 
 const authContainer = document.querySelector('.auth-backdrop');
 const authOpenButton = document.querySelector('.auth-open');
 const authCloseButton = document.querySelector('.auth-close');
+const passwordInput = document.querySelectorAll('.auth-password-eye');
+const passReset = document.querySelector('#passreset');
 
 authOpenButton.addEventListener('click', () => {
   authContainer.classList.remove('auth-hidden');
-  document.body.classList.add('auth-open');
+  document.body.classList.add('auth-modal-open', 'body-overflow');
 });
 
-authCloseButton.addEventListener('click', evt => {
+authCloseButton.addEventListener('click', () => {
   authContainer.classList.add('auth-hidden');
-  document.body.classList.remove('auth-open');
+  document.body.classList.remove('auth-modal-open', 'body-overflow');
+});
+
+passwordInput.forEach(icon => {
+  icon.addEventListener('click', evt => {
+    const target = evt.target.closest('.auth-section').querySelector('.auth-password');
+
+    if (!target.value) return;
+
+    if (target.type === 'password') {
+      target.type = 'text';
+    } else {
+      target.type = 'password';
+    }
+  });
+
+  icon.addEventListener('mouseenter', evt => {
+    const target = evt.target.closest('.auth-section').querySelector('.auth-password');
+
+    if (!target.value) return;
+
+    authNotify('show/hide password', 'note');
+  });
+
+  icon.addEventListener('mouseleave', evt => {
+    authClearOutput();
+  });
+});
+
+passReset.addEventListener('mouseenter', () => {
+  timerId2 = setTimeout(() => authNotify('Send password reset Email?', 'note'), 1000);
+});
+
+passReset.addEventListener('mouseleave', () => {
+  clearTimeout(timerId2);
+
+  if (authOutputField.textContent === 'Password reset Email sent!') return;
+  authClearOutput();
 });
 
 const authOutputField = document.querySelector('.auth-form .output');
@@ -47,7 +86,7 @@ const authNotify = (message, type = 'alert') => {
 const authClearOutput = () => {
   clearTimeout(timerId);
   authOutputField.textContent = '\u00A0';
-  authOutputField.classList.remove('alert', 'note', 'animate');
+  authOutputField.classList.remove('alert', 'success', 'note', 'animate');
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -63,7 +102,7 @@ function handleLogIn() {
     firebase
       .auth()
       .signOut()
-      .then(() => authNotify('You have signed out succesfully', 'note'));
+      .then(() => authNotify('You have signed out succesfully', 'success'));
   } else {
     const email = document.querySelector('#logemail').value;
     const password = document.querySelector('#logpass').value;
@@ -80,7 +119,7 @@ function handleLogIn() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(({ user }) => authNotify(`Signed to ${user.displayName || 'anonymous'}`, 'note'))
+      .then(({ user }) => authNotify(`Signed to ${user.displayName || 'anonymous'}`, 'success'))
       .catch(function (error) {
         // Handle Errors here.
         const errorCode = error.code;
@@ -124,8 +163,9 @@ function handleSignUp() {
       });
     })
     .then(() => {
-      authNotify(`${userName}, wellcome to our Filmoteka!`, 'note');
-      document.querySelector('#logheader').textContent = `Signed to: ${userName}`;
+      authNotify(`${userName}, wellcome to our Filmoteka!`, 'success');
+      document.querySelector('#sign-in-text').textContent = 'Signed to: ';
+      document.querySelector('#logged-user').textContent = userName;
       document.querySelector('#logbtn').textContent = 'Sign out';
     })
     .catch(function (error) {
@@ -149,7 +189,7 @@ function sendEmailVerification() {
     .currentUser.sendEmailVerification()
     .then(function () {
       // Email Verification sent!
-      authNotify('Email Verification Sent!', 'note');
+      authNotify('Email verification Sent!', 'success');
     });
 }
 
@@ -161,7 +201,7 @@ function sendPasswordReset() {
     .sendPasswordResetEmail(email)
     .then(function () {
       // Password Reset Email Sent!
-      authNotify('Password Reset Email Sent!', 'note');
+      authNotify('Password reset Email sent!', 'success');
     })
     .catch(function (error) {
       const errorCode = error.code;
@@ -198,13 +238,13 @@ function initApp() {
       //       // User is signed in.
       const { displayName, email, emailVerified, photoURL, isAnonymous, uid, providerData } = user;
 
-      document.querySelector('#logheader').textContent = `Signed to: ${
-        firebase.auth().currentUser.displayName || 'anonymous'
-      }`;
+      document.querySelector('#sign-in-text').textContent = 'Signed to: ';
+      document.querySelector('#logged-user').textContent = firebase.auth().currentUser.displayName || 'anonymous';
       document.querySelector('#logbtn').textContent = 'Sign out';
     } else {
       //       // User is signed out.
-      document.querySelector('#logheader').textContent = 'Sign in:';
+      document.querySelector('#sign-in-text').textContent = 'Sign in';
+      document.querySelector('#logged-user').textContent = '';
       document.querySelector('#logbtn').textContent = 'Sign in';
     }
   });

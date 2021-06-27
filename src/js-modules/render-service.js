@@ -1,6 +1,6 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
 import popapFilmMarkup from "../hbs-templates/modal-film-card.hbs";
-import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId } from "./api-service.js";
+import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId, getSortedFilms } from "./apiService.js";
 import variables from "./variables.js";
 
 export const renderTrendingFilms = async function (container, preloader, page) {
@@ -8,6 +8,7 @@ export const renderTrendingFilms = async function (container, preloader, page) {
 
   if (movies.error !== undefined) {
     variables.searchError.innerText = "Some server issue has occured";
+    preloader.classList.add('preloader-hidden');
 
     setTimeout(() => {
       variables.searchError.innerText = '';
@@ -20,6 +21,7 @@ export const renderTrendingFilms = async function (container, preloader, page) {
     container.innerHTML = '';
   }
   container.insertAdjacentHTML('afterbegin', trendingFilmsMarkupFc(movies.updatedFilmData));
+  preloader.classList.add('preloader-hidden');
   return movies.totalPages;
 };
 
@@ -28,7 +30,6 @@ export async function renderDataForModal(movieId) {
   const movieInfo = await fetchMovieForModal(movieId);
 
   if (movieInfo.error !== undefined) {
-    console.log(movieInfo.error);
     variables.modalContentBox.innerText = "Some server issue has occured";
     return;
   }
@@ -85,3 +86,25 @@ export const renderTrailerMarkup = async function (id) {
     allowfullscreen></iframe>`;
   return { markup };
 };
+
+export const renderFilmsSortedByGenre = async function (container, preloader, genre, page) {
+  const movies = await getSortedFilms(preloader, genre, page);
+
+  if (movies.error !== undefined) {
+    variables.searchError.innerText = "Some server issue has occured";
+    preloader.classList.add('preloader-hidden');
+    
+    setTimeout(() => {
+      variables.searchError.innerText = '';
+    }, 5000);
+    return;
+  }
+
+  if (container.innerText.length !== 0) {
+    container.innerHTML = '';
+  }
+
+  container.insertAdjacentHTML('afterbegin', trendingFilmsMarkupFc(movies.updatedFilmData));
+  preloader.classList.add('preloader-hidden');
+  return movies.totalPages;
+}

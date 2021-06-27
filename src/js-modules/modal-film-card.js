@@ -8,15 +8,14 @@ const body = document.querySelector('body');
 variables.filmGrid.addEventListener('click', onClickFilm);
 // функция клика по карточке фильма
 async function onClickFilm(e) {
-    
-    // отключаем скролл на body при открытии модалки
-    body.classList.add('body-overflow');
 
     // ID search depending on clicked node
-
     if (e.target.nodeName === "UL") {
         return;
     }
+
+    // отключаем скролл на body при открытии модалки
+    body.classList.add('body-overflow');
 
     const id = e.target.closest(".film__item").dataset.id;
 
@@ -61,7 +60,11 @@ async function onClickFilm(e) {
         }
     }
 
-    // ...проверка: добавлен ли фильм ранеее в очередь
+    if (existingWatchedFilmsArray === null) {
+        addToWatchedBtn.addEventListener('click', addToWatchedFilmsInLocalStorage);
+    };
+
+    // ...проверка: добавлен ли фильм ранее в очередь
     if (existingFilmsInQueueArray) {
         const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
 
@@ -75,9 +78,18 @@ async function onClickFilm(e) {
         }
     }
   
+    if (existingFilmsInQueueArray === null) {
+        addToQueueBtn.addEventListener('click', addFilmToQueueInLocalStorage);
+    };
+
     // ...функция добавления фильма в Watched массив в Local Storage
     function addToWatchedFilmsInLocalStorage() {
-        dataCheck(filmObjFromSessionStorage);
+
+        const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+        
+        dataCheck(filmObjFromSessionStorage)
+
         // ...если уже есть фильмы в watchedFilms
         if (existingWatchedFilmsArray) {
 
@@ -89,7 +101,8 @@ async function onClickFilm(e) {
             existingWatchedFilmsArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('watchedFilms', JSON.stringify(existingWatchedFilmsArray));
 
-        }
+        };
+
 
         // ...если ещё нет фильмов в watchedFilms
         if (existingWatchedFilmsArray === null) {
@@ -110,6 +123,9 @@ async function onClickFilm(e) {
 
     // ...функция удаления фильма из Watched массива в Local Storage
     function removeFromWatchedFilmsInLocalStorage() {
+        const existingWatchedFilmsArray = JSON.parse(localStorage.getItem('watchedFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+
         const searchedFilm = existingWatchedFilmsArray.find((el) => el.id === filmObjFromSessionStorage.id);
         if (searchedFilm) {
             existingWatchedFilmsArray.splice(existingWatchedFilmsArray.indexOf(searchedFilm), 1);
@@ -123,7 +139,12 @@ async function onClickFilm(e) {
 
     // ...функция добавления фильма в Queue массив в Local Storage
     function addFilmToQueueInLocalStorage() {
-        dataCheck(filmObjFromSessionStorage);
+
+        const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+
+        dataCheck(filmObjFromSessionStorage)
+
         // ...если уже есть фильмы в queueFilms
         if (existingFilmsInQueueArray) {
 
@@ -135,7 +156,8 @@ async function onClickFilm(e) {
             existingFilmsInQueueArray.unshift(filmObjFromSessionStorage);
             localStorage.setItem('queueFilms', JSON.stringify(existingFilmsInQueueArray));
 
-        }
+        };
+
 
         // ...если ещё нет фильмов в queueFilms
         if (existingFilmsInQueueArray === null) {
@@ -156,6 +178,9 @@ async function onClickFilm(e) {
 
     // ...функция удаления фильма из Queue массива в Local Storage
     function removeFilmFromQueueInLocalStorage() {
+        const existingFilmsInQueueArray = JSON.parse(localStorage.getItem('queueFilms'));
+        const filmObjFromSessionStorage = JSON.parse(sessionStorage.getItem('modalMovieInfo'));
+        
         const searchedFilm = existingFilmsInQueueArray.find((el) => el.id === filmObjFromSessionStorage.id);
         if (searchedFilm) {
             existingFilmsInQueueArray.splice(existingFilmsInQueueArray.indexOf(searchedFilm), 1);
