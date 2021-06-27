@@ -8,15 +8,14 @@ const body = document.querySelector('body');
 variables.filmGrid.addEventListener('click', onClickFilm);
 // функция клика по карточке фильма
 async function onClickFilm(e) {
-    
-    // отключаем скролл на body при открытии модалки
-    body.classList.add('body-overflow');
 
     // ID search depending on clicked node
-
     if (e.target.nodeName === "UL") {
         return;
     };
+
+    // отключаем скролл на body при открытии модалки
+    body.classList.add('body-overflow');
 
     const id = e.target.closest(".film__item").dataset.id;
 
