@@ -21,5 +21,9 @@ export default {
     openModalBtnFooter: document.querySelector("[data-footer-modal-open]"),
     closeModalBtnFooter: document.querySelector(".data-footer-modal-close-button"),
     modalFooter: document.querySelector(".footer-backdrop"),
+    openCardsCommandBtn: document.querySelector('.collapsible'),    
+    contentCommandCards: document.querySelector('.content'),    
+    closeCardsCommandBtn: document.querySelector('.data-user-close-button')
+    
 }
 
