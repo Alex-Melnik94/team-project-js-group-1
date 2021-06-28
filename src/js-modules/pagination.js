@@ -1,20 +1,22 @@
 // Pagination plugin. See API below >>>>
 
 // Exports: class "Pages"
-
+//
 // Usage:
 //          'let pagination = new Pages(selector);'
 //   [selector] is CSS selector to find pagination container in html
 //   When created, pagination is not rendered to container immediately.
-
+//
 // Can receive:
-//          current page => in case of current page change,
+//          current page => in case of current page change;
 //          total pages => necessary in case of new query made;
-// Interaction and primary physical render:
+//          array => array for pagination (custom realization for the aim of the current project);
+//
+// Main interaction should be in the following way:
 //          'pagination.moveToPage(currPage, [tllPages]);'
 //   `currPage` sets new current page
 //   `tllPages` (optional) - sets new total pages number; if omitted, current total pages kept
-
+//
 // Can provide:
 //   current page:
 //        'const currentPage = pagination.page;'
@@ -22,15 +24,21 @@
 //        'const paginationContainerRef = pagination.container;'
 //   current page saved in container data-property:
 //        'const currentPage = pagination.container.dataset.page;'
-//  custom event "pagechanged" dispatched on pagination container when user selects new page.
-//  It can be then caught in outer code, smth like:
-//        'pagination.container.addEventListener('pagechanged', *callback*);'
+//   method `listen` to set up callback invoked at page change; callback may be debounced, default time - 500ms:
+//        'pagination.listen(callback, [debounceTime])'
+//   method `unlisten` to remove page change callback:
+//        'pagination.unlisten()'
+//   methods `show` and `hide` removind or adding class `pagination-hidden` to pagination container;
+//        'pagination.show()', 'pagination.hide()'
+//   methods `defineLibraryCardsPerPage`, `paginateLibrary` methods for customs use for the current project.
+//   see code for details, methods need to be made more universal to use.
+
 
 // Visual interface:
 //   `boxes with figures` - allow to change current page within +/- 1-2 offset range
 //   `ellipsis (...)` - visual separators, no interaction
-//   `<` / `>` - shift current page f'wd and b'wd by one
-//   `<<` / `>>` - shift current page f'wd and b'wd by 10
+//   `<-`  /  `->` - shift current page f'wd and b'wd by one page
+//   `<<-` / `->>` - shift current page f'wd and b'wd by 10 pages
 
 import { camelToKebabCase } from './utilities';
 import { debounce } from './utilities.js';
@@ -209,15 +217,15 @@ export default class Pages {
     const lastFilmToRender = Math.min(firstFilmToRender + cardsPerPage, totalCards);
     const array = arrayToPaginate.slice(firstFilmToRender, lastFilmToRender);
 
-    console.log('----------------');
-    console.log('isFirstInvoke', firstInvoke);
-    console.log('cardsPerPage', cardsPerPage);
-    console.log('currentPage', currentPage);
-    console.log('totalCards', totalCards);
-    console.log('totalPages', totalPages);
-    console.log('firstFilmToRender', firstFilmToRender);
-    console.log('lastFilmToRender', lastFilmToRender);
-    console.log('array', array);
+    // console.log('----------------');
+    // console.log('isFirstInvoke', firstInvoke);
+    // console.log('cardsPerPage', cardsPerPage);
+    // console.log('currentPage', currentPage);
+    // console.log('totalCards', totalCards);
+    // console.log('totalPages', totalPages);
+    // console.log('firstFilmToRender', firstFilmToRender);
+    // console.log('lastFilmToRender', lastFilmToRender);
+    // console.log('array', array);
 
     return { array, currentPage, totalPages };
   }
@@ -229,8 +237,8 @@ export default class Pages {
     this.refreshPaginationMarkup();
     this.show();
 
-    console.log('----------------');
-    console.log('this after moveToPage', this);
+    // console.log('----------------');
+    // console.log('this after moveToPage', this);
   }
 
   shiftPage(offset) {
@@ -285,8 +293,8 @@ export default class Pages {
   listen(callback, debounceTime = 500) {
     this.unlisten();
 
-    console.log('----------------');
-    console.log('*callback in page listener*', callback);
+    // console.log('----------------');
+    // console.log('*callback in page listener*', callback);
 
     this.#listener = debounce(() => {
       window.scrollTo({ top: 0, left: pageXOffset, behavior: 'smooth' });
