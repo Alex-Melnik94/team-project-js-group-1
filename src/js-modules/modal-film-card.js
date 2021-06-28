@@ -9,7 +9,6 @@ variables.filmGrid.addEventListener('click', onClickFilm);
 // функция клика по карточке фильма
 async function onClickFilm(e) {
 
-    // ID search depending on clicked node
     if (e.target.nodeName === "UL") {
         return;
     }

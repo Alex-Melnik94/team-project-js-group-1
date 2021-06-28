@@ -1,6 +1,4 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
-
-// import { pagination } from "../index";
 import api from './apiService.js'
 import './btnListener.js';
 import variables from "./variables.js";

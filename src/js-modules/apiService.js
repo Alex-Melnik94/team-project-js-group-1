@@ -5,9 +5,6 @@ const API_KEY = 'bf52702752a5ae3d0e879b91a59cc623';
 export default {
   searchQuery: '',
 
-
-
-
   async fetchMovies(page = 1) {
 
     try {
@@ -128,9 +125,6 @@ export const fetchTrailerByMovieId = async function (id) {
     return { error };
   }
 };
-
-
-// ************************************************
 
 export const getSortedFilms = async function (preloader, genre, page = 1) {
   preloader.classList.remove('preloader-hidden');
