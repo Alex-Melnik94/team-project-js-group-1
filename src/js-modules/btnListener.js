@@ -86,6 +86,7 @@ function onHeaderWatchedButtonClick(e) {
         if (parsedArray === null || parsedArray.length === 0) {
         const notification = '<p class="film__notification">No added movies yet</p>';
         variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        pagination.moveToPage(1, 1);
         return;
     }
 
@@ -110,6 +111,7 @@ function onHeaderQueueButtonClick(e) {
         if (parsedArray === null || parsedArray.length === 0) {
         const notification = '<p class="film__notification">No added movies yet</p>';
         variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+        pagination.moveToPage(1, 1);
         return;
     }
 
@@ -209,6 +211,7 @@ function renderLibraryFilmsSortedByGenre(e) {
         if (parsedArray === null || parsedArray.length === 0) {
             const notification = '<p class="film__notification">No added movies yet</p>';
             variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+            pagination.moveToPage(1, 1);
             return;
         }
         
@@ -243,6 +246,7 @@ function renderLibraryFilmsSortedByGenre(e) {
         if (parsedArray === null || parsedArray.length === 0) {
             const notification = '<p class="film__notification">No added movies yet</p>';
             variables.filmGrid.insertAdjacentHTML('beforeend', notification);
+            pagination.moveToPage(1, 1);   
             return;
         }
         
