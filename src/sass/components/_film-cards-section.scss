@@ -1,37 +1,5 @@
-// .container {
-//   margin-left: auto;
-//   margin-right: auto;
-
-//   display: flex;
-
-//   @media screen and (min-width: 320px) {
-//     width: 320px;
-//   }
-
-//   @media screen and (min-width: 768px) {
-//     width: 768px;
-//   }
-
-//   @media screen and (min-width: 1024px) {
-//     width: 1024px;
-//   }
-// }
-
 .films {
-  display: flex;
-  padding: 100px 0px 60px 0px;
-
-  // @media screen and (max-width: 767px) {
-  //   padding: 60px 0px;
-  // }
-
-  // @media screen and (min-width: 768px) {
-  //   padding: 60px 0px;
-  // }
-
-  // @media screen and (min-width: 1024px) {
-  //   padding: 100px 0px 60px 0px;
-  // }
+  padding-bottom: 50px;
 }
 
 .film__grid {
@@ -91,19 +59,19 @@
 body.light-theme .film__name {
   text-transform: uppercase;
   margin-bottom: 7px;
-  color: #000000;
+  color: $mainTextColor;
   font-weight: 700;
   line-height: 1.25;
 }
 body.dark-theme .film__name {
   text-transform: uppercase;
   margin-bottom: 7px;
-  color: white;
+  color: $secondTextColor;
   font-weight: 700;
   line-height: 1.25;
 }
 .film__description {
-  color: #ff6b08;
+  color: $accent-color;
   font-weight: 500;
   line-height: 1.16;
 }
@@ -163,4 +131,18 @@ body.dark-theme .film__name {
   @media screen and (min-width: 1024px) {
     font-size: 26px;
   }
+}
+
+.film__poster {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.film__rating {
+  background-color: $accentColor;
+  color: $secondTextColor;
+
+  border-radius: 5px;
+  padding: 1px 7px;
+  margin-left: 5px;
 }

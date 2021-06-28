@@ -1,26 +1,14 @@
 import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
-import popapFilmMarkup from "../hbs-templates/popap.hbs";
-import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId } from "./api-service.js";
+import popapFilmMarkup from "../hbs-templates/modal-film-card.hbs";
+import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId, getSortedFilms } from "./apiService.js";
 import variables from "./variables.js";
 
 export const renderTrendingFilms = async function (container, preloader, page) {
-  const movies = await getTrendingFilms(preloader, page);
 
-  if (movies.error !== undefined) {
-    variables.searchError.innerText = "Some server issue has occured";
+  const fetchInfo = await getTrendingFilms(preloader, page);
+  const renderResult = renderUtilFunc(container, fetchInfo, preloader);
 
-    setTimeout(() => {
-      variables.searchError.innerText = '';
-    }, 5000);
-    return;
-  }
-
-
-  if (container.innerText.length !== 0) {
-    container.innerHTML = '';
-  }
-  container.insertAdjacentHTML('afterbegin', trendingFilmsMarkupFc(movies.updatedFilmData));
-  return movies.totalPages;
+  return renderResult;
 };
 
 
@@ -28,14 +16,12 @@ export async function renderDataForModal(movieId) {
   const movieInfo = await fetchMovieForModal(movieId);
 
   if (movieInfo.error !== undefined) {
-    console.log(movieInfo.error);
     variables.modalContentBox.innerText = "Some server issue has occured";
     return;
   }
 
   const dataForRendering = movieInfo.data;
 
-  // Poster Availability Check
 
   if (dataForRendering.poster_path === null) {
     dataForRendering.poster_path = "http://lexingtonvenue.com/media/poster-placeholder.jpg";
@@ -46,17 +32,13 @@ export async function renderDataForModal(movieId) {
   }
 
 
-  // Rounded popularity
   dataForRendering.popularity = parseFloat(dataForRendering.popularity).toFixed(2);
 
-
-  // Overview Availability Check
 
   if (dataForRendering.overview.length === 0) {
     dataForRendering.overview = 'Overview is not provided.';
   }
 
-  // Genres Availability Check
 
   if (dataForRendering.genres.length === 0 || dataForRendering.genres === undefined) {
     dataForRendering.genres = "Unspecified genre";
@@ -67,15 +49,9 @@ export async function renderDataForModal(movieId) {
     dataForRendering.genres = filmGenres.join(', ');
   }
 
-  /**Added object with info about movie to session storage 
-   to simplify rendering to queue / watched sections */
-
   sessionStorage.setItem('modalMovieInfo', JSON.stringify(dataForRendering));
   variables.modalContentBox.insertAdjacentHTML('beforeend', popapFilmMarkup(dataForRendering));
 }
-
-
-
 
 export const renderTrailerMarkup = async function (id) {
   const res = await fetchTrailerByMovieId(id);
@@ -85,3 +61,31 @@ export const renderTrailerMarkup = async function (id) {
     allowfullscreen></iframe>`;
   return { markup };
 };
+
+export const renderFilmsSortedByGenre = async function (container, preloader, genre, page) {
+  const movies = await getSortedFilms(preloader, genre, page);
+  const renderResult = renderUtilFunc(container, movies, preloader);
+  
+  return renderResult;
+}
+
+const renderUtilFunc = async function (container, fetchInfo, preloader) {
+
+  if (fetchInfo.error !== undefined) {
+    variables.searchError.innerText = "Some server issue has occured";
+    preloader.classList.add('preloader-hidden');
+    
+    setTimeout(() => {
+      variables.searchError.innerText = '';
+    }, 5000);
+    return;
+  }
+
+  if (container.innerText.length !== 0) {
+    container.innerHTML = '';
+  }
+
+  container.insertAdjacentHTML('afterbegin', trendingFilmsMarkupFc(fetchInfo.updatedFilmData));
+  preloader.classList.add('preloader-hidden');
+  return fetchInfo.totalPages;
+}

@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+// import 'firebase/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC5XShaL3vp3Iinx35hfO3S-EImalXSgec',
@@ -15,55 +15,182 @@ firebase.initializeApp(firebaseConfig);
 
 ////////////////
 
-let timerId;
+let timerId, timerId2;
 
-const authContainer = document.querySelector('.auth-backdrop');
-const authOpenButton = document.querySelector('.auth-open');
-const authCloseButton = document.querySelector('.auth-close');
+// Auth Refs
 
-authOpenButton.addEventListener('click', () => {
-  authContainer.classList.remove('auth-hidden');
-  document.body.classList.add('auth-modal-open');
-});
+const authContainerRef = document.querySelector('[data-action="auth-backdrop"]');
+const authOpenButtonRef = document.querySelector('[data-action="auth-open"]');
+const authCloseButtonRef = document.querySelector('[data-action="auth-close"]');
 
-authCloseButton.addEventListener('click', evt => {
-  authContainer.classList.add('auth-hidden');
-  document.body.classList.remove('auth-modal-open');
-});
+const authNotifyField = document.querySelector('[data-action="auth-notify"]');
 
-const authOutputField = document.querySelector('.auth-form .output');
+const passwordEyeIconRefs = document.querySelectorAll('[data-action="toggle-password"]');
+const passResetBtnRef = document.querySelector('[data-action="password-reset"]');
+const verifiedIconRef = document.querySelector('[data-action="verify-email"]');
+
+const authLoginButtonRef = document.querySelector('[data-action="log-button"]');
+const authSignupButtonRef = document.querySelector('[data-action="sign-button"]');
+
+// Auth Listeners
+
+const AddAuthListeners = () => {
+  authLoginButtonRef.addEventListener('click', handleLogIn);
+  authSignupButtonRef.addEventListener('click', handleSignUp);
+
+  passResetBtnRef.addEventListener('click', sendPasswordReset);
+  passResetBtnRef.addEventListener('mouseenter', showPasswordResetHint);
+  passResetBtnRef.addEventListener('mouseleave', hidePasswordResetHint);
+
+  verifiedIconRef.addEventListener('click', sendEmailVerification);
+  verifiedIconRef.addEventListener('mouseenter', showVerificationEmailHint);
+  verifiedIconRef.addEventListener('mouseleave', hideVerificationEmailtHint);
+
+  passwordEyeIconRefs.forEach(icon => {
+    icon.addEventListener('click', togglePasswordDisplay);
+    icon.addEventListener('mouseenter', showPasswordDisplayHint);
+    icon.addEventListener('mouseleave', authClearOutput);
+  });
+
+  document.addEventListener('keydown', onEscKeyPressed);
+  authContainerRef.addEventListener('click', onAuthBackdropClicked);
+};
+
+const openAuthModal = () => {
+  authContainerRef.classList.remove('auth-hidden');
+  document.body.classList.add('auth-modal-open', 'body-overflow');
+  AddAuthListeners();
+};
+
+const closeAuthModal = () => {
+  authContainerRef.classList.add('auth-hidden');
+  document.body.classList.remove('auth-modal-open', 'body-overflow');
+  RemoveAuthListeners();
+};
+
+const RemoveAuthListeners = () => {
+  authLoginButtonRef.removeEventListener('click', handleLogIn);
+  authSignupButtonRef.removeEventListener('click', handleSignUp);
+  passResetBtnRef.removeEventListener('click', sendPasswordReset);
+
+  verifiedIconRef.removeEventListener('click', sendEmailVerification);
+  verifiedIconRef.removeEventListener('mouseenter', showVerificationEmailHint);
+  verifiedIconRef.removeEventListener('mouseleave', hideVerificationEmailtHint);
+
+  passwordEyeIconRefs.forEach(icon => {
+    icon.removeEventListener('click', togglePasswordDisplay);
+    icon.removeEventListener('mouseenter', showPasswordDisplayHint);
+    icon.removeEventListener('mouseleave', authClearOutput);
+  });
+
+  passResetBtnRef.removeEventListener('mouseenter', showPasswordResetHint);
+  passResetBtnRef.removeEventListener('mouseleave', hidePasswordResetHint);
+
+  document.removeEventListener('keydown', onEscKeyPressed);
+  authContainerRef.removeEventListener('click', onAuthBackdropClicked);
+};
+
+const togglePasswordDisplay = evt => {
+  const target = evt.target.closest('.form-field').querySelector('[data-action="input-password"]');
+
+  if (!target.value) return;
+
+  if (target.type === 'password') {
+    target.type = 'text';
+    setTimeout(() => {
+      target.type = 'password';
+    }, 1000);
+  } else {
+    target.type = 'password';
+  }
+};
+
+const showPasswordDisplayHint = evt => {
+  const target = evt.target.closest('.form-field').querySelector('[data-action="input-password"]');
+
+  if (!target.value) return;
+
+  authNotify('show/hide password', 'note');
+};
+
+const showPasswordResetHint = () => {
+  timerId2 = setTimeout(() => authNotify('Send password reset Email?', 'note'), 1000);
+};
+
+const hidePasswordResetHint = () => {
+  clearTimeout(timerId2);
+
+  if (authNotifyField.textContent === 'Password reset Email sent!') return;
+  authClearOutput();
+};
+
+const showVerificationEmailHint = () => {
+  if (firebase.auth().currentUser.emailVerified) {
+    authNotify('Your Email is verified!', 'success');
+    return;
+  }
+
+  timerId2 = setTimeout(
+    () => authNotify('Your Email is not verified. Send verification request?', 'alert'),
+    500,
+  );
+};
+
+const hideVerificationEmailtHint = () => {
+  clearTimeout(timerId2);
+
+  if (authNotifyField.textContent === 'Verification Email sent!') return;
+  authClearOutput();
+};
+
+const onEscKeyPressed = evt => {
+  if (evt.code !== 'Escape') return;
+
+  closeAuthModal();
+};
+
+const onAuthBackdropClicked = evt => {
+  if (evt.target.closest('.auth-popup')) return;
+
+  closeAuthModal();
+};
+
+authOpenButtonRef.addEventListener('click', openAuthModal);
+authCloseButtonRef.addEventListener('click', closeAuthModal);
+
+// Auth notification
 
 const authNotify = (message, type = 'alert') => {
   authClearOutput();
 
-  authOutputField.classList.add(type);
-  authOutputField.textContent = message;
-  authOutputField.classList.add('animate');
+  authNotifyField.classList.add(type);
+  authNotifyField.textContent = message;
+  authNotifyField.classList.add('animate');
 
-  setTimeout(() => authOutputField.classList.remove('animate'), 1000);
+  setTimeout(() => authNotifyField.classList.remove('animate'), 1000);
   timerId = setTimeout(() => authClearOutput(), 8000);
 };
 
 const authClearOutput = () => {
   clearTimeout(timerId);
-  authOutputField.textContent = '\u00A0';
-  authOutputField.classList.remove('alert', 'note', 'animate');
+  authNotifyField.textContent = '\u00A0';
+  authNotifyField.classList.remove('alert', 'success', 'note', 'animate');
 };
 
+// Auth main logic
 ////////////////////////////////////////////////////////////////////////
 
-/**
- * Handles the sign in button press.
- */
+// Handles the sign in button press.
 
-function handleLogIn() {
+function handleLogIn(evt) {
+  evt.preventDefault();
   clearsignUp();
 
   if (firebase.auth().currentUser) {
     firebase
       .auth()
       .signOut()
-      .then(() => authNotify('You have signed out succesfully', 'note'));
+      .then(() => authNotify('You have signed out succesfully', 'success'));
   } else {
     const email = document.querySelector('#logemail').value;
     const password = document.querySelector('#logpass').value;
@@ -80,7 +207,7 @@ function handleLogIn() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(({ user }) => authNotify(`Signed to ${user.displayName || 'anonymous'}`, 'note'))
+      .then(({ user }) => authNotify(`Signed to ${user.displayName || 'anonymous'}`, 'success'))
       .catch(function (error) {
         // Handle Errors here.
         const errorCode = error.code;
@@ -95,10 +222,10 @@ function handleLogIn() {
   }
 }
 
-/**
- * Handles the sign up button press.
- */
-function handleSignUp() {
+// Handles the sign up button press.
+
+function handleSignUp(evt) {
+  evt.preventDefault();
   clearLogin();
 
   const email = document.querySelector('#signemail').value;
@@ -124,9 +251,10 @@ function handleSignUp() {
       });
     })
     .then(() => {
-      authNotify(`${userName}, wellcome to our Filmoteka!`, 'note');
-      document.querySelector('#logheader').textContent = `Signed to: ${userName}`;
-      document.querySelector('#logbtn').textContent = 'Sign out';
+      authNotify(`${userName}, wellcome to our Filmoteka!`, 'success');
+      document.querySelector('#sign-in-text').textContent = 'Signed to: ';
+      document.querySelector('#logged-user').textContent = userName;
+      authLoginButtonRef.textContent = 'Sign out';
     })
     .catch(function (error) {
       const errorCode = error.code;
@@ -140,16 +268,17 @@ function handleSignUp() {
     });
 }
 
-/**
- * Sends an email verification to the user.
- */
+// Sends an email verification to the user.
+
 function sendEmailVerification() {
+  if (firebase.auth().currentUser.emailVerified) return;
+
   firebase
     .auth()
     .currentUser.sendEmailVerification()
     .then(function () {
       // Email Verification sent!
-      authNotify('Email Verification Sent!', 'note');
+      authNotify('Verification Email sent!', 'success');
     });
 }
 
@@ -161,7 +290,7 @@ function sendPasswordReset() {
     .sendPasswordResetEmail(email)
     .then(function () {
       // Password Reset Email Sent!
-      authNotify('Password Reset Email Sent!', 'note');
+      authNotify('Password reset Email sent!', 'success');
     })
     .catch(function (error) {
       const errorCode = error.code;
@@ -187,7 +316,7 @@ const clearsignUp = () => {
 };
 
 /**
- * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+ * initApp handles registering Firebase auth listeners:
  *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
  *    out, and that is where we update the UI.
  */
@@ -198,20 +327,24 @@ function initApp() {
       //       // User is signed in.
       const { displayName, email, emailVerified, photoURL, isAnonymous, uid, providerData } = user;
 
-      document.querySelector('#logheader').textContent = `Signed to: ${
-        firebase.auth().currentUser.displayName || 'anonymous'
-      }`;
-      document.querySelector('#logbtn').textContent = 'Sign out';
+      document.querySelector('#sign-in-text').textContent = 'Signed to: ';
+      document.querySelector('#logged-user').textContent = displayName || 'anonymous';
+      authLoginButtonRef.textContent = 'Sign out';
+
+      document.body.classList.add('logged-in');
+      document.body.dataset.user = displayName || 'anonymous';
+      document.body.dataset.verified = emailVerified;
     } else {
       //       // User is signed out.
-      document.querySelector('#logheader').textContent = 'Sign in:';
-      document.querySelector('#logbtn').textContent = 'Sign in';
+      document.querySelector('#sign-in-text').textContent = 'Sign in';
+      document.querySelector('#logged-user').textContent = '';
+      authLoginButtonRef.textContent = 'Sign in';
+
+      document.body.classList.remove('logged-in');
+      document.body.removeAttribute('data-user');
+      document.body.removeAttribute('data-verified');
     }
   });
-
-  document.querySelector('#logbtn').addEventListener('click', handleLogIn);
-  document.querySelector('#signbtn').addEventListener('click', handleSignUp);
-  document.querySelector('#passreset').addEventListener('click', sendPasswordReset);
 }
 
 window.onload = function () {

@@ -5,9 +5,9 @@
 @import './base/normalize';
 @import './base/defaults';
 
-@import './components/auth';
 @import './components/auth-form';
 @import './components/film-cards-section';
+@import './components/genre-modal.scss';
 @import './components/footer';
 @import './components/footer-modal';
 @import './components/header';
@@ -16,3 +16,4 @@
 @import './components/pagination';
 @import './components/preloader';
 @import './components/up-arrow';
+@import './components/switchers-section';

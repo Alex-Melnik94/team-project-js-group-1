@@ -5,7 +5,7 @@ export default {
     homeBtn: document.querySelector('.js-home-btn'),
     libraryBtn: document.querySelector('.js-library-btn'),
     headerHome: document.querySelector('.section__header'),
-    headerLibrary: document.querySelector('.my__library'),
+    headerLibrary: document.querySelector('.my__library'),  // wrong!!! it will be undefined
     libraryBtns: document.querySelector('.library'),
     btnWatched: document.querySelector('.js-btn-watched'),
     btnQueue: document.querySelector('.js-btn-queue'),
@@ -23,7 +23,13 @@ export default {
     modalFooter: document.querySelector(".footer-backdrop"),
     openCardsCommandBtn: document.querySelector('.collapsible'),    
     contentCommandCards: document.querySelector('.content'),    
-    closeCardsCommandBtn: document.querySelector('.data-user-close-button')
-    
+    closeCardsCommandBtn: document.querySelector('.data-user-close-button'),
+    genreSorter: document.querySelector('.genre-modal'),
+    genresBtn: document.querySelector('.value-btn'),
+    genresList: document.querySelector('.genres-list'),
+    genresSection: document.querySelector('.genres-section'),
+    switchersContainer: document.querySelector('.switchers'),
+    genreBtn: document.querySelector('.genreBtn'),
+
 }
 

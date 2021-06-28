@@ -1,11 +1,16 @@
-const genreBtnRef = document.querySelector('[data-menu-button]');
-const genreMenuRef = document.querySelector('[data-menu]');
+import genresMarkup from "../hbs-templates/genres.hbs";
 
-genreBtnRef.addEventListener('click', () => {
-    const expanded = genreBtnRef.getAttribute('aria-expanded') === 'true' || false;
+export async function renderGenres(list) {
+  const genresArr = await JSON.parse(localStorage.getItem('genres'))
+  
+  const newGenresMarkup = list.insertAdjacentHTML('beforeend', genresMarkup(genresArr));
+  return  newGenresMarkup
+}
 
-    genreBtnRef.classList.toggle('is-open');
-    genreBtnRef.setAttribute('aria-expanded', !expanded);
+export function slideDown(element) {
+  return element.style.height = `${element.scrollHeight}px`;
+}
 
-    genreMenuRef.classList.toggle('is-open');
-});
+export function slideUp(element) {
+  return element.style.height = '0px';
+}
