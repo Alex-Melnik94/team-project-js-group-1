@@ -3,6 +3,7 @@ import renderQueueAndWatched from '../hbs-templates/queue-and-watched-films.hbs'
 
 import { renderTrendingFilms,  renderFilmsSortedByGenre} from '../js-modules/render-service.js';
 import { initMainMarkup, updateTrendingMarkup, pagination } from '../index.js'
+import { renderGenres, slideDown, slideUp } from '../js-modules/isOpenGenre.js'
 
 
 variables.homeBtn.addEventListener('click', onHomeBtnClick);
@@ -13,6 +14,7 @@ variables.headerWatchedBtn.addEventListener('click', onHeaderWatchedButtonClick)
 variables.headerQueueBtn.addEventListener('click', onHeaderQueueButtonClick);
 variables.fetchTrendingMoviesBtn.addEventListener('input', onTrendingMoviesBtnClick);
 variables.genreSorter.addEventListener('click', onGenreBtnClick);
+variables.genresBtn.addEventListener('click', onGenresBtnClick);
 let activeGenre = '';
 
 function onHomeBtnClick(e) {
@@ -24,6 +26,7 @@ function onHomeBtnClick(e) {
     variables.searchInput.classList.remove('hidden');
     variables.libraryBtns.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
+    variables.switchersContainer.classList.remove('one-switcher')
     initMainMarkup();
     pagination.listen(initMainMarkup);
 
@@ -41,6 +44,7 @@ function onLibraryBtnClick(e) {
     variables.searchInput.classList.add('hidden');
     variables.searchError.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');
+    variables.switchersContainer.classList.add('one-switcher')
     variables.genreSorter.removeEventListener('click', onGenreBtnClick);
     variables.genreSorter.addEventListener('click', renderLibraryFilmsSortedByGenre);
 
@@ -165,9 +169,10 @@ async function onGenreBtnClick(e) {
      pagination.listen(updateTrendingMarkup);
         initMainMarkup();
         variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
+        variables.switchersContainer.classList.remove('one-switcher');
         return;
 }
-
+    variables.switchersContainer.classList.add('one-switcher')
     variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');
     const genre = genres.find((el) => el.name === genreName);
     const genreId = genre.id;
@@ -267,4 +272,21 @@ function renderLibraryFilmsSortedByGenre(e) {
         variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
         return;
     }
+}
+
+ function onGenresBtnClick() {
+    variables.genresBtn.classList.toggle('is-open');
+
+    if (variables.genresList.children.length === 1) {
+        renderGenres(variables.genresList)
+    }
+    
+
+    if (variables.genresBtn.classList.contains('is-open')) {
+        slideDown(variables.genresSection)
+    } else {
+        slideUp(variables.genresSection)
+     }
+     
+  
 }

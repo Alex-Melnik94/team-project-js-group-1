@@ -22,5 +22,10 @@ export default {
     closeModalBtnFooter: document.querySelector(".data-footer-modal-close-button"),
     modalFooter: document.querySelector(".footer-backdrop"),
     genreSorter: document.querySelector('.genre-modal'),
+    genresBtn: document.querySelector('.value-btn'),
+    genresList: document.querySelector('.genres-list'),
+    genresSection: document.querySelector('.genres-section'),
+    switchersContainer: document.querySelector('.switchers'),
+    genreBtn: document.querySelector('.genreBtn'),
 }
 

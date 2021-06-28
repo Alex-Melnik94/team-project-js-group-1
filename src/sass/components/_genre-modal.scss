@@ -9,9 +9,11 @@
 }
 
 .container.genre-modal {
-  // width: 1024px;
-  padding: 25px 70px;
-  height: 100%;
+  padding: 45px 70px 45px 70px;
+  height: 150px;
+  @media screen and(min-width: 768px) and(max-width: 1023px) {
+    padding: 20px 70px 0px 70px;
+  }
 }
 
 // .open {
@@ -84,17 +86,18 @@
   cursor: pointer;
 }
 
-.menu-genre {
+.genres-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   // width: 100%;
 
-  // & .button-genre {
-  //   align-items: center;
-  //   justify-content: center;
-  // }
+  & .button-genre {
+    margin: 0 5px 5px 0;
+    // align-items: center;
+    // justify-content: center;
+  }
 }
 
 .genreBtn {
@@ -103,8 +106,8 @@
   // align-items: center;
 
   min-width: 65px;
-  height: 35px;
-  margin: 0 5px 5px 0;
+  min-height: 35px;
+
   border: 1px solid $mainBgColor;
   border-radius: 5px;
 
