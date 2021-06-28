@@ -63,4 +63,4 @@ const e=document.querySelector("body"),s=document.querySelector(".theme-switch__
 },{"./variables.js":"BrGT"}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./js-modules/trendingMoviesSwitcher.js"),require("./js-modules/auth.js"),require("./js-modules/galleryMarkup.js"),require("./js-modules/themeSwitcher.js"),require("./js-modules/modal-film-card"),require("./js-modules/modal-footer.js"),require("./js-modules/btnListener.js"),require("./js-modules/isOpenGenre"),require("./js-modules/initialMarkup.js");
 },{"./sass/main.scss":"clu1","./js-modules/trendingMoviesSwitcher.js":"SgyY","./js-modules/auth.js":"pgMI","./js-modules/galleryMarkup.js":"ZD2y","./js-modules/themeSwitcher.js":"apEU","./js-modules/modal-film-card":"ATui","./js-modules/modal-footer.js":"aNXp","./js-modules/btnListener.js":"VzoS","./js-modules/isOpenGenre":"uM6Y","./js-modules/initialMarkup.js":"A9c4"}]},{},["Focm"], null)
-//# sourceMappingURL=/team-project-js-group-1/src.023136ac.js.map
+//# sourceMappingURL=/team-project-js-group-1/src.cc048edf.js.map
