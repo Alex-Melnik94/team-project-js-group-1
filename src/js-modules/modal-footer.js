@@ -3,6 +3,7 @@ import variables from './variables.js';
 (() => {
     
   variables.openModalBtnFooter.addEventListener("click", openModalFooter);
+  
     
   function openModalFooter(e) {     
         variables.modalFooter.classList.remove("footer-hidden");
@@ -33,24 +34,29 @@ import variables from './variables.js';
 
 
 
-const coll = document.getElementsByClassName("collapsible");
-let i;
+(() => {
+  variables.openModalBtnFooter.addEventListener('click', () => {    
+    variables.modalFooter.classList.remove('footer-hidden');        
+  });   
+  variables.closeModalBtnFooter.addEventListener('click', () => {
+    variables.modalFooter.classList.add('footer-hidden'); 
+    document.querySelector('.footer-card-list .card-active').classList.remove('card-active');
+  });
+   
+  const cardListRef = document.querySelector('.footer-card-list');
+  cardListRef.addEventListener('click', (evt) => {
+    const targetButton = evt.target.closest('.collapsible');
+    if (!targetButton) return;
+    const targetCard = targetButton.closest('.footer-card-list-item');
+    const currentActiveCard = document.querySelector('.footer-card-list .card-active');
+    if (targetCard === currentActiveCard) {
+      targetCard.classList.remove('card-active');
+      return
+    };
+    if (currentActiveCard) currentActiveCard.classList.remove('card-active');
+    targetCard.classList.add('card-active')
+    
+  });
+})();
 
-for(i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-      console.log('clik')
-        this.classList.toggle("active");
-        const content = this.nextElementSibling;
-        if (content.style.display === "block") {
-           content.style.display = "none";
-          
-        } else {
-            content.style.display = "block";
-            
-        }
-        
-    });
-}
 
-
-  
