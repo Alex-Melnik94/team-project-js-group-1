@@ -18,9 +18,9 @@
 .switch-button {
   background: rgba(148, 147, 147, 0.7);
   border-radius: 30px;
-  //   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
-  //     rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
-  //     rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  // box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+  //   rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+  //   rgba(0, 0, 0, 0.09) 0px 32px 16px;
   overflow: hidden;
   width: 240px;
   text-align: center;
@@ -31,9 +31,7 @@
   color: #000000;
   padding-right: 120px;
 
-  transition-property: box-shadow;
-  transition-duration: 1000ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all $transitionTime $cubicBezierMain;
 
   @media screen and (max-width: 767px) {
     display: none;
