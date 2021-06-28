@@ -97,6 +97,9 @@ const togglePasswordDisplay = evt => {
 
   if (target.type === 'password') {
     target.type = 'text';
+    setTimeout(() => {
+      target.type = 'password';
+    }, 1000);
   } else {
     target.type = 'password';
   }
@@ -147,10 +150,7 @@ const onEscKeyPressed = evt => {
 };
 
 const onAuthBackdropClicked = evt => {
-  console.log(!evt.target.closest('.auth-toggle-wrapper'));
-  console.log(!evt.target.closest('.card-3d-wrap'));
-
-  if (evt.target.closest('.auth-toggle-wrapper') || evt.target.closest('.card-3d-wrap')) return;
+  if (evt.target.closest('.auth-popup')) return;
 
   closeAuthModal();
 };
