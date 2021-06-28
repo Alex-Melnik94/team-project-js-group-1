@@ -2,8 +2,9 @@ import variables from "./variables.js";
 import renderQueueAndWatched from '../hbs-templates/queue-and-watched-films.hbs';
 
 import { renderTrendingFilms,  renderFilmsSortedByGenre} from '../js-modules/render-service.js';
-import { initMainMarkup, updateTrendingMarkup, pagination } from '../index.js'
+// import { initMainMarkup, updateTrendingMarkup, pagination } from '../index.js'
 import { renderGenres, slideDown, slideUp } from '../js-modules/isOpenGenre.js'
+import { initMainMarkup, updateTrendingMarkup, pagination } from './initialMarkup.js';
 
 
 variables.homeBtn.addEventListener('click', onHomeBtnClick);

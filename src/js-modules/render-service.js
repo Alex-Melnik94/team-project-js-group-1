@@ -4,25 +4,11 @@ import { getTrendingFilms, fetchMovieForModal, fetchTrailerByMovieId, getSortedF
 import variables from "./variables.js";
 
 export const renderTrendingFilms = async function (container, preloader, page) {
-  const movies = await getTrendingFilms(preloader, page);
 
-  if (movies.error !== undefined) {
-    variables.searchError.innerText = "Some server issue has occured";
-    preloader.classList.add('preloader-hidden');
+  const fetchInfo = await getTrendingFilms(preloader, page);
+  const renderResult = renderUtilFunc(container, fetchInfo, preloader);
 
-    setTimeout(() => {
-      variables.searchError.innerText = '';
-    }, 5000);
-    return;
-  }
-
-
-  if (container.innerText.length !== 0) {
-    container.innerHTML = '';
-  }
-  container.insertAdjacentHTML('afterbegin', trendingFilmsMarkupFc(movies.updatedFilmData));
-  preloader.classList.add('preloader-hidden');
-  return movies.totalPages;
+  return renderResult;
 };
 
 
@@ -75,9 +61,6 @@ export async function renderDataForModal(movieId) {
   variables.modalContentBox.insertAdjacentHTML('beforeend', popapFilmMarkup(dataForRendering));
 }
 
-
-
-
 export const renderTrailerMarkup = async function (id) {
   const res = await fetchTrailerByMovieId(id);
   const key = res.trailerKey;
@@ -89,8 +72,14 @@ export const renderTrailerMarkup = async function (id) {
 
 export const renderFilmsSortedByGenre = async function (container, preloader, genre, page) {
   const movies = await getSortedFilms(preloader, genre, page);
+  const renderResult = renderUtilFunc(container, movies, preloader);
+  
+  return renderResult;
+}
 
-  if (movies.error !== undefined) {
+const renderUtilFunc = async function (container, fetchInfo, preloader) {
+
+  if (fetchInfo.error !== undefined) {
     variables.searchError.innerText = "Some server issue has occured";
     preloader.classList.add('preloader-hidden');
     
@@ -104,7 +93,7 @@ export const renderFilmsSortedByGenre = async function (container, preloader, ge
     container.innerHTML = '';
   }
 
-  container.insertAdjacentHTML('afterbegin', trendingFilmsMarkupFc(movies.updatedFilmData));
+  container.insertAdjacentHTML('afterbegin', trendingFilmsMarkupFc(fetchInfo.updatedFilmData));
   preloader.classList.add('preloader-hidden');
-  return movies.totalPages;
+  return fetchInfo.totalPages;
 }
