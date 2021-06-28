@@ -36,6 +36,9 @@
 }
 
 .header {
+  position: relative;
+  height: 100%;
+
   &__navigation {
     display: flex;
     justify-content: space-between;

@@ -27,65 +27,136 @@ const authNotifyField = document.querySelector('[data-action="auth-notify"]');
 
 const passwordEyeIconRefs = document.querySelectorAll('[data-action="toggle-password"]');
 const passResetBtnRef = document.querySelector('[data-action="password-reset"]');
+const verifiedIconRef = document.querySelector('[data-action="verify-email"]');
 
 const authLoginButtonRef = document.querySelector('[data-action="log-button"]');
 const authSignupButtonRef = document.querySelector('[data-action="sign-button"]');
 
 // Auth Listeners
-authLoginButtonRef.addEventListener('click', handleLogIn);
-authSignupButtonRef.addEventListener('click', handleSignUp);
-passResetBtnRef.addEventListener('click', sendPasswordReset);
 
-authOpenButtonRef.addEventListener('click', () => {
+const AddAuthListeners = () => {
+  authLoginButtonRef.addEventListener('click', handleLogIn);
+  authSignupButtonRef.addEventListener('click', handleSignUp);
+
+  passResetBtnRef.addEventListener('click', sendPasswordReset);
+  passResetBtnRef.addEventListener('mouseenter', showPasswordResetHint);
+  passResetBtnRef.addEventListener('mouseleave', hidePasswordResetHint);
+
+  verifiedIconRef.addEventListener('click', sendEmailVerification);
+  verifiedIconRef.addEventListener('mouseenter', showVerificationEmailHint);
+  verifiedIconRef.addEventListener('mouseleave', hideVerificationEmailtHint);
+
+  passwordEyeIconRefs.forEach(icon => {
+    icon.addEventListener('click', togglePasswordDisplay);
+    icon.addEventListener('mouseenter', showPasswordDisplayHint);
+    icon.addEventListener('mouseleave', authClearOutput);
+  });
+
+  document.addEventListener('keydown', onEscKeyPressed);
+  authContainerRef.addEventListener('click', onAuthBackdropClicked);
+};
+
+const openAuthModal = () => {
   authContainerRef.classList.remove('auth-hidden');
   document.body.classList.add('auth-modal-open', 'body-overflow');
-});
+  AddAuthListeners();
+};
 
-authCloseButtonRef.addEventListener('click', () => {
+const closeAuthModal = () => {
   authContainerRef.classList.add('auth-hidden');
   document.body.classList.remove('auth-modal-open', 'body-overflow');
-});
+  RemoveAuthListeners();
+};
 
-passwordEyeIconRefs.forEach(icon => {
-  icon.addEventListener('click', evt => {
-    const target = evt.target
-      .closest('.form-field')
-      .querySelector('[data-action="input-password"]');
+const RemoveAuthListeners = () => {
+  authLoginButtonRef.removeEventListener('click', handleLogIn);
+  authSignupButtonRef.removeEventListener('click', handleSignUp);
+  passResetBtnRef.removeEventListener('click', sendPasswordReset);
 
-    if (!target.value) return;
+  verifiedIconRef.removeEventListener('click', sendEmailVerification);
+  verifiedIconRef.removeEventListener('mouseenter', showVerificationEmailHint);
+  verifiedIconRef.removeEventListener('mouseleave', hideVerificationEmailtHint);
 
-    if (target.type === 'password') {
-      target.type = 'text';
-    } else {
-      target.type = 'password';
-    }
+  passwordEyeIconRefs.forEach(icon => {
+    icon.removeEventListener('click', togglePasswordDisplay);
+    icon.removeEventListener('mouseenter', showPasswordDisplayHint);
+    icon.removeEventListener('mouseleave', authClearOutput);
   });
 
-  icon.addEventListener('mouseenter', evt => {
-    const target = evt.target
-      .closest('.form-field')
-      .querySelector('[data-action="input-password"]');
+  passResetBtnRef.removeEventListener('mouseenter', showPasswordResetHint);
+  passResetBtnRef.removeEventListener('mouseleave', hidePasswordResetHint);
 
-    if (!target.value) return;
+  document.removeEventListener('keydown', onEscKeyPressed);
+  authContainerRef.removeEventListener('click', onAuthBackdropClicked);
+};
 
-    authNotify('show/hide password', 'note');
-  });
+const togglePasswordDisplay = evt => {
+  const target = evt.target.closest('.form-field').querySelector('[data-action="input-password"]');
 
-  icon.addEventListener('mouseleave', evt => {
-    authClearOutput();
-  });
-});
+  if (!target.value) return;
 
-passResetBtnRef.addEventListener('mouseenter', () => {
+  if (target.type === 'password') {
+    target.type = 'text';
+  } else {
+    target.type = 'password';
+  }
+};
+
+const showPasswordDisplayHint = evt => {
+  const target = evt.target.closest('.form-field').querySelector('[data-action="input-password"]');
+
+  if (!target.value) return;
+
+  authNotify('show/hide password', 'note');
+};
+
+const showPasswordResetHint = () => {
   timerId2 = setTimeout(() => authNotify('Send password reset Email?', 'note'), 1000);
-});
+};
 
-passResetBtnRef.addEventListener('mouseleave', () => {
+const hidePasswordResetHint = () => {
   clearTimeout(timerId2);
 
   if (authNotifyField.textContent === 'Password reset Email sent!') return;
   authClearOutput();
-});
+};
+
+const showVerificationEmailHint = () => {
+  if (firebase.auth().currentUser.emailVerified) {
+    authNotify('Your Email is verified!', 'success');
+    return;
+  }
+
+  timerId2 = setTimeout(
+    () => authNotify('Your Email is not verified. Send verification request?', 'alert'),
+    500,
+  );
+};
+
+const hideVerificationEmailtHint = () => {
+  clearTimeout(timerId2);
+
+  if (authNotifyField.textContent === 'Verification Email sent!') return;
+  authClearOutput();
+};
+
+const onEscKeyPressed = evt => {
+  if (evt.code !== 'Escape') return;
+
+  closeAuthModal();
+};
+
+const onAuthBackdropClicked = evt => {
+  console.log(!evt.target.closest('.auth-toggle-wrapper'));
+  console.log(!evt.target.closest('.card-3d-wrap'));
+
+  if (evt.target.closest('.auth-toggle-wrapper') || evt.target.closest('.card-3d-wrap')) return;
+
+  closeAuthModal();
+};
+
+authOpenButtonRef.addEventListener('click', openAuthModal);
+authCloseButtonRef.addEventListener('click', closeAuthModal);
 
 // Auth notification
 
@@ -106,12 +177,23 @@ const authClearOutput = () => {
   authNotifyField.classList.remove('alert', 'success', 'note', 'animate');
 };
 
+// const arrowRandomBlink = () => {
+//   setInterval(() => {
+//     if (firebase.auth().currentUser) return;
+
+//     authOpenButtonRef.classList.add('animated');
+//     setTimeout(() => {
+//       authOpenButtonRef.classList.remove('animated');
+//     }, 2000);
+//   }, 60000);
+// };
+
+// arrowRandomBlink();
+
 // Auth main logic
 ////////////////////////////////////////////////////////////////////////
 
-/**
- * Handles the sign in button press.
- */
+// Handles the sign in button press.
 
 function handleLogIn(evt) {
   evt.preventDefault();
@@ -153,9 +235,8 @@ function handleLogIn(evt) {
   }
 }
 
-/**
- * Handles the sign up button press.
- */
+// Handles the sign up button press.
+
 function handleSignUp(evt) {
   evt.preventDefault();
   clearLogin();
@@ -200,16 +281,17 @@ function handleSignUp(evt) {
     });
 }
 
-/**
- * Sends an email verification to the user.
- */
+// Sends an email verification to the user.
+
 function sendEmailVerification() {
+  if (firebase.auth().currentUser.emailVerified) return;
+
   firebase
     .auth()
     .currentUser.sendEmailVerification()
     .then(function () {
       // Email Verification sent!
-      authNotify('Email verification Sent!', 'success');
+      authNotify('Verification Email sent!', 'success');
     });
 }
 
@@ -247,7 +329,7 @@ const clearsignUp = () => {
 };
 
 /**
- * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+ * initApp handles registering Firebase auth listeners:
  *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
  *    out, and that is where we update the UI.
  */
@@ -259,14 +341,21 @@ function initApp() {
       const { displayName, email, emailVerified, photoURL, isAnonymous, uid, providerData } = user;
 
       document.querySelector('#sign-in-text').textContent = 'Signed to: ';
-      document.querySelector('#logged-user').textContent =
-        firebase.auth().currentUser.displayName || 'anonymous';
+      document.querySelector('#logged-user').textContent = displayName || 'anonymous';
       authLoginButtonRef.textContent = 'Sign out';
+
+      document.body.classList.add('logged-in');
+      document.body.dataset.user = displayName || 'anonymous';
+      document.body.dataset.verified = emailVerified;
     } else {
       //       // User is signed out.
       document.querySelector('#sign-in-text').textContent = 'Sign in';
       document.querySelector('#logged-user').textContent = '';
       authLoginButtonRef.textContent = 'Sign in';
+
+      document.body.classList.remove('logged-in');
+      document.body.removeAttribute('data-user');
+      document.body.removeAttribute('data-verified');
     }
   });
 }

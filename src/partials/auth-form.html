@@ -1,20 +1,23 @@
 <div class="auth-backdrop auth-hidden" data-action="auth-backdrop">
   <div class="auth-popup">
-    <h4 class="auth-toggle-header">
-      <span class="text">Log In </span><span class="text">Sign Up</span>
-    </h4>
-    <input class="auth-toggle visually-hidden" type="checkbox" id="reg-log" name="reg-log" />
-    <label for="reg-log" class="auth-toggle-label"></label>
+    <div class="auth-toggle-wrapper">
+      <h4 class="auth-toggle-header">
+        <span class="text">Log In </span><span class="text">Sign Up</span>
+      </h4>
+      <input class="auth-toggle visually-hidden" type="checkbox" id="reg-log" name="reg-log" />
+      <label for="reg-log" class="auth-toggle-label"></label>
 
-    <p class="auth-text auth-notify" data-action="auth-notify">&nbsp;</p>
+      <p class="auth-text auth-notify" data-action="auth-notify">&nbsp;</p>
+    </div>
 
     <div class="card-3d-wrap">
       <div class="card-3d-wrapper">
         <div class="card-front">
           <form class="form-log auth-form">
             <h3 class="auth-header auth-log-header" id="logheader">
-              <span class="sign-in-text" id="sign-in-text">Log In</span
-              ><span class="logged-user" id="logged-user"></span>
+              <i class="icon-shield" data-action="verify-email">&nbsp;</i>
+              <span class="sign-in-text" id="sign-in-text">Log In</span>
+              <span class="logged-user" id="logged-user"></span>
             </h3>
             <div class="form-field">
               <input
