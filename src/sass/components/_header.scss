@@ -152,7 +152,7 @@
   margin-left: auto;
   margin-right: 274px;
   margin-bottom: 3px;
-  width: 70px;
+  min-width: 70px;
   height: 25px;
   border: 1px solid $mainBgColor;
   border-radius: 5px;
@@ -192,7 +192,7 @@
 
 .value {
   font-size: 14px;
-  width: 280px;
+  // width: 280px;
   text-align: center;
   margin-right: 13px;
 }
@@ -286,96 +286,4 @@
 
 .hidden {
   display: none;
-}
-
-/* THEME SWITCH */
-body.light-theme {
-  background-color: $mainBgColor;
-  color: #333333;
-}
-
-body.dark-theme {
-  background-color: #333333;
-  color: $mainBgColor;
-}
-
-.toggle {
-  overflow: visible;
-  position: absolute;
-
-  @media screen and (max-width: 767px) {
-    top: 265px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  @media screen and (min-width: 768px) {
-    top: 252px;
-    left: 50%;
-    transform: translateX(230%);
-  }
-  @media screen and (min-width: 1024px) {
-    top: 252px;
-    left: 50%;
-    transform: translateX(355%);
-  }
-
-  input {
-    display: none;
-  }
-
-  input:checked ~ span {
-    border-color: $accent-color;
-    background: #2c4e63;
-    &:before {
-      left: 60.2px;
-      box-shadow: inset -9.8px 0 0 0.14px #ff9e42;
-      background: transparent;
-    }
-    &:after {
-      content: '\002605';
-      top: 2.8px;
-      left: 51.8px;
-      width: 28px;
-      height: 28px;
-      font-size: 16.8px;
-      color: #ff9e42;
-    }
-  }
-
-  span {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    width: 94px;
-    height: 32px;
-    cursor: pointer;
-    border-radius: 70px;
-    border: 3.5px solid $accent-color;
-    background: #5197c4;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    &:before {
-      content: '';
-      position: absolute;
-      top: 1.4px;
-      left: 4.2px;
-      width: 22px;
-      height: 22px;
-
-      border-radius: 50%;
-      box-shadow: inset -56px -56px 0 0 #ff9e42;
-      transition: all 0.5s cubic-bezier(0, 0.55, 0.45, 1);
-    }
-    &:after {
-      content: '\002601';
-      position: absolute;
-      top: 0;
-      left: 19%;
-      width: 5px;
-      height: 5px;
-      color: $mainBgColor;
-      font-size: 32px;
-      transition: all 0.5s cubic-bezier(0, 0.55, 0.45, 1);
-    }
-  }
 }
