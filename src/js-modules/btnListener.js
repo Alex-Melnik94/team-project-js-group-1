@@ -28,8 +28,8 @@ function onHomeBtnClick(e) {
     variables.libraryBtns.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
     variables.switchersContainer.classList.remove('one-switcher')
+    
     initMainMarkup();
-    pagination.listen(initMainMarkup);
 
     variables.genreSorter.addEventListener('click', onGenreBtnClick);
     variables.genreSorter.removeEventListener('click', renderLibraryFilmsSortedByGenre);
@@ -100,9 +100,6 @@ function onHeaderWatchedButtonClick(e) {
     
     pagination.moveToPage(currentPage, totalPages);
     pagination.listen(onHeaderWatchedButtonClick);
-
-    console.log('!!!!!!!!!!');
-    console.log(paginatedArray);
 
     variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(paginatedArray));
 }
