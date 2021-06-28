@@ -22,7 +22,6 @@ export async function renderDataForModal(movieId) {
 
   const dataForRendering = movieInfo.data;
 
-  // Poster Availability Check
 
   if (dataForRendering.poster_path === null) {
     dataForRendering.poster_path = "http://lexingtonvenue.com/media/poster-placeholder.jpg";
@@ -33,17 +32,13 @@ export async function renderDataForModal(movieId) {
   }
 
 
-  // Rounded popularity
   dataForRendering.popularity = parseFloat(dataForRendering.popularity).toFixed(2);
 
-
-  // Overview Availability Check
 
   if (dataForRendering.overview.length === 0) {
     dataForRendering.overview = 'Overview is not provided.';
   }
 
-  // Genres Availability Check
 
   if (dataForRendering.genres.length === 0 || dataForRendering.genres === undefined) {
     dataForRendering.genres = "Unspecified genre";
@@ -53,9 +48,6 @@ export async function renderDataForModal(movieId) {
     const filmGenres = dataForRendering.genres.map((genre) => genre.name);
     dataForRendering.genres = filmGenres.join(', ');
   }
-
-  /**Added object with info about movie to session storage 
-   to simplify rendering to queue / watched sections */
 
   sessionStorage.setItem('modalMovieInfo', JSON.stringify(dataForRendering));
   variables.modalContentBox.insertAdjacentHTML('beforeend', popapFilmMarkup(dataForRendering));

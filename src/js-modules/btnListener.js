@@ -1,8 +1,6 @@
 import variables from "./variables.js";
 import renderQueueAndWatched from '../hbs-templates/queue-and-watched-films.hbs';
-
 import { renderTrendingFilms,  renderFilmsSortedByGenre} from '../js-modules/render-service.js';
-// import { initMainMarkup, updateTrendingMarkup, pagination } from '../index.js'
 import { renderGenres, slideDown, slideUp } from '../js-modules/isOpenGenre.js'
 import { initMainMarkup, updateTrendingMarkup, pagination } from './initialMarkup.js';
 
@@ -55,21 +53,6 @@ function onLibraryBtnClick(e) {
         variables.headerWatchedBtn.dispatchEvent(new Event('click')); // commented by Krokodil, delete all the comments if agree
     } 
 
-    // // Automatically render watched films
-    // const watchedFilmsArr = localStorage.getItem('watchedFilms');
-    // const parsedArray = JSON.parse(watchedFilmsArr);
-
-    //     if (variables.filmGrid.innerHTML.length !== 0) {
-    //     variables.filmGrid.innerHTML = "";
-    // }
-
-    //     if (parsedArray === null || parsedArray.length === 0) {
-    //     const notification = '<p class="film__notification">No added movies yet</p>';
-    //     variables.filmGrid.insertAdjacentHTML('beforeend', notification);
-    //     return;
-    // }
-
-    // variables.filmGrid.insertAdjacentHTML('beforeend', renderQueueAndWatched(parsedArray));
 }
 
 function onWatchedBtnClick(e) {
