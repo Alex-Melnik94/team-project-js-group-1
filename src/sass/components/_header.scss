@@ -268,13 +268,13 @@
 .library__btn {
   border-width: 1px;
   border-radius: 4px;
-  border-color: #ffffff;
+  border-color: $background-color;
   background-color: transparent;
   font-size: 12px;
   text-transform: uppercase;
   min-width: 130px;
   height: 44px;
-  color: #ffffff;
+  color: $background-color;
   cursor: pointer;
 
   @media screen and (min-width: 768px) {
@@ -291,7 +291,7 @@
 }
 
 .checked {
-  background-color: #ff6b08;
+  background-color: $accentColor;
   border: none;
 }
 
