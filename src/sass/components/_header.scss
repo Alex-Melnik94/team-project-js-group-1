@@ -122,6 +122,12 @@
   }
 }
 
+.search__result {
+  color: $errorTextColor;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
 .search__input::placeholder {
   color: $background-color;
   font-weight: normal;

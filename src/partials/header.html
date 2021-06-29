@@ -26,16 +26,11 @@
         <svg class="search__icon" width="12" height="12">
           <use href="./images/sprite.svg#icon-search"></use>
         </svg>
-        <p class="search__result visually-hidden">Search result notification</p>
+        <p class="search-error search__result"></p>
       </form>
 
       <div class="genre-container">
-        <button
-          type="button"
-          class="value-btn"
-          aria-expanded="false"
-          data-menu-button
-        >
+        <button type="button" class="value-btn" aria-expanded="false" data-menu-button>
           <span class="value">Genres</span>
           <svg class="arrow-down" aria-label="Переключатель меню">
             <use href="./images/sprite.svg#icon-arrow-down"></use>
@@ -47,17 +42,16 @@
       </div>
     </div>
 
-
     <div class="library visually-hidden">
-            <ul class="library__list">
-                <li class="library__item">
-                    <button class="library__btn button-glitter js-btn-watched  checked">Watched</button>
-                </li>
-                <li class="library__item">
-                    <button class="library__btn button-glitter js-btn-queue">queue</button>
-                </li>
-            </ul>
-        <p class="search-error"></p>
+      <ul class="library__list">
+        <li class="library__item">
+          <button class="library__btn button-glitter js-btn-watched checked">Watched</button>
+        </li>
+        <li class="library__item">
+          <button class="library__btn button-glitter js-btn-queue">queue</button>
+        </li>
+      </ul>
+      <p class="search-error"></p>
     </div>
 
     <!-- Кнопка открытия модального окна аутентификации -->
@@ -66,5 +60,5 @@
         <use href="./images/sprite.svg#icon-user"></use>
       </svg>
     </button>
-
+  </div>
 </header>
