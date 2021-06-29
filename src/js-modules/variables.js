@@ -21,11 +21,15 @@ export default {
     openModalBtnFooter: document.querySelector("[data-footer-modal-open]"),
     closeModalBtnFooter: document.querySelector(".data-footer-modal-close-button"),
     modalFooter: document.querySelector(".footer-backdrop"),
+    openCardsCommandBtn: document.querySelector('.collapsible'),    
+    contentCommandCards: document.querySelector('.content'),    
+    closeCardsCommandBtn: document.querySelector('.data-user-close-button'),
     genreSorter: document.querySelector('.genre-modal'),
     genresBtn: document.querySelector('.value-btn'),
     genresList: document.querySelector('.genres-list'),
     genresSection: document.querySelector('.genres-section'),
     switchersContainer: document.querySelector('.switchers'),
     genreBtn: document.querySelector('.genreBtn'),
+    genreLi: document.querySelector('.button-genre')
 }
 

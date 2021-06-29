@@ -177,19 +177,6 @@ const authClearOutput = () => {
   authNotifyField.classList.remove('alert', 'success', 'note', 'animate');
 };
 
-// const arrowRandomBlink = () => {
-//   setInterval(() => {
-//     if (firebase.auth().currentUser) return;
-
-//     authOpenButtonRef.classList.add('animated');
-//     setTimeout(() => {
-//       authOpenButtonRef.classList.remove('animated');
-//     }, 2000);
-//   }, 60000);
-// };
-
-// arrowRandomBlink();
-
 // Auth main logic
 ////////////////////////////////////////////////////////////////////////
 
