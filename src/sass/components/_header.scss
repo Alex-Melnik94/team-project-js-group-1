@@ -146,30 +146,34 @@
   flex-direction: column;
 }
 
+.header__search {
+  margin-bottom: 45px;
+}
+
 .value-btn {
-  position: relative;
   display: flex;
-  flex-direction: row-reverse;
+
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px;
 
   align-items: center;
-  margin-left: auto;
-  margin-right: 274px;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   min-width: 70px;
-  height: 25px;
+  height: 30px;
   border: 1px solid $mainBgColor;
   border-radius: 5px;
   cursor: pointer;
 
   background: $overlayHeaderColor;
   color: $mainBgColor;
-
+  font-size: 14px;
   transition: background-color, color, box-shadow, $transitionTime $cubicBezierMain;
 
   &:hover {
     background-color: $accent-color;
     color: $mainTextColor;
-    box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
+    box-shadow: 0px 8px 23px rgba(255, 107, 1, 0.6);
   }
 
   @media screen and (min-width: 320px) {
@@ -178,12 +182,10 @@
 
   @media screen and (min-width: 768px) {
     display: flex;
-    margin-right: 141px;
   }
 
   @media screen and (min-width: 1024px) {
     display: flex;
-    margin-right: 274px;
   }
 }
 
@@ -199,38 +201,33 @@
   display: none;
 }
 
-.value {
-  font-size: 14px;
-  // width: 280px;
-  text-align: center;
-  margin-right: 13px;
+.value-btn.is-open {
+  background-color: $accent-color;
+  color: $mainTextColor;
+  box-shadow: 0px 8px 23px rgba(255, 107, 1, 0.6);
 }
 
 .arrow-down {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 12px;
-  height: 11px;
-  margin-right: 5px;
+  width: 19px;
+  height: 13px;
+  margin-left: 5px;
 
   fill: currentColor;
 }
 
 .icon-close {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  margin-right: 1px;
+  width: 21px;
+  height: 24px;
+  margin-left: 3px;
 
   fill: currentColor;
 }
 
 // header my library
+
+.library {
+  margin-bottom: 20px;
+}
 
 .my__library {
   position: relative;
@@ -270,6 +267,9 @@
   height: 44px;
   color: #ffffff;
   cursor: pointer;
+  transition-property: box-shadow;
+  transition-duration: $transitionTime;
+  transition-timing-function: $cubicBezierMain;
 
   @media screen and (min-width: 768px) {
     min-width: 136px;
@@ -279,9 +279,6 @@
 .library__btn:hover,
 .library__btn:focus {
   box-shadow: 0px 8px 43px 0px rgba(255, 107, 1, 0.6);
-  transition-property: box-shadow;
-  transition-duration: $transitionTime;
-  transition-timing-function: $cubicBezierMain;
 }
 
 .checked {

@@ -1,5 +1,5 @@
 .genres-section {
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 768px) {
     display: none;
   }
 
@@ -53,4 +53,10 @@
     color: $mainTextColor;
     box-shadow: 0px 8px 23px rgba(255, 107, 1, 0.6);
   }
+}
+
+.is-active {
+  background-color: $accent-color;
+  color: $mainTextColor;
+  box-shadow: 0px 8px 23px rgba(255, 107, 1, 0.6);
 }

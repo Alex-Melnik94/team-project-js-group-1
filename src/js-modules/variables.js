@@ -30,6 +30,6 @@ export default {
     genresSection: document.querySelector('.genres-section'),
     switchersContainer: document.querySelector('.switchers'),
     genreBtn: document.querySelector('.genreBtn'),
-
+    genreLi: document.querySelector('.button-genre')
 }
 

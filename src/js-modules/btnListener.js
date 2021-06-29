@@ -46,6 +46,7 @@ function onLibraryBtnClick(e) {
     variables.switchersContainer.classList.add('one-switcher')
     variables.genreSorter.removeEventListener('click', onGenreBtnClick);
     variables.genreSorter.addEventListener('click', renderLibraryFilmsSortedByGenre);
+    
 
     if (variables.btnQueue.classList.contains('checked')) {           // needed to do this way to immediately initialize library pagination
         variables.headerQueueBtn.dispatchEvent(new Event('click'));   // but this will make unnecessary all the code commented below  
@@ -96,7 +97,7 @@ function onHeaderQueueButtonClick(e) {
         if (parsedArray === null || parsedArray.length === 0) {
         const notification = '<p class="film__notification">No added movies yet</p>';
         variables.filmGrid.insertAdjacentHTML('beforeend', notification);
-        pagination.moveToPage(1, 1);
+            pagination.moveToPage(1, 1);
         return;
     }
 
@@ -139,29 +140,40 @@ function onTrendingMoviesBtnClick() {
 async function onGenreBtnClick(e) {
     if (e.target.nodeName !== 'BUTTON') {
         return;
-}
-    e.preventDefault();
+    }
 
+    const allBtns = document.querySelectorAll('.genreBtn')
+    const allBtnsArr = Array.from(allBtns) 
+    const activeBtn = allBtnsArr.find(btn => btn.classList.value === 'genreBtn is-active')
+        if (activeBtn) {
+            e.target.classList.add('is-active')
+            activeBtn.classList.remove('is-active')
+        } 
+    
     const localGenres = localStorage.getItem('genres');
     const genres = JSON.parse(localGenres);
     const genreName = e.target.innerText;
 
+     
+
     if (genreName.toLowerCase() === "all genres") {
-     pagination.listen(updateTrendingMarkup);
+        pagination.listen(updateTrendingMarkup);
         initMainMarkup();
         variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
         variables.switchersContainer.classList.remove('one-switcher');
         return;
-}
+    }
+    
+
     variables.switchersContainer.classList.add('one-switcher')
     variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');
     const genre = genres.find((el) => el.name === genreName);
     const genreId = genre.id;
     
-
-        const resetMainMarkup = async function () {
+    
+    const resetMainMarkup = async function () {
         const totalPages = await renderFilmsSortedByGenre(variables.filmGrid, variables.preloader, genreId);
-            pagination.moveToPage(1, totalPages);
+        pagination.moveToPage(1, totalPages);
     };
 
     const sortedMoviesMarkup = async function () {
@@ -172,7 +184,7 @@ async function onGenreBtnClick(e) {
 
     resetMainMarkup();
     
-}
+    }
 
 function renderLibraryFilmsSortedByGenre(e) {
 
@@ -255,10 +267,10 @@ function renderLibraryFilmsSortedByGenre(e) {
     }
 }
 
- function onGenresBtnClick() {
+async function onGenresBtnClick(e) {
     variables.genresBtn.classList.toggle('is-open');
 
-    if (variables.genresList.children.length === 1) {
+    if (variables.genresList.children.length === 0) {
         renderGenres(variables.genresList)
     }
     
@@ -267,7 +279,6 @@ function renderLibraryFilmsSortedByGenre(e) {
         slideDown(variables.genresSection)
     } else {
         slideUp(variables.genresSection)
-     }
-     
-  
+    }
+    
 }

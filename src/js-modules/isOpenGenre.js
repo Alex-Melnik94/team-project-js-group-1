@@ -4,6 +4,15 @@ export async function renderGenres(list) {
   const genresArr = await JSON.parse(localStorage.getItem('genres'))
   
   const newGenresMarkup = list.insertAdjacentHTML('beforeend', genresMarkup(genresArr));
+
+  const allGenresBtn = document.querySelector('[data-action="genres"]')
+        const allBtns = document.querySelectorAll('.genreBtn')
+        const allBtnsArr = Array.from(allBtns)
+        const activeBtn = allBtnsArr.find(btn => btn.classList ==='genreBtn is-active')
+        if (!activeBtn) {
+        allGenresBtn.classList.add('is-active')
+    }
+
   return  newGenresMarkup
 }
 

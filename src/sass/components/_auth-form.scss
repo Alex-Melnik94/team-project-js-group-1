@@ -396,6 +396,10 @@ body.logged-in[data-verified='true'] .auth-log-header .icon-shield {
   bottom: 30px;
   right: 20px;
 
+  @media screen and (max-width: 767px) {
+    bottom: 12px;
+  }
+
   @media screen and (min-width: 768px) {
     right: 75px;
   }
@@ -415,11 +419,12 @@ body.logged-in[data-verified='true'] .auth-log-header .icon-shield {
 
   font-size: 30px;
 
-  transition: color 250ms $cubicBezierMain, border 250ms $cubicBezierMain;
+  transition: color, border, box-shadow 250ms $cubicBezierMain;
 
   &:hover {
     color: $accentColor;
     border: 2px solid $accentColor;
+    box-shadow: 0px 8px 23px rgba(255, 107, 1, 0.6);
   }
 
   &::before {
