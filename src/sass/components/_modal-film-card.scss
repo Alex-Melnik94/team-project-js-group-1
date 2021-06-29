@@ -3,14 +3,13 @@
   position: fixed;
   top: 0;
   left: 0;
-  overflow: hidden;
   z-index: 999;
-
   overflow: hidden;
+  opacity: 1;
+
   width: 100%;
   height: 100%;
 
-  opacity: 1;
   pointer-events: initial;
   background-color: rgba(0, 0, 0, 0.25);
   transition: opacity 500ms $timing-function;
@@ -26,6 +25,7 @@
   top: 20px;
   left: 50%;
 
+
   transform: translate(-50%, 0);
   transition: transform 500ms $timing-function;
 
@@ -33,23 +33,18 @@
   max-height: 100vh;
   overflow-y: scroll;
 
+
   @media screen and (min-width: 768px) {
-    // top: 231px;
     top: 50%;
     transform: translate(-50%, -50%);
-  }
-
-  @media screen and (min-width: 1024px) {
-    // top: 100px;
-    // top: 50%;
-    // transform: translate(-50%, -50%);
   }
 }
 
 .popap__content {
   width: 280px;
+  padding: 48px 20px 61px;
+
   background-color: $background-color;
-  padding: 48px 20px 41px;
 
   &.dark-theme {
     background-color: $footerTextColor;
@@ -58,11 +53,11 @@
   @media screen and (min-width: 768px) {
     display: flex;
     width: 619px;
-    padding: 42px 29px 40px 28px;
+    padding: 42px 29px 50px 28px;
   }
 
   @media screen and (min-width: 1024px) {
-    width: 867px;
+    width: 884px;
     padding: 50px 30px 40px;
   }
 }
@@ -80,15 +75,26 @@
   padding: 0;
   margin: 0;
   border: none;
-  background-color: transparent;
   cursor: pointer;
   outline: none;
+
+  background-color: transparent;
+
+  &.disabled {
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+  }
 }
 
 .popap__svg-close {
   width: 30px;
   height: 30px;
 
+  border-radius: 50%;
+
+  transition: transform, box-shadow, $transitionTime $cubicBezierMain;
+  
   &.dark-theme {
     fill: $background-color;
   }
@@ -97,7 +103,6 @@
   &:focus {
     transform: scale(1.2, 1.2);
     box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
-    border-radius: 50%;
   }
 }
 
@@ -114,10 +119,9 @@
 
 .popap__image {
   display: block;
-  margin: 0 auto 30px auto;
-
   width: 240px;
   height: auto;
+  margin: 0 auto 30px auto;
 
   @media screen and (min-width: 768px) {
     width: 264px;
@@ -130,9 +134,9 @@
 }
 
 .popap__title {
-  margin-bottom: 20px;
   max-width: 240px;
-
+  margin-bottom: 20px;
+  
   font-style: normal;
   font-size: 20px;
   line-height: 1.15;
@@ -143,8 +147,8 @@
   }
 
   @media screen and (min-width: 1024px) {
-    font-size: 30px;
     max-width: 396px;
+    font-size: 30px;
   }
 }
 
@@ -203,7 +207,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
-  color: #8c8c8c;
+  color: $modalTitleTextColor;
 
   &.dark-theme {
     color: rgb(236, 236, 119);
@@ -213,7 +217,7 @@
 .popap__block-info {
   margin-right: 39px;
 
-  color: #8c8c8c;
+  color: $modalTitleTextColor;
 
   &.dark-theme {
     color: bisque;
@@ -227,7 +231,7 @@
 .popap__film-vote {
   font-style: normal;
   line-height: 1.33;
-  color: #8c8c8c;
+  color: $modalTitleTextColor;
 }
 
 .votes {
@@ -236,9 +240,10 @@
   justify-content: center;
 
   width: 36px;
+
   border-radius: 5px;
-  background: #f7f7f7;
-  color: #000000;
+  background: $secondBgColor;
+  color: $primary-text-color;
 }
 
 .popap__film-res__number {
@@ -249,8 +254,9 @@
 }
 
 .popap__film-res {
-  margin-bottom: 10px;
   max-width: 132px;
+  margin-bottom: 10px;
+  
   &:last-child {
     margin-bottom: 0;
   }
@@ -310,37 +316,41 @@
   }
 
   @media screen and (min-width: 1024px) {
-    width: 396px;
     flex-wrap: nowrap;
+    width: 396px;
   }
 }
 
 .popap__button {
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-transform: uppercase;
 
   width: 112px;
   height: 44px;
 
-  border: 1px solid #000000;
+  cursor: pointer;
+  border: 1px solid $primary-text-color;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: #fff;
-
+  
   font-style: normal;
   font-size: 12px;
   line-height: 1.33;
+  text-transform: uppercase;
+  background-color: $background-color;
+
+  transition: transform, box-shadow, $transitionTime $cubicBezierMain;
 
   @media screen and (max-width: 767px) {
     &:first-child {
       margin-right: 15px;
     }
+
     &:last-child {
       margin-top: 15px;
       width: 280px;
+      margin-top: 15px;
     }
   }
 
@@ -351,9 +361,11 @@
     &:first-child {
       margin-right: 15px;
     }
+
     &:last-child {
       margin-top: 15px;
       width: 264px;
+      margin-top: 15px;
     }
 
     @media screen and (min-width: 1024px) {
@@ -371,17 +383,18 @@
     }
   }
 
+
   &:hover,
   &:focus {
     transform: scale(1.1, 1.1);
     box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
-    // border-radius: 50%;
   }
 }
 .accent {
-  background: #ff6b01;
-  color: #ffffff;
   border: none;
+
+  background: #ff6b01;
+  color: $background-color;
 }
 
 .trailer-btn--disabled {
@@ -407,11 +420,59 @@
   height: auto;
 
   @media screen and (min-width: 768px) {
-    height: 240px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 565px;
+    height: 440px;
+
+    transform: translate(-50%, -50%);
   }
 
   @media screen and (min-width: 1024px) {
-    height: 300px;
+    width: 825px;
+    height: 620px;
+  }
+}
+
+
+.trailer-btn__close {
+  display: none;
+
+  @media screen and (min-width: 768px) {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  
+  display: block;
+  width: 25px;
+  height: 25px;
+  border: 50px;
+  outline: 0;
+
+  background-color: transparent;
+  background-image: url('../images/cancel.svg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+  transition: transform, box-shadow, $transitionTime $cubicBezierMain;
+  }
+
+  @media screen and (min-width: 1024px) {
+    top: 7px;
+    right: 7px;
+  }
+
+  &:hover,
+  &:focus {
+    transform: scale(1.1, 1.1);
+    box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
+
+    @media screen and (min-width: 1024px) {
+      transform: scale(1.2, 1.2);
+    }
   }
 }
 
@@ -440,3 +501,4 @@ body.dark-theme .popap__box::-webkit-scrollbar {
 body.dark-theme .popap__box::-webkit-scrollbar-track {
   background-color: rgb(51, 51, 51);
 }
+

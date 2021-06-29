@@ -1,9 +1,9 @@
 import variables from './variables.js';
 import { renderDataForModal, renderTrailerMarkup } from "./render-service.js";
 
-let popapBox ='';
 let titleRubrics = '';
 const body = document.querySelector('body');
+const popapBox = document.querySelector('.popap__content')
 
 variables.filmGrid.addEventListener('click', onClickFilm);
 // функция клика по карточке фильма
@@ -28,12 +28,30 @@ async function onClickFilm(e) {
     async function renderTrailer() {
         const res = await renderTrailerMarkup(id);
         const videoSection = document.querySelector('.popap__video-div');
-
-
+        const trailerBtnClose = document.querySelector('.trailer-btn__close');
+        variables.btnCloseModal.classList.add('disabled')
 
         videoSection.insertAdjacentHTML('beforeend', res.markup);
         trailerBtn.disabled = 'true';
         trailerBtn.classList.add('trailer-btn--disabled');
+
+        trailerBtnClose.classList.remove('visually-hidden');
+        trailerBtnClose.addEventListener('click', onClickTrailerBtnClose);
+        
+        // функция закрытия трейлера по клику на модалку
+        popapBox.addEventListener('click', (e) => {
+            if (e.currentTarget.nodeName === 'DIV') {
+                onClickTrailerBtnClose()
+            }
+        })
+        // функция закрытия трейлера
+        function onClickTrailerBtnClose() {
+            videoSection.innerHTML = '';
+            trailerBtn.classList.remove('trailer-btn--disabled');
+            trailerBtn.removeAttribute('disabled');
+            trailerBtnClose.classList.add('visually-hidden');
+            variables.btnCloseModal.classList.remove('disabled')
+        }
     }
 
     // ...находим кнопки в модалке
@@ -203,7 +221,6 @@ function openModal() {
 // добавляю класс dark-theme для модалки и её элементов
 function themeSwitcherPopap() {
     if(body.classList.contains('dark-theme')) {
-        popapBox = document.querySelector('.popap__content');
         titleRubrics = document.querySelectorAll('.popap__film-info');
 
         titleRubrics.forEach(el => el.classList.add('dark-theme'));
