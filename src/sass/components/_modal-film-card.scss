@@ -25,14 +25,12 @@
   top: 20px;
   left: 50%;
 
-
   transform: translate(-50%, 0);
   transition: transform 500ms $timing-function;
 
-  box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
+  box-shadow: 0px 8px 8px rgba(255, 107, 1, 0.6);
   max-height: 100vh;
   overflow-y: scroll;
-
 
   @media screen and (min-width: 768px) {
     top: 50%;
@@ -94,7 +92,7 @@
   border-radius: 50%;
 
   transition: transform, box-shadow, $transitionTime $cubicBezierMain;
-  
+
   &.dark-theme {
     fill: $background-color;
   }
@@ -136,7 +134,7 @@
 .popap__title {
   max-width: 240px;
   margin-bottom: 20px;
-  
+
   font-style: normal;
   font-size: 20px;
   line-height: 1.15;
@@ -256,7 +254,7 @@
 .popap__film-res {
   max-width: 132px;
   margin-bottom: 10px;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -333,7 +331,7 @@
   border: 1px solid $primary-text-color;
   box-sizing: border-box;
   border-radius: 5px;
-  
+
   font-style: normal;
   font-size: 12px;
   line-height: 1.33;
@@ -382,7 +380,6 @@
       }
     }
   }
-
 
   &:hover,
   &:focus {
@@ -436,28 +433,27 @@
   }
 }
 
-
 .trailer-btn__close {
   display: none;
 
   @media screen and (min-width: 768px) {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
-  
-  display: block;
-  width: 25px;
-  height: 25px;
-  border: 50px;
-  outline: 0;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
 
-  background-color: transparent;
-  background-image: url('../images/cancel.svg');
-  background-repeat: no-repeat;
-  background-size: 100%;
+    display: block;
+    width: 25px;
+    height: 25px;
+    border: 50px;
+    outline: 0;
 
-  transition: transform, box-shadow, $transitionTime $cubicBezierMain;
+    background-color: transparent;
+    background-image: url('../images/cancel.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+
+    transition: transform, box-shadow, $transitionTime $cubicBezierMain;
   }
 
   @media screen and (min-width: 1024px) {
@@ -501,4 +497,3 @@ body.dark-theme .popap__box::-webkit-scrollbar {
 body.dark-theme .popap__box::-webkit-scrollbar-track {
   background-color: rgb(51, 51, 51);
 }
-

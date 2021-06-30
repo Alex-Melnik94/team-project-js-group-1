@@ -1,7 +1,7 @@
-import trendingFilmsMarkupFc from "../hbs-templates/trending-films.hbs";
+import trendingFilmsMarkupFc from '../hbs-templates/trending-films.hbs';
 import api from './apiService.js'
 import './btnListener.js';
-import variables from "./variables.js";
+import variables from './variables.js';
 import { pagination } from './initialMarkup.js';
 
 
@@ -30,7 +30,7 @@ export function appendGalleryMarkup(fetchMovies) {
 
   }
   if (films.error !== undefined) {
-    variables.searchError.innerText = "Some server issue has occured";
+    variables.searchError.innerText = 'Some server issue has occured';
     return;
   }
 

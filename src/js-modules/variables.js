@@ -26,10 +26,12 @@ export default {
     closeCardsCommandBtn: document.querySelector('.data-user-close-button'),
     genreSorter: document.querySelector('.genre-modal'),
     genresBtn: document.querySelector('.value-btn'),
+    searchNav: document.querySelector('.search-nav'),
     genresList: document.querySelector('.genres-list'),
     genresSection: document.querySelector('.genres-section'),
     switchersContainer: document.querySelector('.switchers'),
     genreBtn: document.querySelector('.genreBtn'),
-    genreLi: document.querySelector('.button-genre')
+    genreLi: document.querySelector('.button-genre'),
+    body: document.querySelector('body'),
 }
 

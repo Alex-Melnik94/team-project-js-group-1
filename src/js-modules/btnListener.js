@@ -24,6 +24,8 @@ function onHomeBtnClick(e) {
     variables.homeBtn.classList.add('current');
     variables.searchInput.classList.remove('hidden');
     variables.libraryBtns.classList.add('visually-hidden');
+    variables.searchNav.classList.remove('visually-hidden');
+    variables.searchError.classList.remove('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.remove('switch-button--is-hidden');
     variables.switchersContainer.classList.remove('one-switcher')
     
@@ -40,6 +42,7 @@ function onLibraryBtnClick(e) {
     variables.homeBtn.classList.remove('current');
     variables.headerHome.classList.remove('section__header');
     variables.libraryBtns.classList.remove('visually-hidden');
+    variables.searchNav.classList.add('visually-hidden')
     variables.searchInput.classList.add('hidden');
     variables.searchError.classList.add('visually-hidden');
     variables.fetchTrendingMoviesToggle.classList.add('switch-button--is-hidden');

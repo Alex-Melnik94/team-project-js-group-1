@@ -141,13 +141,15 @@
   text-align: center;
 }
 
+.search__result {
+  color: $errorTextColor;
+  font-size: 14px;
+}
+
 .search-nav {
   display: flex;
   flex-direction: column;
-}
-
-.header__search {
-  margin-bottom: 45px;
+  margin-bottom: 20px;
 }
 
 .value-btn {

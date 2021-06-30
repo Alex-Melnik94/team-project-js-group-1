@@ -6,7 +6,8 @@ import variables from './variables.js';
   
     
   function openModalFooter(e) {     
-        variables.modalFooter.classList.remove("footer-hidden");
+    variables.modalFooter.classList.remove("footer-hidden");
+    variables.body.classList.add('body-overflow')
         window.addEventListener("keydown", onPressEscapeFooter);
         variables.closeModalBtnFooter.addEventListener("click", closeModalFooter);
         variables.modalFooter.addEventListener("click", backdropCloseModalFooter);   
@@ -17,6 +18,7 @@ import variables from './variables.js';
       
       variables.closeModalBtnFooter.removeEventListener("click", closeModalFooter);
       variables.modalFooter.classList.add("footer-hidden");
+      variables.body.classList.remove('body-overflow')
       variables.modalFooter.removeEventListener("click", closeModalFooter);
       window.removeEventListener('keydown', onPressEscapeFooter);
     }
